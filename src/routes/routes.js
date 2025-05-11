@@ -31,7 +31,10 @@ export const ROUTES = {
     NOTIFICATIONS: '/PROstudent/notifications',
     DOCUMENTS: '/PROstudent/documents',
     EVALUATIONS: '/PROstudent/evaluations',
-    PROFILE: '/PROstudent/profile'
+    PROFILE: '/PROstudent/profile', 
+    WORKSHOPS: '/PROstudent/workshops',
+    VIDEOCALL: '/PROstudent/videocall'
+
   },
   FACULTY: {
     ROOT: '/faculty',
@@ -39,6 +42,11 @@ export const ROUTES = {
   },
   SCAD: {
     ROOT: '/scad',
+    HOME: '/scad/scadDashboard',
+    STATISTICS: '/scad/statistics',
+    REPORTS: '/scad/internshipReports', 
+    REPORT_DETAILS: '/scad/reportDetails'
+
     // Add SCAD office routes
   }
 };

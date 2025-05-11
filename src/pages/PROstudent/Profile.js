@@ -13,15 +13,6 @@ const StudentProfile = () => {
       resume: null,
       coverLetter: null,
       certificates: []
-    },
-    assessments: {
-      available: [],
-      completed: [],
-      scores: {},
-      isScorePublic: false
-    },
-    profileViews: {
-      companies: []
     }
   });
 
@@ -51,35 +42,39 @@ const StudentProfile = () => {
                 onChange={(e) => setProfile({...profile, major: e.target.value})}
               >
                 <option value="">Select Major</option>
-                <option value = "CSEN">Computer Science and Engineering</option>
-                <option value = "DMET">Digital Media Engineering and Technology</option>
-                <option value = "BI">Business Informatics</option>
-                <option value = "Management">Management</option>
-                <option value = "Applied-Arts">Applied Arts</option>
-                <option value = "Pharmacy">Pharmacy</option>
-                <option value = "Biotechnology">Biotechnology</option>
-                <option value = "Law">Law</option>
+                <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                <option value="Media Engineering and Technology">Media Engineering and Technology</option>
+                <option value="Mechatronics">Mechatronics</option>
+                <option value="Networks">Networks</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Communications Engineering">Communications Engineering</option>
+                <option value="Management">Management</option>
+                <option value="Business Informatics">Business Informatics</option>
+                <option value="Applied Arts">Applied Arts</option>
+                <option value="Pharmacy">Pharmacy</option>
+                <option value="Biotechnology">Biotechnology</option>
+                <option value="Law">Law</option>
                 {/* Majors will be mapped here */}
               </select>
             </div>
 
             <div className="form-group">
               <label>Semester</label>
-               <select 
+              <select 
                 value={profile.semester}
                 onChange={(e) => setProfile({...profile, semester: e.target.value})}
               >
                 <option value="">Select Semester</option>
-                <option value = "1">1</option>
-                <option value = "2">2</option>
-                <option value = "3">3</option>
-                <option value = "4">4</option>
-                <option value = "5">5</option>
-                <option value = "6">6</option>
-                <option value = "7">7</option>
-                <option value = "8">8</option>
-                <option value = "9">9</option>
-                <option value = "10">10</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
                 {/* Semesters will be mapped here */}
               </select>
             </div>
@@ -103,13 +98,6 @@ const StudentProfile = () => {
                 <option value="internship">Internship</option>
                 <option value="part-time">Part-time</option>
                 <option value="full-time">Full-time</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Payment</label>
-              <select multiple>
-                <option value="paid">paid</option>
-                <option value="unpaid">un-paid</option>
               </select>
             </div>
           </div>
@@ -170,64 +158,6 @@ const StudentProfile = () => {
               <label>Certificates</label>
               <input type="file" multiple accept=".pdf,.jpg,.png" />
             </div>
-          </div>
-        </div>
-
-        <div className="assessments-section">
-          <h2>Online Assessments</h2>
-          <div className="assessments-content">
-            <div className="available-assessments">
-              <h3>Available Assessments</h3>
-              <div className="assessment-list">
-                {profile.assessments.available.map((assessment, index) => (
-                  <div key={index} className="assessment-item">
-                    <h4>{assessment.title}</h4>
-                    <p>{assessment.description}</p>
-                    <button className="start-assessment-btn">Start Assessment</button>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="completed-assessments">
-              <h3>Completed Assessments</h3>
-              <div className="assessment-list">
-                {profile.assessments.completed.map((assessment, index) => (
-                  <div key={index} className="assessment-item">
-                    <h4>{assessment.title}</h4>
-                    <p>Score: {profile.assessments.scores[assessment.id]}</p>
-                    <div className="score-visibility">
-                      <label>
-                        <input 
-                          type="checkbox"
-                          checked={profile.assessments.isScorePublic}
-                          onChange={(e) => setProfile({
-                            ...profile,
-                            assessments: {
-                              ...profile.assessments,
-                              isScorePublic: e.target.checked
-                            }
-                          })}
-                        />
-                        Show score on profile
-                      </label>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="profile-views-section">
-          <h2>Profile Views</h2>
-          <div className="company-views-list">
-            {profile.profileViews.companies.map((company, index) => (
-              <div key={index} className="company-view-item">
-                <h4>{company.name}</h4>
-                <p>Viewed on: {company.viewDate}</p>
-              </div>
-            ))}
           </div>
         </div>
 

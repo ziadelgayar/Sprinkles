@@ -31,6 +31,8 @@ const menus = {
     { path: '/PROstudent/notifications', label: 'Notifications' },
     { path: '/PROstudent/documents', label: 'Documents' },
     { path: '/PROstudent/evaluations', label: 'My Evaluations' },
+    { path: '/PROstudent/workshops', label: 'Career Workshops' },
+    { path: '/PROstudent/videoCall', label: 'Video Call' },
   ],
   scad: [
     { path: '/scad/home', label: 'Home' },
