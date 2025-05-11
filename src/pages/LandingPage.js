@@ -13,6 +13,9 @@ const LandingPage = () => {
       case 'student':
         navigate(ROUTES.STUDENT.ROOT);
         break;
+      case 'PROstudent':
+        navigate(ROUTES.PROSTUDENT.ROOT);
+        break;
       case 'faculty':
         navigate(ROUTES.FACULTY.ROOT);
         break;
@@ -34,10 +37,12 @@ const LandingPage = () => {
           Company
         </button>
         
-        <button onClick={() => handleRoleSelect('student')}>
-          Student
+          <button onClick={() => handleRoleSelect('student')}>
+            Student
+        </button> 
+        <button onClick={() => handleRoleSelect('PROstudent')}>
+          PRO Student
         </button>
-        
         <button onClick={() => handleRoleSelect('faculty')}>
           Faculty Member
         </button>

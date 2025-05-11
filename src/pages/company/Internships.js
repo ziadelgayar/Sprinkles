@@ -9,7 +9,9 @@ const Internships = () => {
     date: '',
     status: 'active'
   });
-
+  const [isPostedBySCAD, setIsPostedBySCAD] = useState(false);
+  const [isPostedByMe, setIsPostedByMe] = useState(false);
+  
   return (
     <div className="internships-page">
       <div className="page-header">
@@ -53,6 +55,29 @@ const Internships = () => {
           value={filters.date}
           onChange={(e) => setFilters({...filters, date: e.target.value})}
         />
+      </div>
+
+      <div className="posted-by-scad">
+        <label>
+          <input 
+            type="checkbox"
+            checked={isPostedBySCAD}
+            onChange={() => setIsPostedBySCAD(!isPostedBySCAD)}
+          />
+          Posted by SCAD
+        </label>
+      </div>
+
+      
+      <div className="posted-by-me">
+        <label>
+          <input 
+            type="checkbox"
+            checked={isPostedByMe}
+            onChange={() => setIsPostedByMe(!isPostedByMe)}
+          />
+          Posted by Me
+        </label>
       </div>
 
       <div className="internships-list">

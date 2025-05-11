@@ -16,10 +16,21 @@ const menus = {
   ],
   student: [
     { path: '/student/home', label: 'Home' },
-    { path: '/student/browse-internships', label: 'Browse Internships' },
+    { path: '/student/internships', label: 'Browse Internships' },
     { path: '/student/applications', label: 'My Applications' },
-    { path: '/student/profile-settings', label: 'Profile & Settings' },
+    { path: '/student/profile', label: 'Profile & Settings' },
     { path: '/student/notifications', label: 'Notifications' },
+    { path: '/student/documents', label: 'Documents' },
+    { path: '/student/evaluations', label: 'My Evaluations' },
+  ],
+  PROstudent: [
+    { path: '/PROstudent/home', label: 'Home' },
+    { path: '/PROstudent/internships', label: 'Browse Internships' },
+    { path: '/PROstudent/applications', label: 'My Applications' },
+    { path: '/PROstudent/profile', label: 'Profile & Settings' },
+    { path: '/PROstudent/notifications', label: 'Notifications' },
+    { path: '/PROstudent/documents', label: 'Documents' },
+    { path: '/PROstudent/evaluations', label: 'My Evaluations' },
   ],
   scad: [
     { path: '/scad/home', label: 'Home' },
@@ -41,7 +52,7 @@ const menus = {
 const Sidebar = ({ role }) => {
     const menu = menus[role];
   
-    if (!menu) return null; // or fallback UI
+    if (!menu) return null; 
   
     return (
       <nav className="sidebar">

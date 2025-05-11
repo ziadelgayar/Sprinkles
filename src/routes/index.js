@@ -20,6 +20,16 @@ import StudentDocumentsReports from '../pages/student/DocumentsReport';
 import StudentProfile from '../pages/student/Profile';
 import StudentNotifications from '../pages/student/Notifications';
 
+// Import PROstudent page components
+import PROStudentHome from '../pages/PROstudent/Home';
+import PROStudentInternships from '../pages/PROstudent/Internships';
+import PROStudentApplications from '../pages/PROstudent/Applications';
+import PROStudentEvaluations from '../pages/PROstudent/Evaluations';
+import PROStudentDocumentsReports from '../pages/PROstudent/DocumentsReport';
+import PROStudentProfile from '../pages/PROstudent/Profile';
+import PROStudentNotifications from '../pages/PROstudent/Notifications';
+
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -49,6 +59,17 @@ const AppRoutes = () => {
       <Route path="documents" element={<StudentDocumentsReports />} />
       <Route path="profile" element={<StudentProfile />} />
       <Route path="notifications" element={<StudentNotifications />} /> 
+      </Route> 
+      {/* PROstudent routes */}
+      <Route path="/PROstudent" element={<MainLayout />}>
+        <Route index element={<Navigate to="/PROstudent/home" replace />} />
+      <Route path="home" element={<PROStudentHome />} />
+      <Route path="internships" element={<PROStudentInternships />} />
+      <Route path="applications" element={<PROStudentApplications />} />
+      <Route path="evaluations" element={<PROStudentEvaluations />} />
+      <Route path="documents" element={<PROStudentDocumentsReports />} />
+      <Route path="profile" element={<PROStudentProfile />} />
+      <Route path="notifications" element={<PROStudentNotifications />} /> 
       </Route>
 
 

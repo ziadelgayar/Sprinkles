@@ -8,7 +8,7 @@ export const ROUTES = {
     APPLICATIONS: '/company/applications',
     INTERNS: '/company/interns',
     EVALUATIONS: '/company/evaluations',
-    DOCUMENTS: '/company/documents',
+    DOCUMENTS: '/company/DocumentsReports',
     PROFILE: '/company/profile',
     NOTIFICATIONS: '/company/notifications'
   },
@@ -22,6 +22,16 @@ export const ROUTES = {
     DOCUMENTS: '/student/documents',
     PROFILE: '/student/profile',
     NOTIFICATIONS: '/student/notifications'
+  }, 
+  PROSTUDENT: {
+    ROOT: '/PROstudent',
+    HOME: '/PROstudent/home',
+    INTERNSHIPS: '/PROstudent/internships',
+    APPLICATIONS: '/PROstudent/applications',
+    NOTIFICATIONS: '/PROstudent/notifications',
+    DOCUMENTS: '/PROstudent/documents',
+    EVALUATIONS: '/PROstudent/evaluations',
+    PROFILE: '/PROstudent/profile'
   },
   FACULTY: {
     ROOT: '/faculty',
