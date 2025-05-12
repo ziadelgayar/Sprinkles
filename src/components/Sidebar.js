@@ -37,11 +37,13 @@ const menus = {
   scad: [
     { path: '/scad/home', label: 'Home' },
     { path: '/scad/companies', label: 'Manage Companies' },
-    { path: '/scad/internships', label: 'Manage Internships' },
+    { path: '/scad/Internships', label: 'Manage Internships' },
     { path: '/scad/students', label: 'Manage Students' },
     { path: '/scad/reports', label: 'Reports' },
     { path: '/scad/profile-settings', label: 'Profile & Settings' },
     { path: '/scad/notifications', label: 'Notifications' },
+    { path: '/scad/statistics', label: 'Statistics' },
+  
   ],
   faculty: [
     { path: '/faculty/home', label: 'Home' },
