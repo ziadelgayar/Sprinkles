@@ -39,6 +39,8 @@ const Internships = () => {
           <option value="tech">Technology</option>
           <option value="marketing">Marketing</option>
           <option value="finance">Finance</option>
+          <option value="pharmaceutical">pharmaceutical</option>
+          <option value="law">law</option>
         </select>
 
         <select 
@@ -78,6 +80,18 @@ const Internships = () => {
           />
           Posted by Me
         </label>
+        {isPostedByMe && (
+    <div className="crud-action-dropdown">
+      <label>Choose Action:</label>
+      <select>
+        <option value="">Select Action</option>
+        <option value="create">Create</option>
+        <option value="read">Read</option>
+        <option value="update">Update</option>
+        <option value="delete">Delete</option>
+      </select>
+    </div>
+  )}
       </div>
 
       <div className="internships-list">

@@ -42,6 +42,18 @@ const StudentProfile = () => {
                 onChange={(e) => setProfile({...profile, major: e.target.value})}
               >
                 <option value="">Select Major</option>
+                <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                <option value="Media Engineering and Technology">Media Engineering and Technology</option>
+                <option value="Mechatronics">Mechatronics</option>
+                <option value="Networks">Networks</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Communications Engineering">Communications Engineering</option>
+                <option value="Management">Management</option>
+                <option value="Business Informatics">Business Informatics</option>
+                <option value="Applied Arts">Applied Arts</option>
+                <option value="Pharmacy">Pharmacy</option>
+                <option value="Biotechnology">Biotechnology</option>
+                <option value="Law">Law</option>
                 {/* Majors will be mapped here */}
               </select>
             </div>
@@ -53,6 +65,16 @@ const StudentProfile = () => {
                 onChange={(e) => setProfile({...profile, semester: e.target.value})}
               >
                 <option value="">Select Semester</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
                 {/* Semesters will be mapped here */}
               </select>
             </div>
