@@ -11,6 +11,18 @@ const Internships = () => {
   });
   const [isPostedBySCAD, setIsPostedBySCAD] = useState(false);
   const [isPostedByMe, setIsPostedByMe] = useState(false);
+  const handlePostNewInternship = () => {
+    const newInternship = {
+      id: Date.now(), // unique ID
+      title: 'New Internship',
+      description: 'This is a dummy internship description.',
+      location: 'Remote',
+      duration: '3 months',
+      applicationCount: 0,
+      status: 'active'
+    };
+  
+    setInternships([...internships, newInternship]);};
   
   return (
     <div className="internships-page">
@@ -26,7 +38,9 @@ const Internships = () => {
           />
           <button className="search-btn">Search</button>
         </div>
-        <button className="post-new-btn">Post New Internship</button>
+        <button className="post-new-btn" onClick={handlePostNewInternship}>
+  Post New Internship
+</button>
         
       </div>
 
