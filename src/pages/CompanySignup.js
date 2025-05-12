@@ -7,6 +7,7 @@ const CompanySignup = () => {
   const [industry, setIndustry] = useState('');
   const [companySize, setCompanySize] = useState('');
   const [logo, setLogo] = useState(null);
+  const [TaxReg, setTaxReg] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -50,9 +51,10 @@ const CompanySignup = () => {
                 required
             >
                 <option value="">Select size</option>
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
+                <option value="Small">Small (>50 employees)</option>
+                <option value="Medium">Medium(between 50 and 100 employees)</option>
+                <option value="Large">Large (between 100 and 500 employees)</option>
+                <option value="Corporate">Corporate (500+ empl0yees)</option>
             </select>
      </div>
         <div className="form-group">
@@ -62,7 +64,17 @@ const CompanySignup = () => {
             accept="image/*"
             onChange={(e) => setLogo(e.target.files[0])}
           />
+        </div> 
+
+        <div className="form-group">
+          <label>Tax Registeration:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setTaxReg(e.target.files[0])}
+          />
         </div>
+
         <div className="form-group">
           <label>Official Company Email:</label>
           <input

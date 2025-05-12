@@ -1,21 +1,73 @@
 import React, { useState } from 'react';
 
 const Interns = () => {
-  const [interns, setInterns] = useState([]);
+  const [interns, setInterns] = useState([
+    {
+      id: 1,
+      name: 'Alice',
+      department: 'Engineering',
+      startDate: '2025-01-10',
+      endDate: '2025-05-10',
+      supervisor: 'John Doe',
+      status: 'current intern',
+      jobTitle: 'Software Intern',
+    },
+    {
+      id: 2,
+      name: 'Bob',
+      department: 'Marketing',
+      startDate: '2025-02-01',
+      endDate: '2025-06-01',
+      supervisor: 'Jane Smith',
+      status: 'internship complete',
+      jobTitle: 'Marketing Intern',
+    },
+    {
+      id: 3,
+      name: 'Charlie',
+      department: 'Sales',
+      startDate: '2025-03-01',
+      endDate: '2025-08-01',
+      supervisor: 'Eve Johnson',
+      status: 'current intern',
+      jobTitle: 'Sales Intern',
+    },
+  ]);
+
   const [filter, setFilter] = useState('active');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter interns based on status
+  const filteredInterns = interns.filter((intern) => {
+    const matchesStatus = filter === 'active' ? intern.status === 'current intern' : intern.status === 'internship complete';
+    const matchesSearch = intern.name.toLowerCase().includes(searchQuery.toLowerCase()) || intern.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
   return (
     <div className="interns-page">
       <div className="page-header">
         <h1>Current Interns</h1>
+        
+        {/* Search Bar */}
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search by name or job title"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        {/* Filter Tabs */}
         <div className="filter-tabs">
-          <button 
+          <button
             className={`filter-btn ${filter === 'active' ? 'active' : ''}`}
             onClick={() => setFilter('active')}
           >
             Active
           </button>
-          <button 
+          <button
             className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
             onClick={() => setFilter('completed')}
           >
@@ -24,19 +76,20 @@ const Interns = () => {
         </div>
       </div>
 
+      {/* Intern List */}
       <div className="interns-list">
-        {interns.length === 0 ? (
+        {filteredInterns.length === 0 ? (
           <div className="empty-state">
-            <p>No active interns</p>
+            <p>No interns found</p>
           </div>
         ) : (
-          interns.map((intern) => (
+          filteredInterns.map((intern) => (
             <div key={intern.id} className="intern-card">
               <div className="intern-header">
                 <h3>{intern.name}</h3>
                 <span className={`status ${intern.status}`}>{intern.status}</span>
               </div>
-              
+
               <div className="intern-details">
                 <p>Department: {intern.department}</p>
                 <p>Start Date: {intern.startDate}</p>
@@ -46,8 +99,9 @@ const Interns = () => {
 
               <div className="intern-actions">
                 <button className="view-profile-btn">View Profile</button>
-                <button className="evaluate-btn">Evaluate</button>
-                <button className="view-progress-btn">View Progress</button>
+                {intern.status === 'internship complete' && (
+                  <button className="view-completion-btn">View Completion</button>
+                )}
               </div>
             </div>
           ))
