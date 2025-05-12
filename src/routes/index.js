@@ -27,8 +27,14 @@ import PROStudentApplications from '../pages/PROstudent/Applications';
 import PROStudentEvaluations from '../pages/PROstudent/Evaluations';
 import PROStudentDocumentsReports from '../pages/PROstudent/DocumentsReport';
 import PROStudentProfile from '../pages/PROstudent/Profile';
-import PROStudentNotifications from '../pages/PROstudent/Notifications';
+import PROStudentNotifications from '../pages/PROstudent/Notifications'; 
+import PROStudentWorkshops from '../pages/PROstudent/Workshops';
+import PROStudentVideoCall from '../pages/PROstudent/VideoCall'; 
 
+import InternshipReports from '../pages/Scad/InternshipReports'; 
+import ReportDetails from '../pages/Scad/ReportDetails'; 
+import Statistics  from '../pages/Scad/Statistics';
+import ScadHome from '../pages/Scad/ScadDashboard';
 
 const AppRoutes = () => {
   return (
@@ -63,13 +69,22 @@ const AppRoutes = () => {
       {/* PROstudent routes */}
       <Route path="/PROstudent" element={<MainLayout />}>
         <Route index element={<Navigate to="/PROstudent/home" replace />} />
-      <Route path="home" element={<PROStudentHome />} />
-      <Route path="internships" element={<PROStudentInternships />} />
-      <Route path="applications" element={<PROStudentApplications />} />
-      <Route path="evaluations" element={<PROStudentEvaluations />} />
-      <Route path="documents" element={<PROStudentDocumentsReports />} />
-      <Route path="profile" element={<PROStudentProfile />} />
-      <Route path="notifications" element={<PROStudentNotifications />} /> 
+        <Route path="home" element={<PROStudentHome />} />
+        <Route path="internships" element={<PROStudentInternships />} />
+        <Route path="applications" element={<PROStudentApplications />} />
+        <Route path="evaluations" element={<PROStudentEvaluations />} />
+        <Route path="documents" element={<PROStudentDocumentsReports />} />
+        <Route path="profile" element={<PROStudentProfile />} />
+        <Route path="notifications" element={<PROStudentNotifications />} />  
+        <Route path="workshops" element={<PROStudentWorkshops />} />
+        <Route path="videocall" element={<PROStudentVideoCall />} />
+      </Route> 
+      {/* Scad routes */}
+      <Route path="/scad" element={<MainLayout />}>
+        <Route index element={<Navigate to="/scad/home" replace />} />
+        <Route path="home" element={<ScadHome />} />
+        <Route path="statistics" element={<Statistics />} />
+        <Route path="reports" element={<InternshipReports />} />
       </Route>
 
 

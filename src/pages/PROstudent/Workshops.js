@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const StudentWorkshops = () => {
+const PROStudentWorkshops = () => {
   const [workshops, setWorkshops] = useState({
     upcoming: [],
     registered: [],
@@ -10,6 +10,27 @@ const StudentWorkshops = () => {
   const [activeWorkshop, setActiveWorkshop] = useState(null);
   const [notes, setNotes] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
+
+  const handleRegister = (workshopId) => {
+    // Add workshop to registered list
+    const workshop = workshops.upcoming.find(w => w.id === workshopId);
+    if (workshop) {
+      setWorkshops(prev => ({
+        ...prev,
+        registered: [...prev.registered, workshop],
+        upcoming: prev.upcoming.filter(w => w.id !== workshopId)
+      }));
+    }
+  };
+
+  const handleJoinWorkshop = (workshopId) => {
+    // Set the active workshop and initialize workshop session
+    const workshop = workshops.registered.find(w => w.id === workshopId);
+    if (workshop) {
+      setActiveWorkshop(workshop);
+      // Additional workshop joining logic can be added here
+    }
+  };
 
   return (
     <div className="student-workshops">
@@ -130,4 +151,4 @@ const StudentWorkshops = () => {
   );
 };
 
-export default StudentWorkshops; 
+export default PROStudentWorkshops; 
