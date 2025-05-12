@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import LandingPage from '../pages/LandingPage';
+import Login from '../pages/Login';
+import CompanySignup from '../pages/CompanySignup';
 
 import CompanyHome from '../pages/company/Home';
 import CompanyInternships from '../pages/company/Internships';
@@ -34,13 +36,25 @@ import PROStudentVideoCall from '../pages/PROstudent/VideoCall';
 import InternshipReports from '../pages/Scad/InternshipReports'; 
 import ReportDetails from '../pages/Scad/ReportDetails'; 
 import Statistics  from '../pages/Scad/Statistics';
-import ScadHome from '../pages/Scad/ScadDashboard';
+import ScadHome from '../pages/Scad/ScadDashboard'; 
+import Companies from '../pages/Scad/companies'; 
+import Internships from '../pages/Scad/Internships';
+
+// Import faculty page components
+import FacultyHome from '../pages/Faculty/Dashboard';
+import FacultyEvaluationReports from '../pages/Faculty/EvaluationReports';
+import FacultyInternshipReports from '../pages/Faculty/InternshipReports';
+import FacultyNotifications from '../pages/Faculty/Notifications';
+import FacultyProfile from '../pages/Faculty/Profile';
+import FacultyStatisticsReports from '../pages/Faculty/StatisticsReports';
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* Landing page */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup/company" element={<CompanySignup />} />
 
       {/* Company routes */}
       <Route path="/company" element={<MainLayout />}>
@@ -58,13 +72,13 @@ const AppRoutes = () => {
       {/* student routes */}
       <Route path="/student" element={<MainLayout />}>
         <Route index element={<Navigate to="/student/home" replace />} />
-      <Route path="home" element={<StudentHome />} />
-      <Route path="internships" element={<StudentInternships />} />
-      <Route path="applications" element={<StudentApplications />} />
-      <Route path="evaluations" element={<StudentEvaluations />} />
-      <Route path="documents" element={<StudentDocumentsReports />} />
-      <Route path="profile" element={<StudentProfile />} />
-      <Route path="notifications" element={<StudentNotifications />} /> 
+        <Route path="home" element={<StudentHome />} />
+        <Route path="internships" element={<StudentInternships />} />
+        <Route path="applications" element={<StudentApplications />} />
+        <Route path="evaluations" element={<StudentEvaluations />} />
+        <Route path="documents" element={<StudentDocumentsReports />} />
+        <Route path="profile" element={<StudentProfile />} />
+        <Route path="notifications" element={<StudentNotifications />} /> 
       </Route> 
       {/* PROstudent routes */}
       <Route path="/PROstudent" element={<MainLayout />}>
@@ -84,11 +98,22 @@ const AppRoutes = () => {
         <Route index element={<Navigate to="/scad/home" replace />} />
         <Route path="home" element={<ScadHome />} />
         <Route path="statistics" element={<Statistics />} />
-        <Route path="reports" element={<InternshipReports />} />
+        <Route path="reports" element={<InternshipReports />} /> 
+        <Route path="companies" element={<Companies />} />
+        <Route path="Internships" element={<Internships />} />
       </Route>
 
-
-{/* route groups for student, faculty, and SCAD office */}    </Routes>
+      {/* Faculty routes */}
+      <Route path="/faculty" element={<MainLayout />}>
+        <Route index element={<Navigate to="/faculty/home" replace />} />
+        <Route path="home" element={<FacultyHome />} />
+        <Route path="evaluation-reports" element={<FacultyEvaluationReports />} />
+        <Route path="internship-reports" element={<FacultyInternshipReports />} />
+        <Route path="notifications" element={<FacultyNotifications />} />
+        <Route path="profile" element={<FacultyProfile />} />
+        <Route path="statistics-reports" element={<FacultyStatisticsReports />} />
+      </Route>
+    </Routes>
   );
 };
 

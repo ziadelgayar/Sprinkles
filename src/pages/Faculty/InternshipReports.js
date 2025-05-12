@@ -121,11 +121,7 @@ const InternshipReports = () => {
                                     <td>{report.studentName}</td>
                                     <td>{report.major}</td>
                                     <td>{report.company}</td>
-                                    <td>
-                                        <span className={`status-badge ${report.status}`}>
-                                            {report.status}
-                                        </span>
-                                    </td>
+                                    <td>{report.status}</td>
                                     <td>{report.submissionDate}</td>
                                     <td>
                                         <button onClick={() => setSelectedReport(report)}>
@@ -156,19 +152,16 @@ const InternshipReports = () => {
                                 <div className="status-buttons">
                                     <button 
                                         onClick={() => handleStatusUpdate(selectedReport.id, 'accepted')}
-                                        className="accept"
                                     >
                                         Accept
                                     </button>
                                     <button 
                                         onClick={() => handleStatusUpdate(selectedReport.id, 'rejected')}
-                                        className="reject"
                                     >
                                         Reject
                                     </button>
                                     <button 
                                         onClick={() => handleStatusUpdate(selectedReport.id, 'flagged')}
-                                        className="flag"
                                     >
                                         Flag
                                     </button>

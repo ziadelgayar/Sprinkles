@@ -5,14 +5,14 @@ import './sidebar.css';
 
 const menus = {
   company: [
-    { path: '/company/Home', label: 'Home' },
-    { path: '/company/Internships', label: 'Internship Posts' },
-    { path: '/company/Applications', label: 'Applications' },
-    { path: '/company/Interns', label: 'Interns' },
-    { path: '/company/Evaluations', label: 'Evaluations' },
-    { path: '/company/DocumentsReports', label: 'Documents & Reports' },
-    { path: '/company/Profile', label: 'Profile & Settings' },
-    { path: '/company/Notifications', label: 'Notifications' },
+    { path: '/company/home', label: 'Home' },
+    { path: '/company/internships', label: 'Internship Posts' },
+    { path: '/company/applications', label: 'Applications' },
+    { path: '/company/interns', label: 'Interns' },
+    { path: '/company/evaluations', label: 'Evaluations' },
+    { path: '/company/documents', label: 'Documents & Reports' },
+    { path: '/company/profile', label: 'Profile & Settings' },
+    { path: '/company/notifications', label: 'Notifications' },
   ],
   student: [
     { path: '/student/home', label: 'Home' },
@@ -32,7 +32,7 @@ const menus = {
     { path: '/PROstudent/documents', label: 'Documents' },
     { path: '/PROstudent/evaluations', label: 'My Evaluations' },
     { path: '/PROstudent/workshops', label: 'Career Workshops' },
-    { path: '/PROstudent/videoCall', label: 'Video Call' },
+    { path: '/PROstudent/videocall', label: 'Video Call' },
   ],
   scad: [
     { path: '/scad/home', label: 'Home' },
@@ -42,31 +42,34 @@ const menus = {
     { path: '/scad/reports', label: 'Reports' },
     { path: '/scad/profile-settings', label: 'Profile & Settings' },
     { path: '/scad/notifications', label: 'Notifications' },
+    { path: '/scad/statistics', label: 'Statistics' },
   ],
   faculty: [
     { path: '/faculty/home', label: 'Home' },
-    { path: '/faculty/monitor-internships', label: 'Monitor Internships' },
-    { path: '/faculty/reports', label: 'Reports' },
-    { path: '/faculty/profile-settings', label: 'Profile & Settings' },
+    { path: '/faculty/internship-reports', label: 'Internship Reports' },
+    { path: '/faculty/evaluation-reports', label: 'Evaluation Reports' },
+    { path: '/faculty/statistics-reports', label: 'Statistics Reports' },
+    { path: '/faculty/profile', label: 'Profile & Settings' },
     { path: '/faculty/notifications', label: 'Notifications' },
   ]
-}; 
+};
+
 const Sidebar = ({ role }) => {
-    const menu = menus[role];
-  
-    if (!menu) return null; 
-  
-    return (
-      <nav className="sidebar">
-        <ul>
-          {menu.map(item =>
-            <li key={item.path}>
-              <Link to={item.path}>{item.label}</Link>
-            </li>
-          )}
-        </ul>
-      </nav>
-    );
-  };
-  
-  export default Sidebar;
+  const menu = menus[role];
+
+  if (!menu) return null;
+
+  return (
+    <nav className="sidebar">
+      <ul>
+        {menu.map(item =>
+          <li key={item.path}>
+            <Link to={item.path}>{item.label}</Link>
+          </li>
+        )}
+      </ul>
+    </nav>
+  );
+};
+
+export default Sidebar;

@@ -1,6 +1,7 @@
 // Define your route constants
 export const ROUTES = {
   HOME: '/',
+  SIGNUP_COMPANY: '/signup/company',
   COMPANY: {
     ROOT: '/company',
     HOME: '/company/home',
@@ -34,11 +35,15 @@ export const ROUTES = {
     PROFILE: '/PROstudent/profile', 
     WORKSHOPS: '/PROstudent/workshops',
     VIDEOCALL: '/PROstudent/videocall'
-
   },
   FACULTY: {
     ROOT: '/faculty',
-    // Add faculty routes
+    HOME: '/faculty/home',
+    EVALUATION_REPORTS: '/faculty/evaluation-reports',
+    INTERNSHIP_REPORTS: '/faculty/internship-reports',
+    NOTIFICATIONS: '/faculty/notifications',
+    PROFILE: '/faculty/profile',
+    STATISTICS_REPORTS: '/faculty/statistics-reports'
   },
   SCAD: {
     ROOT: '/scad',
@@ -46,7 +51,5 @@ export const ROUTES = {
     STATISTICS: '/scad/statistics',
     REPORTS: '/scad/internshipReports', 
     REPORT_DETAILS: '/scad/reportDetails'
-
-    // Add SCAD office routes
   }
 };

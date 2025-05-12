@@ -11,6 +11,18 @@ const Internships = () => {
   });
   const [isPostedBySCAD, setIsPostedBySCAD] = useState(false);
   const [isPostedByMe, setIsPostedByMe] = useState(false);
+  const handlePostNewInternship = () => {
+    const newInternship = {
+      id: Date.now(), // unique ID
+      title: 'New Internship',
+      description: 'This is a dummy internship description.',
+      location: 'Remote',
+      duration: '3 months',
+      applicationCount: 0,
+      status: 'active'
+    };
+  
+    setInternships([...internships, newInternship]);};
   
   return (
     <div className="internships-page">
@@ -26,7 +38,9 @@ const Internships = () => {
           />
           <button className="search-btn">Search</button>
         </div>
-        <button className="post-new-btn">Post New Internship</button>
+        <button className="post-new-btn" onClick={handlePostNewInternship}>
+  Post New Internship
+</button>
         
       </div>
 
@@ -39,6 +53,8 @@ const Internships = () => {
           <option value="tech">Technology</option>
           <option value="marketing">Marketing</option>
           <option value="finance">Finance</option>
+          <option value="pharmaceutical">pharmaceutical</option>
+          <option value="law">law</option>
         </select>
 
         <select 
@@ -78,6 +94,18 @@ const Internships = () => {
           />
           Posted by Me
         </label>
+        {isPostedByMe && (
+    <div className="crud-action-dropdown">
+      <label>Choose Action:</label>
+      <select>
+        <option value="">Select Action</option>
+        <option value="create">Create</option>
+        <option value="read">Read</option>
+        <option value="update">Update</option>
+        <option value="delete">Delete</option>
+      </select>
+    </div>
+  )}
       </div>
 
       <div className="internships-list">

@@ -6,25 +6,8 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleRoleSelect = (role) => {
-    switch(role) {
-      case 'company':
-        navigate(ROUTES.COMPANY.ROOT);
-        break;
-      case 'student':
-        navigate(ROUTES.STUDENT.ROOT);
-        break;
-      case 'PROstudent':
-        navigate(ROUTES.PROSTUDENT.ROOT);
-        break;
-      case 'faculty':
-        navigate(ROUTES.FACULTY.ROOT);
-        break;
-      case 'scad':
-        navigate(ROUTES.SCAD.ROOT);
-        break;
-      default:
-        break;
-    }
+    // Redirect to login page with role as a query parameter
+    navigate(`/login?role=${role}`);
   };
 
   return (
