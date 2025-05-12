@@ -69,13 +69,13 @@ const Dashboard = () => {
             <section className="quick-actions">
                 <h2>Quick Actions</h2>
                 <div className="action-buttons">
-                    <Link to="/faculty/StatisticsReports" className="action-button">
+                    <Link to="/faculty/statistics-reports" className="action-button">
                         View Statistics Reports
                     </Link>
-                    <Link to="/faculty/InternshipReports" className="action-button">
+                    <Link to="/faculty/internship-reports" className="action-button">
                         Review Internship Reports
                     </Link>
-                    <Link to="/faculty/EvaluationReports" className="action-button">
+                    <Link to="/faculty/evaluation-reports" className="action-button">
                         View Evaluation Reports
                     </Link>
                 </div>

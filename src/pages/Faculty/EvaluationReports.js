@@ -82,6 +82,8 @@ const EvaluationReports = () => {
                 </select>
             </div>
 
+            <h2>Reports</h2>
+
             <div className="evaluations-list">
                 <table>
                     <thead>
@@ -100,11 +102,7 @@ const EvaluationReports = () => {
                                 <td>{evaluation.studentName}</td>
                                 <td>{evaluation.major}</td>
                                 <td>{evaluation.company}</td>
-                                <td>
-                                    <span className={`status-badge ${evaluation.status}`}>
-                                        {evaluation.status.replace('_', ' ')}
-                                    </span>
-                                </td>
+                                <td>{evaluation.status.replace('_', ' ')}</td>
                                 <td>{evaluation.submissionDate}</td>
                                 <td>
                                     <button>View Details</button>

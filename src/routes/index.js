@@ -40,13 +40,13 @@ import ScadHome from '../pages/Scad/ScadDashboard';
 import Companies from '../pages/Scad/companies'; 
 import Internships from '../pages/Scad/Internships';
 
-// import faculty page contents 
-/* import FacultyHome from '../pages/Faculty/Dashboard';
+// Import faculty page components
+import FacultyHome from '../pages/Faculty/Dashboard';
 import FacultyEvaluationReports from '../pages/Faculty/EvaluationReports';
 import FacultyInternshipReports from '../pages/Faculty/InternshipReports';
 import FacultyNotifications from '../pages/Faculty/Notifications';
 import FacultyProfile from '../pages/Faculty/Profile';
-import FacultyStatisticsReports from '../pages/Faculty/StatisticsReports'; */
+import FacultyStatisticsReports from '../pages/Faculty/StatisticsReports';
 
 const AppRoutes = () => {
   return (
@@ -72,13 +72,13 @@ const AppRoutes = () => {
       {/* student routes */}
       <Route path="/student" element={<MainLayout />}>
         <Route index element={<Navigate to="/student/home" replace />} />
-      <Route path="home" element={<StudentHome />} />
-      <Route path="internships" element={<StudentInternships />} />
-      <Route path="applications" element={<StudentApplications />} />
-      <Route path="evaluations" element={<StudentEvaluations />} />
-      <Route path="documents" element={<StudentDocumentsReports />} />
-      <Route path="profile" element={<StudentProfile />} />
-      <Route path="notifications" element={<StudentNotifications />} /> 
+        <Route path="home" element={<StudentHome />} />
+        <Route path="internships" element={<StudentInternships />} />
+        <Route path="applications" element={<StudentApplications />} />
+        <Route path="evaluations" element={<StudentEvaluations />} />
+        <Route path="documents" element={<StudentDocumentsReports />} />
+        <Route path="profile" element={<StudentProfile />} />
+        <Route path="notifications" element={<StudentNotifications />} /> 
       </Route> 
       {/* PROstudent routes */}
       <Route path="/PROstudent" element={<MainLayout />}>
@@ -103,16 +103,17 @@ const AppRoutes = () => {
         <Route path="Internships" element={<Internships />} />
       </Route>
 
-      {/* Faculty routes 
-      <Route path="/facultyMember" element={<MainLayout />}></Route>
-      <Route path="/faculty/home" element={<FacultyHome />} />
-      <Route path="/faculty/evaluation-reports" element={<FacultyEvaluationReports />} />
-      <Route path="/faculty/internship-reports" element={<FacultyInternshipReports />} />
-      <Route path="/faculty/notifications" element={<FacultyNotifications />} />
-      <Route path="/faculty/profile" element={<FacultyProfile />} />
-      <Route path="/faculty/statistics-reports" element={<FacultyStatisticsReports />} />*/}
-
-{/* route groups for student, faculty, and SCAD office */}    </Routes>
+      {/* Faculty routes */}
+      <Route path="/faculty" element={<MainLayout />}>
+        <Route index element={<Navigate to="/faculty/home" replace />} />
+        <Route path="home" element={<FacultyHome />} />
+        <Route path="evaluation-reports" element={<FacultyEvaluationReports />} />
+        <Route path="internship-reports" element={<FacultyInternshipReports />} />
+        <Route path="notifications" element={<FacultyNotifications />} />
+        <Route path="profile" element={<FacultyProfile />} />
+        <Route path="statistics-reports" element={<FacultyStatisticsReports />} />
+      </Route>
+    </Routes>
   );
 };
 

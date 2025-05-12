@@ -2,39 +2,40 @@ import React, { useState, useEffect } from 'react';
 
 const StatisticsReports = () => {
     const [statistics, setStatistics] = useState({
-        totalInternships: 0,
-        activeInternships: 0,
-        completedInternships: 0,
-        pendingEvaluations: 0,
-        departmentStats: []
+        reportsPerCycle: {
+            accepted: 0,
+            rejected: 0,
+            flagged: 0
+        },
+        averageReviewTime: 0,
+        mostUsedCourses: [],
+        topRatedCompanies: [],
+        topCompaniesByInternship: []
     });
 
     // Dummy data for demonstration
     useEffect(() => {
         setStatistics({
-            totalInternships: 150,
-            activeInternships: 75,
-            completedInternships: 65,
-            pendingEvaluations: 10,
-            departmentStats: [
-                {
-                    department: 'Computer Science',
-                    totalStudents: 45,
-                    activeInternships: 25,
-                    completedInternships: 20
-                },
-                {
-                    department: 'Data Science',
-                    totalStudents: 30,
-                    activeInternships: 15,
-                    completedInternships: 15
-                },
-                {
-                    department: 'UI/UX Design',
-                    totalStudents: 25,
-                    activeInternships: 10,
-                    completedInternships: 15
-                }
+            reportsPerCycle: {
+                accepted: 120,
+                rejected: 20,
+                flagged: 10
+            },
+            averageReviewTime: 3.2, // days
+            mostUsedCourses: [
+                { name: 'CS101 - Intro to Programming', count: 40 },
+                { name: 'DS201 - Data Analysis', count: 32 },
+                { name: 'UX301 - User Research', count: 28 }
+            ],
+            topRatedCompanies: [
+                { name: 'Tech Corp', rating: 4.9 },
+                { name: 'Data Systems', rating: 4.7 },
+                { name: 'Design Studio', rating: 4.6 }
+            ],
+            topCompaniesByInternship: [
+                { name: 'Tech Corp', count: 25 },
+                { name: 'Data Systems', count: 20 },
+                { name: 'Design Studio', count: 18 }
             ]
         });
     }, []);
@@ -43,55 +44,60 @@ const StatisticsReports = () => {
         <div className="statistics-reports">
             <h1>Statistics Reports</h1>
 
-            <div className="overview-cards">
-                <div className="stat-card">
-                    <h3>Total Internships</h3>
-                    <p className="stat-number">{statistics.totalInternships}</p>
-                </div>
-                <div className="stat-card">
-                    <h3>Active Internships</h3>
-                    <p className="stat-number">{statistics.activeInternships}</p>
-                </div>
-                <div className="stat-card">
-                    <h3>Completed Internships</h3>
-                    <p className="stat-number">{statistics.completedInternships}</p>
-                </div>
-                <div className="stat-card">
-                    <h3>Pending Evaluations</h3>
-                    <p className="stat-number">{statistics.pendingEvaluations}</p>
-                </div>
-            </div>
+            {/* 1. Number of accepted/rejected/flagged reports per cycle */}
+            <section>
+                <h2>Number of accepted/rejected/flagged reports per cycle</h2>
+                <ul>
+                    <li>Accepted: {statistics.reportsPerCycle.accepted}</li>
+                    <li>Rejected: {statistics.reportsPerCycle.rejected}</li>
+                    <li>Flagged: {statistics.reportsPerCycle.flagged}</li>
+                </ul>
+            </section>
 
-            <div className="department-stats">
-                <h2>Department Statistics</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Department</th>
-                            <th>Total Students</th>
-                            <th>Active Internships</th>
-                            <th>Completed Internships</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {statistics.departmentStats.map(dept => (
-                            <tr key={dept.department}>
-                                <td>{dept.department}</td>
-                                <td>{dept.totalStudents}</td>
-                                <td>{dept.activeInternships}</td>
-                                <td>{dept.completedInternships}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            {/* 2. Average review time */}
+            <section>
+                <h2>Average review time</h2>
+                <p>{statistics.averageReviewTime} days</p>
+            </section>
 
+            {/* 3. Most frequently used courses in internships */}
+            <section>
+                <h2>Most frequently used courses in internships</h2>
+                <ol>
+                    {statistics.mostUsedCourses.map(course => (
+                        <li key={course.name}>{course.name} ({course.count} times)</li>
+                    ))}
+                </ol>
+            </section>
+
+            {/* 4. Top rated companies based on student evaluations */}
+            <section>
+                <h2>Top rated companies based on student evaluations</h2>
+                <ol>
+                    {statistics.topRatedCompanies.map(company => (
+                        <li key={company.name}>{company.name} (Rating: {company.rating})</li>
+                    ))}
+                </ol>
+            </section>
+
+            {/* 5. Top companies by internship count */}
+            <section>
+                <h2>Top companies by internship count</h2>
+                <ol>
+                    {statistics.topCompaniesByInternship.map(company => (
+                        <li key={company.name}>{company.name} ({company.count} internships)</li>
+                    ))}
+                </ol>
+            </section>
+
+            {/* Generate reports section remains as before */}
             <div className="export-section">
-                <h2>Export Reports</h2>
+                <h2>Generate Reports</h2>
                 <div className="export-buttons">
                     <button>Export as PDF</button>
                     <button>Export as Excel</button>
                 </div>
+                <p>Generate reports based on the real-time statistics above.</p>
             </div>
         </div>
     );

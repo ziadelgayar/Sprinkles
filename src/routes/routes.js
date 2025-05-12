@@ -35,27 +35,21 @@ export const ROUTES = {
     PROFILE: '/PROstudent/profile', 
     WORKSHOPS: '/PROstudent/workshops',
     VIDEOCALL: '/PROstudent/videocall'
-
   },
- /* FACULTY: {
-    ROOT: '/FacultyMember',
-    HOME: '/Faculty/Dashboard',
-    INTERNSHIPS: '/Faculty/InternshipReports',
-    APPLICATIONS: '/Faculty/applications',
-    NOTIFICATIONS: '/Faculty/notifications',
-    EVALUATIONS: '/Faculty/EvaluationReports',
-    PROFILE: '/Faculty/Profile', 
-    STATISTICS: '/Faculty/StatisticsReports'
-  
-  },*/
-
+  FACULTY: {
+    ROOT: '/faculty',
+    HOME: '/faculty/home',
+    EVALUATION_REPORTS: '/faculty/evaluation-reports',
+    INTERNSHIP_REPORTS: '/faculty/internship-reports',
+    NOTIFICATIONS: '/faculty/notifications',
+    PROFILE: '/faculty/profile',
+    STATISTICS_REPORTS: '/faculty/statistics-reports'
+  },
   SCAD: {
     ROOT: '/scad',
     HOME: '/scad/scadDashboard',
     STATISTICS: '/scad/statistics',
     REPORTS: '/scad/internshipReports', 
     REPORT_DETAILS: '/scad/reportDetails'
-
-    // Add SCAD office routes
   }
 };
