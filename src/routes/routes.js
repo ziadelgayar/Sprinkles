@@ -45,7 +45,8 @@ export const ROUTES = {
     HOME: '/scad/scadDashboard',
     STATISTICS: '/scad/statistics',
     REPORTS: '/scad/internshipReports', 
-    REPORT_DETAILS: '/scad/reportDetails'
+    REPORT_DETAILS: '/scad/reportDetails',
+    COMPANIES: '/scad/companies'
 
     // Add SCAD office routes
   }

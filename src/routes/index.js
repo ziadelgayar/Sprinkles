@@ -34,7 +34,9 @@ import PROStudentVideoCall from '../pages/PROstudent/VideoCall';
 import InternshipReports from '../pages/Scad/InternshipReports'; 
 import ReportDetails from '../pages/Scad/ReportDetails'; 
 import Statistics  from '../pages/Scad/Statistics';
-import ScadHome from '../pages/Scad/ScadDashboard';
+import ScadHome from '../pages/Scad/ScadDashboard'; 
+import Companies from '../pages/Scad/companies'; 
+import Internships from '../pages/Scad/Internships';
 
 const AppRoutes = () => {
   return (
@@ -84,7 +86,9 @@ const AppRoutes = () => {
         <Route index element={<Navigate to="/scad/home" replace />} />
         <Route path="home" element={<ScadHome />} />
         <Route path="statistics" element={<Statistics />} />
-        <Route path="reports" element={<InternshipReports />} />
+        <Route path="reports" element={<InternshipReports />} /> 
+        <Route path="companies" element={<Companies />} />
+        <Route path="Internships" element={<Internships />} />
       </Route>
 
 
