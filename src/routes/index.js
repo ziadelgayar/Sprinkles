@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import LandingPage from '../pages/LandingPage';
+import Login from '../pages/Login';
+import CompanySignup from '../pages/CompanySignup';
 
 import CompanyHome from '../pages/company/Home';
 import CompanyInternships from '../pages/company/Internships';
@@ -38,11 +40,21 @@ import ScadHome from '../pages/Scad/ScadDashboard';
 import Companies from '../pages/Scad/companies'; 
 import Internships from '../pages/Scad/Internships';
 
+// import faculty page contents 
+/* import FacultyHome from '../pages/Faculty/Dashboard';
+import FacultyEvaluationReports from '../pages/Faculty/EvaluationReports';
+import FacultyInternshipReports from '../pages/Faculty/InternshipReports';
+import FacultyNotifications from '../pages/Faculty/Notifications';
+import FacultyProfile from '../pages/Faculty/Profile';
+import FacultyStatisticsReports from '../pages/Faculty/StatisticsReports'; */
+
 const AppRoutes = () => {
   return (
     <Routes>
       {/* Landing page */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup/company" element={<CompanySignup />} />
 
       {/* Company routes */}
       <Route path="/company" element={<MainLayout />}>
@@ -91,6 +103,14 @@ const AppRoutes = () => {
         <Route path="Internships" element={<Internships />} />
       </Route>
 
+      {/* Faculty routes 
+      <Route path="/facultyMember" element={<MainLayout />}></Route>
+      <Route path="/faculty/home" element={<FacultyHome />} />
+      <Route path="/faculty/evaluation-reports" element={<FacultyEvaluationReports />} />
+      <Route path="/faculty/internship-reports" element={<FacultyInternshipReports />} />
+      <Route path="/faculty/notifications" element={<FacultyNotifications />} />
+      <Route path="/faculty/profile" element={<FacultyProfile />} />
+      <Route path="/faculty/statistics-reports" element={<FacultyStatisticsReports />} />*/}
 
 {/* route groups for student, faculty, and SCAD office */}    </Routes>
   );

@@ -1,0 +1,90 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css'; // reuse login styling
+
+const CompanySignup = () => {
+  const [companyName, setCompanyName] = useState('');
+  const [industry, setIndustry] = useState('');
+  const [companySize, setCompanySize] = useState('');
+  const [logo, setLogo] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // You can still do validations or logging here if needed
+
+    alert('Company registered successfully!');
+    navigate('/company/home'); // Direct redirect
+  };
+
+  return (
+    <div className="login-container">
+      <h2>Company Sign Up</h2>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-group">
+          <label>Company Name:</label>
+          <input
+            type="text"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Industry:</label>
+          <input
+            type="text"
+            value={industry}
+            onChange={(e) => setIndustry(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+            <label>Company Size:</label>
+            <select
+                value={companySize}
+                onChange={(e) => setCompanySize(e.target.value)}
+                required
+            >
+                <option value="">Select size</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+            </select>
+     </div>
+        <div className="form-group">
+          <label>Company Logo:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setLogo(e.target.files[0])}
+          />
+        </div>
+        <div className="form-group">
+          <label>Official Company Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Register Company</button>
+      </form>
+    </div>
+  );
+};
+
+export default CompanySignup;
