@@ -1,67 +1,187 @@
 import React, { useState } from 'react';
 
 const StudentApplications = () => {
-  const [applications, setApplications] = useState([]);
+  // Sample application data
+  const sampleApplications = [
+    {
+      id: 1,
+      position: 'UX Design Intern',
+      companyName: 'Google',
+      location: 'Remote',
+      appliedDate: '2025-03-10',
+      lastUpdated: '2025-03-15',
+      status: 'pending',
+      documents: [
+        { name: 'Resume.pdf', url: '#' },
+        { name: 'Cover_Letter_Google.pdf', url: '#' }
+      ]
+    },
+    {
+      id: 2,
+      position: 'Software Engineering Intern',
+      companyName: 'Microsoft',
+      location: 'Redmond, WA',
+      appliedDate: '2025-02-28',
+      lastUpdated: '2025-03-20',
+      status: 'finalized',
+      documents: [
+        { name: 'Resume.pdf', url: '#' },
+        { name: 'Transcript.pdf', url: '#' }
+      ],
+      notes: 'You are currently a top candidate!'
+    },
+    {
+      id: 3,
+      position: 'Marketing Intern',
+      companyName: 'Nike',
+      location: 'Portland, OR',
+      appliedDate: '2025-01-15',
+      lastUpdated: '2025-02-01',
+      status: 'accepted',
+      documents: [
+        { name: 'Resume.pdf', url: '#' },
+        { name: 'Writing_Sample.pdf', url: '#' }
+      ],
+      startDate: '2025-06-01'
+    },
+    {
+      id: 4,
+      position: 'Graphic Design Intern',
+      companyName: 'Apple',
+      location: 'Cupertino, CA',
+      appliedDate: '2025-02-20',
+      lastUpdated: '2025-03-10',
+      status: 'rejected',
+      documents: [
+        { name: 'Resume.pdf', url: '#' },
+        { name: 'Portfolio.pdf', url: '#' }
+      ],
+      rejectionReason: 'Position filled by internal candidate'
+    }
+  ];
+
+  const [applications, setApplications] = useState(sampleApplications);
   const [filter, setFilter] = useState('all');
+
+  // Filter applications based on status
+  const filteredApplications = applications.filter(application => {
+    return filter === 'all' || application.status === filter;
+  });
+
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 'pending': return 'Pending Review';
+      case 'finalized': return 'Top Applicant';
+      case 'accepted': return 'Accepted';
+      case 'rejected': return 'Rejected';
+      default: return status;
+    }
+  };
+
+  const withdrawApplication = (applicationId) => {
+    if (window.confirm('Are you sure you want to withdraw this application?')) {
+      setApplications(applications.filter(app => app.id !== applicationId));
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <div className="student-applications">
       <div className="page-header">
         <h1>My Applications</h1>
-        <div className="filter-tabs">
-          <button 
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
-          >
-            All
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'pending' ? 'active' : ''}`}
-            onClick={() => setFilter('pending')}
-          >
-            Pending
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'accepted' ? 'active' : ''}`}
-            onClick={() => setFilter('accepted')}
-          >
-            Accepted
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'rejected' ? 'active' : ''}`}
-            onClick={() => setFilter('rejected')}
-          >
-            Rejected
-          </button>
-        </div>
+        <p>Track the status of your internship applications</p>
+      </div>
+
+      <div className="filter-tabs">
+        <button 
+          className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+          onClick={() => setFilter('all')}
+        >
+          All Applications
+        </button>
+        <button 
+          className={`filter-btn ${filter === 'pending' ? 'active' : ''}`}
+          onClick={() => setFilter('pending')}
+        >
+          Pending
+        </button>
+        <button 
+          className={`filter-btn ${filter === 'finalized' ? 'active' : ''}`}
+          onClick={() => setFilter('finalized')}
+        >
+          Finalized
+        </button>
+        <button 
+          className={`filter-btn ${filter === 'accepted' ? 'active' : ''}`}
+          onClick={() => setFilter('accepted')}
+        >
+          Accepted
+        </button>
+        <button 
+          className={`filter-btn ${filter === 'rejected' ? 'active' : ''}`}
+          onClick={() => setFilter('rejected')}
+        >
+          Rejected
+        </button>
       </div>
 
       <div className="applications-list">
-        {applications.length === 0 ? (
+        {filteredApplications.length === 0 ? (
           <div className="empty-state">
-            <p>No applications found</p>
+            <p>No applications found matching your criteria</p>
+            {filter !== 'all' && (
+              <button onClick={() => setFilter('all')}>View All Applications</button>
+            )}
           </div>
         ) : (
-          applications.map((application) => (
-            <div key={application.id} className="application-card">
+          filteredApplications.map((application) => (
+            <div key={application.id} className={`application-card status-${application.status}`}>
               <div className="application-header">
-                <h3>{application.position}</h3>
+                <div>
+                  <h3>{application.position}</h3>
+                  <h4>{application.companyName}</h4>
+                </div>
                 <span className={`status ${application.status}`}>
-                  {application.status}
+                  {getStatusLabel(application.status)}
                 </span>
               </div>
 
-              <div className="company-info">
-                <h4>{application.companyName}</h4>
-                <p>{application.location}</p>
+              <div className="application-details">
+                <div className="detail-group">
+                  <span className="detail-label">Location:</span>
+                  <span>{application.location}</span>
+                </div>
+                <div className="detail-group">
+                  <span className="detail-label">Applied:</span>
+                  <span>{formatDate(application.appliedDate)}</span>
+                </div>
+                <div className="detail-group">
+                  <span className="detail-label">Last Updated:</span>
+                  <span>{formatDate(application.lastUpdated)}</span>
+                </div>
               </div>
 
-              <div className="application-details">
-                <p><strong>Applied Date:</strong> {application.appliedDate}</p>
-                <p><strong>Last Updated:</strong> {application.lastUpdated}</p>
-                <p><strong>Duration:</strong> {application.duration}</p>
-                <p><strong>Type:</strong> {application.type}</p>
-              </div>
+              {application.status === 'accepted' && (
+                <div className="status-info accepted">
+                  <p>Congratulations! Your internship starts on {formatDate(application.startDate)}</p>
+                </div>
+              )}
+
+              {application.status === 'finalized' && (
+                <div className="status-info finalized">
+                  <p>{application.notes || 'You are being strongly considered for this position!'}</p>
+                </div>
+              )}
+
+              {application.status === 'rejected' && (
+                <div className="status-info rejected">
+                  <p><strong>Reason:</strong> {application.rejectionReason}</p>
+                </div>
+              )}
 
               <div className="submitted-documents">
                 <h4>Submitted Documents:</h4>
@@ -76,28 +196,29 @@ const StudentApplications = () => {
                 </ul>
               </div>
 
-              {application.status === 'pending' && (
-                <div className="application-actions">
-                  <button className="withdraw-btn">Withdraw Application</button>
-                  <button className="update-docs-btn">Update Documents</button>
-                </div>
-              )}
-
-              {application.status === 'rejected' && (
-                <div className="rejection-info">
-                  <h4>Rejection Reason:</h4>
-                  <p>{application.rejectionReason}</p>
-                </div>
-              )}
+              <div className="application-actions">
+                {application.status === 'pending' && (
+                  <>
+                    <button 
+                      className="withdraw-btn"
+                      onClick={() => withdrawApplication(application.id)}
+                    >
+                      Withdraw Application
+                    </button>
+                    <button className="update-btn">
+                      Update Documents
+                    </button>
+                  </>
+                )}
+                {application.status === 'accepted' && (
+                  <button className="accept-btn">
+                    Confirm Acceptance
+                  </button>
+                )}
+              </div>
             </div>
           ))
         )}
-      </div>
-
-      <div className="pagination">
-        <button className="prev-btn">Previous</button>
-        <span className="page-info">Page 1 of 1</span>
-        <button className="next-btn">Next</button>
       </div>
     </div>
   );

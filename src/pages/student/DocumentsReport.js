@@ -1,170 +1,152 @@
 import React, { useState } from 'react';
+import { jsPDF } from 'jspdf';
 
-const StudentDocumentsReport = () => {
-  const [reports, setReports] = useState([]);
+const DocumentsPage = () => {
+  const [documents, setDocuments] = useState([
+    { id: 1, name: 'My_CV.pdf', type: 'CV', date: '2025-01-15' },
+    { id: 2, name: 'Cover_Letter_CompanyX.pdf', type: 'Cover Letter', date: '2025-02-20' },
+    { id: 3, name: 'Certificate_CourseY.pdf', type: 'Certificate', date: '2025-03-10' },
+  ]);
   const [filter, setFilter] = useState('all');
+  const [newDocument, setNewDocument] = useState(null);
+
+  const handleFilterChange = (type) => {
+    setFilter(type);
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setNewDocument(file);
+    }
+  };
+
+  const addDocument = () => {
+    if (newDocument) {
+      const docType = determineDocumentType(newDocument.name);
+      const newDoc = {
+        id: documents.length + 1,
+        name: newDocument.name,
+        type: docType,
+        date: new Date().toISOString().split('T')[0],
+        file: newDocument
+      };
+      setDocuments([...documents, newDoc]);
+      setNewDocument(null);
+    }
+  };
+
+  const determineDocumentType = (filename) => {
+    const lowerName = filename.toLowerCase();
+    if (lowerName.includes('cv') || lowerName.includes('resume')) return 'CV';
+    if (lowerName.includes('cover') || lowerName.includes('letter')) return 'Cover Letter';
+    if (lowerName.includes('certif') || lowerName.includes('diploma')) return 'Certificate';
+    return 'Other';
+  };
+
+  const downloadDocument = (document) => {
+    // In a real app, this would download the actual file
+    // For this demo, we'll generate a placeholder PDF
+    const doc = new jsPDF();
+    doc.text(`Document: ${document.name}`, 10, 10);
+    doc.text(`Type: ${document.type}`, 10, 20);
+    doc.text(`Uploaded: ${document.date}`, 10, 30);
+    doc.text('This is a placeholder for the actual document content.', 10, 40);
+    doc.save(document.name);
+  };
+
+  const removeDocument = (id) => {
+    setDocuments(documents.filter(doc => doc.id !== id));
+  };
 
   return (
-    <div className="student-documents-report">
-      <div className="page-header">
-        <h1>Internship Reports & Documents</h1>
-        <div className="filter-tabs">
-          <button 
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
-          >
-            All
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'draft' ? 'active' : ''}`}
-            onClick={() => setFilter('draft')}
-          >
-            Drafts
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'submitted' ? 'active' : ''}`}
-            onClick={() => setFilter('submitted')}
-          >
-            Submitted
-          </button>
-          <button 
-            className={`filter-btn ${filter === 'flagged' ? 'active' : ''}`}
-            onClick={() => setFilter('flagged')}
-          >
-            Flagged
-          </button>
-        </div>
-      </div>
-
-      <div className="reports-list">
-        {reports.length === 0 ? (
-          <div className="empty-state">
-            <p>No reports found</p>
+    <div className="documents-page">
+      <h1>My Documents</h1>
+      
+      <div className="upload-section">
+        <h2>Upload New Document</h2>
+        <input 
+          type="file" 
+          onChange={handleFileUpload}
+          accept=".pdf,.doc,.docx,.txt,.rtf" 
+        />
+        {newDocument && (
+          <div className="upload-preview">
+            <p>Selected: {newDocument.name}</p>
+            <button onClick={addDocument}>Upload Document</button>
           </div>
-        ) : (
-          reports.map((report) => (
-            <div key={report.id} className="report-card">
-              <div className="report-header">
-                <h3>{report.title}</h3>
-                <span className={`status ${report.status}`}>
-                  {report.status}
-                </span>
-              </div>
-
-              <div className="internship-info">
-                <h4>{report.companyName}</h4>
-                <p><strong>Position:</strong> {report.position}</p>
-                <p><strong>Period:</strong> {report.period}</p>
-              </div>
-
-              {report.status === 'draft' && (
-                <div className="report-form">
-                  <div className="form-group">
-                    <label>Title</label>
-                    <input type="text" placeholder="Enter report title" />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Introduction</label>
-                    <textarea 
-                      placeholder="Write your introduction..."
-                      rows="4"
-                    ></textarea>
-                  </div>
-
-                  <div className="form-group">
-                    <label>Body</label>
-                    <textarea 
-                      placeholder="Write your report body..."
-                      rows="8"
-                    ></textarea>
-                  </div>
-
-                  <div className="form-group">
-                    <label>Relevant Courses</label>
-                    <select multiple>
-                      {/* Course options will be mapped here */}
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label>Supporting Documents</label>
-                    <input type="file" multiple />
-                  </div>
-
-                  <div className="report-actions">
-                    <button className="save-draft-btn">Save Draft</button>
-                    <button className="submit-btn">Submit Report</button>
-                  </div>
-                </div>
-              )}
-
-              {report.status === 'submitted' && (
-                <div className="submitted-report">
-                  <div className="report-content">
-                    <h4>Report Content</h4>
-                    <p>{report.content}</p>
-                  </div>
-
-                  <div className="relevant-courses">
-                    <h4>Relevant Courses</h4>
-                    <ul>
-                      {report.courses.map((course, index) => (
-                        <li key={index}>{course}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="supporting-documents">
-                    <h4>Supporting Documents</h4>
-                    <ul>
-                      {report.documents.map((doc, index) => (
-                        <li key={index}>
-                          <a href={doc.url} target="_blank" rel="noopener noreferrer">
-                            {doc.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="report-actions">
-                    <button className="download-btn">Download PDF</button>
-                    <button className="edit-btn">Edit Report</button>
-                  </div>
-                </div>
-              )}
-
-              {report.status === 'flagged' && (
-                <div className="flagged-report">
-                  <div className="flag-reason">
-                    <h4>Flag Reason</h4>
-                    <p>{report.flagReason}</p>
-                  </div>
-
-                  <div className="comments">
-                    <h4>Comments</h4>
-                    <p>{report.comments}</p>
-                  </div>
-
-                  <div className="report-actions">
-                    <button className="appeal-btn">Appeal Decision</button>
-                    <button className="edit-btn">Edit Report</button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
         )}
       </div>
 
-      <div className="pagination">
-        <button className="prev-btn">Previous</button>
-        <span className="page-info">Page 1 of 1</span>
-        <button className="next-btn">Next</button>
+      <div className="filter-tabs">
+        <button
+          className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+          onClick={() => handleFilterChange('all')}
+        >
+          All Documents
+        </button>
+        <button
+          className={`filter-btn ${filter === 'CV' ? 'active' : ''}`}
+          onClick={() => handleFilterChange('CV')}
+        >
+          CV/Resume
+        </button>
+        <button
+          className={`filter-btn ${filter === 'Cover Letter' ? 'active' : ''}`}
+          onClick={() => handleFilterChange('Cover Letter')}
+        >
+          Cover Letters
+        </button>
+        <button
+          className={`filter-btn ${filter === 'Certificate' ? 'active' : ''}`}
+          onClick={() => handleFilterChange('Certificate')}
+        >
+          Certificates
+        </button>
+      </div>
+
+      <div className="documents-list">
+        {documents.length === 0 ? (
+          <div className="empty-state">
+            <p>No documents found. Upload your first document!</p>
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Document Name</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {documents
+                .filter(doc => filter === 'all' || doc.type === filter)
+                .map(document => (
+                  <tr key={document.id}>
+                    <td>{document.name}</td>
+                    <td>{document.type}</td>
+                    <td>{document.date}</td>
+                    <td className="actions">
+                      <button onClick={() => downloadDocument(document)}>
+                        Download
+                      </button>
+                      <button 
+                        className="delete-btn"
+                        onClick={() => removeDocument(document.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 };
 
-export default StudentDocumentsReport;
+export default DocumentsPage;
