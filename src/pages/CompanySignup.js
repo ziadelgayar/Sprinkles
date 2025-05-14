@@ -17,7 +17,7 @@ const CompanySignup = () => {
 
     // You can still do validations or logging here if needed
 
-    alert('Company registered successfully!');
+    alert('Company registered successfully,an email will be sent once your application has been approved!');
     navigate('/company/home'); // Direct redirect
   };
 

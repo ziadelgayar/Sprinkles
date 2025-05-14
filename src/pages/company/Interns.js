@@ -37,10 +37,33 @@ const Interns = () => {
   const [filter, setFilter] = useState('active');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Update intern status to 'internship complete'
+  const markAsCompleted = (id) => {
+    setInterns((prevInterns) =>
+      prevInterns.map((intern) =>
+        intern.id === id ? { ...intern, status: 'internship complete' } : intern
+      )
+    );
+  };
+
+  // Update intern status to 'current intern'
+  const markAsCurrent = (id) => {
+    setInterns((prevInterns) =>
+      prevInterns.map((intern) =>
+        intern.id === id ? { ...intern, status: 'current intern' } : intern
+      )
+    );
+  };
+
   // Filter interns based on status
   const filteredInterns = interns.filter((intern) => {
-    const matchesStatus = filter === 'active' ? intern.status === 'current intern' : intern.status === 'internship complete';
-    const matchesSearch = intern.name.toLowerCase().includes(searchQuery.toLowerCase()) || intern.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus =
+      filter === 'active'
+        ? intern.status === 'current intern'
+        : intern.status === 'internship complete';
+    const matchesSearch =
+      intern.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      intern.jobTitle.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesStatus && matchesSearch;
   });
 
@@ -48,7 +71,7 @@ const Interns = () => {
     <div className="interns-page">
       <div className="page-header">
         <h1>Current Interns</h1>
-        
+
         {/* Search Bar */}
         <div className="search-bar">
           <input
@@ -87,7 +110,9 @@ const Interns = () => {
             <div key={intern.id} className="intern-card">
               <div className="intern-header">
                 <h3>{intern.name}</h3>
-                <span className={`status ${intern.status}`}>{intern.status}</span>
+                <span className={`status ${intern.status}`}>
+                  {intern.status}
+                </span>
               </div>
 
               <div className="intern-details">
@@ -98,10 +123,12 @@ const Interns = () => {
               </div>
 
               <div className="intern-actions">
-                <button className="view-profile-btn">View Profile</button>
-                {intern.status === 'internship complete' && (
-                  <button className="view-completion-btn">View Completion</button>
-                )}
+                <button onClick={() => markAsCurrent(intern.id)}>
+                  Mark as Current Intern
+                </button>
+                <button onClick={() => markAsCompleted(intern.id)}>
+                  Mark as Internship Complete
+                </button>
               </div>
             </div>
           ))
