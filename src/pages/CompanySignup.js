@@ -15,10 +15,9 @@ const CompanySignup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // You can still do validations or logging here if needed
 
     alert('Company registered successfully,an email will be sent once your application has been approved!');
-    navigate('/company/home'); // Direct redirect
+    navigate('/company/home'); 
   };
 
   return (
@@ -51,10 +50,10 @@ const CompanySignup = () => {
                 required
             >
                 <option value="">Select size</option>
-                <option value="Small">Small (>50 employees)</option>
+                <option value="Small">Small ( smaller than 50 employees)</option>
                 <option value="Medium">Medium(between 50 and 100 employees)</option>
                 <option value="Large">Large (between 100 and 500 employees)</option>
-                <option value="Corporate">Corporate (500+ empl0yees)</option>
+                <option value="Corporate">Corporate (500+ employees)</option>
             </select>
      </div>
         <div className="form-group">

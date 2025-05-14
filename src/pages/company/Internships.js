@@ -91,7 +91,7 @@ const Internships = () => {
   };
 
   return (
-    <div className="internships-page">
+    <div className="main-content">
       <div className="page-header">
         <h1>Manage Internships</h1>
         

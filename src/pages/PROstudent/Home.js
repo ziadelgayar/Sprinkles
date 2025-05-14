@@ -76,7 +76,7 @@ const StudentHome = () => {
   };
 
   return (
-    <div className="student-home" style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+    <div className="main-content">
       {/* Internship Badge */}
       <div style={{
         display: 'flex',
@@ -91,7 +91,7 @@ const StudentHome = () => {
         <span style={{ fontSize: '2rem', marginRight: '12px' }}>🏅</span>
         <div>
           <h2 style={{ margin: 0 }}>Internship Badge Earned!</h2>
-          <p style={{ margin: 0, fontSize: "0.95rem" }}>You’ve successfully completed a 3-month internship. Great job!</p>
+          <p style={{ margin: 0, fontSize: "0.95rem" }}>You've successfully completed a 3-month internship. Great job!</p>
         </div>
       </div>
 

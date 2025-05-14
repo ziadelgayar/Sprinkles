@@ -68,7 +68,7 @@ const Interns = () => {
   });
 
   return (
-    <div className="interns-page">
+    <div className="main-content interns-page">
       <div className="page-header">
         <h1>Current Interns</h1>
 

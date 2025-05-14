@@ -90,157 +90,159 @@ const Evaluations = () => {
   };
 
   return (
-    <div className="evaluations-page">
-      <div className="page-header">
-        <h1>Intern Evaluations</h1>
+    <div className="main-content">
+      <div className="evaluations-page">
+        <div className="page-header">
+          <h1>Intern Evaluations</h1>
 
-        {/* Filter Tabs */}
-        <div className="filter-tabs">
-          <button
-            className={`filter-btn ${filter === 'pending' ? 'active' : ''}`}
-            onClick={() => setFilter('pending')}
-          >
-            Pending
-          </button>
-          <button
-            className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
-            onClick={() => setFilter('completed')}
-          >
-            Completed
-          </button>
-          <button
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
-          >
-            All
-          </button>
-        </div>
-      </div>
-
-      <div className="evaluations-list">
-        {filteredEvaluations.length === 0 ? (
-          <div className="empty-state">
-            <p>No evaluations available</p>
+          {/* Filter Tabs */}
+          <div className="filter-tabs">
+            <button
+              className={`filter-btn ${filter === 'pending' ? 'active' : ''}`}
+              onClick={() => setFilter('pending')}
+            >
+              Pending
+            </button>
+            <button
+              className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
+              onClick={() => setFilter('completed')}
+            >
+              Completed
+            </button>
+            <button
+              className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+              onClick={() => setFilter('all')}
+            >
+              All
+            </button>
           </div>
-        ) : (
-          filteredEvaluations.map((evaluation) => (
-            <div key={evaluation.id} className="evaluation-card">
-              <div className="evaluation-header">
-                <h3>{evaluation.internName}</h3>
-                <span className={`status ${evaluation.status}`}>
-                  {evaluation.status}
-                </span>
-              </div>
+        </div>
 
-              <div className="evaluation-details">
-                <p>Period: {evaluation.period}</p>
-                <p>Department: {evaluation.department}</p>
-                <p>Due Date: {evaluation.dueDate}</p>
-              </div>
-
-              <div className="evaluation-form">
-                <div className="form-group">
-                  <label>Performance Rating</label>
-                  <select
-                    value={evaluation.performance}
-                    onChange={(e) => handleUpdateEvaluation(evaluation.id, { performance: e.target.value })}
-                  >
-                    <option>Excellent</option>
-                    <option>Good</option>
-                    <option>Average</option>
-                    <option>Needs Improvement</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Comments</label>
-                  <textarea
-                    value={evaluation.comments}
-                    onChange={(e) => handleUpdateEvaluation(evaluation.id, { comments: e.target.value })}
-                  />
-                </div>
-
-                <div className="evaluation-actions">
-                  <button onClick={() => handleDeleteEvaluation(evaluation.id)} className="delete-btn">
-                    Delete
-                  </button>
-                  <button onClick={() => generatePDF(evaluation)} className="download-btn">
-                    Download PDF
-                  </button>
-                  <button onClick={() => handleUpdateEvaluation(evaluation.id, { status: 'completed' })} className="submit-btn">
-                    Mark as Completed
-                  </button>
-                </div>
-              </div>
+        <div className="evaluations-list">
+          {filteredEvaluations.length === 0 ? (
+            <div className="empty-state">
+              <p>No evaluations available</p>
             </div>
-          ))
-        )}
-      </div>
+          ) : (
+            filteredEvaluations.map((evaluation) => (
+              <div key={evaluation.id} className="evaluation-card">
+                <div className="evaluation-header">
+                  <h3>{evaluation.internName}</h3>
+                  <span className={`status ${evaluation.status}`}>
+                    {evaluation.status}
+                  </span>
+                </div>
 
-      {/* Add New Evaluation Form */}
-      <div className="add-evaluation-form">
-        <h2>Add New Evaluation</h2>
-        <div className="form-group">
-          <label>Intern Name</label>
-          <input
-            type="text"
-            name="internName"
-            value={newEvaluation.internName}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Period</label>
-          <input
-            type="text"
-            name="period"
-            value={newEvaluation.period}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Department</label>
-          <input
-            type="text"
-            name="department"
-            value={newEvaluation.department}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Due Date</label>
-          <input
-            type="text"
-            name="dueDate"
-            value={newEvaluation.dueDate}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Performance</label>
-          <select
-            name="performance"
-            value={newEvaluation.performance}
-            onChange={handleInputChange}
-          >
-            <option>Excellent</option>
-            <option>Good</option>
-            <option>Average</option>
-            <option>Needs Improvement</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Comments</label>
-          <textarea
-            name="comments"
-            value={newEvaluation.comments}
-            onChange={handleInputChange}
-          />
+                <div className="evaluation-details">
+                  <p>Period: {evaluation.period}</p>
+                  <p>Department: {evaluation.department}</p>
+                  <p>Due Date: {evaluation.dueDate}</p>
+                </div>
+
+                <div className="evaluation-form">
+                  <div className="form-group">
+                    <label>Performance Rating</label>
+                    <select
+                      value={evaluation.performance}
+                      onChange={(e) => handleUpdateEvaluation(evaluation.id, { performance: e.target.value })}
+                    >
+                      <option>Excellent</option>
+                      <option>Good</option>
+                      <option>Average</option>
+                      <option>Needs Improvement</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Comments</label>
+                    <textarea
+                      value={evaluation.comments}
+                      onChange={(e) => handleUpdateEvaluation(evaluation.id, { comments: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="evaluation-actions">
+                    <button onClick={() => handleDeleteEvaluation(evaluation.id)} className="delete-btn">
+                      Delete
+                    </button>
+                    <button onClick={() => generatePDF(evaluation)} className="download-btn">
+                      Download PDF
+                    </button>
+                    <button onClick={() => handleUpdateEvaluation(evaluation.id, { status: 'completed' })} className="submit-btn">
+                      Mark as Completed
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
-        <button onClick={handleAddEvaluation} className="add-evaluation-btn">
-          Add Evaluation
-        </button>
+        {/* Add New Evaluation Form */}
+        <div className="add-evaluation-form">
+          <h2>Add New Evaluation</h2>
+          <div className="form-group">
+            <label>Intern Name</label>
+            <input
+              type="text"
+              name="internName"
+              value={newEvaluation.internName}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Period</label>
+            <input
+              type="text"
+              name="period"
+              value={newEvaluation.period}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Department</label>
+            <input
+              type="text"
+              name="department"
+              value={newEvaluation.department}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Due Date</label>
+            <input
+              type="text"
+              name="dueDate"
+              value={newEvaluation.dueDate}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Performance</label>
+            <select
+              name="performance"
+              value={newEvaluation.performance}
+              onChange={handleInputChange}
+            >
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Average</option>
+              <option>Needs Improvement</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Comments</label>
+            <textarea
+              name="comments"
+              value={newEvaluation.comments}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <button onClick={handleAddEvaluation} className="add-evaluation-btn">
+            Add Evaluation
+          </button>
+        </div>
       </div>
     </div>
   );

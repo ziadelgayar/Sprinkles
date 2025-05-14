@@ -84,139 +84,141 @@ const Companies = () => {
   });
 
   return (
-    <div className="companies-container">
-      <div className="page-header">
-        <h1>Companies Management</h1>
-        <p>Manage and review companies applying to the SCAD system</p>
-      </div>
-
-      <div className="search-filters">
-        <div className="search-bar">
-          <span className="search-icon">🔍</span>
-          <input
-            type="text"
-            placeholder="Search companies..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
+    <div className="main-content">
+      <div className="companies-container">
+        <div className="page-header">
+          <h1>Companies Management</h1>
+          <p>Manage and review companies applying to the SCAD system</p>
         </div>
 
-        <div className="filter-section">
-          <span className="filter-icon">⚡</span>
-          <select value={selectedIndustry} onChange={handleIndustryChange}>
-            {industries.map(industry => (
-              <option key={industry} value={industry}>
-                {industry.charAt(0).toUpperCase() + industry.slice(1)}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="companies-grid">
-        {filteredCompanies.map(company => (
-          <div key={company.id} className="company-card">
-            <div className="company-header">
-              <span className="company-icon">🏢</span>
-              <h3>{company.name}</h3>
-              <span className={`status-badge ${company.status}`}>{company.status}</span>
-            </div>
-            
-            <div className="company-info">
-              <p><strong>Industry:</strong> {company.industry}</p>
-              <p><strong>Location:</strong> {company.location}</p>
-            </div>
-
-            <div className="company-actions">
-              <button 
-                className="accept-btn"
-                onClick={() => handleStatusChange(company.id, 'accepted')}
-                disabled={company.status === 'accepted'}
-              >
-                ✓ Accept
-              </button>
-              <button 
-                className="reject-btn"
-                onClick={() => handleStatusChange(company.id, 'rejected')}
-                disabled={company.status === 'rejected'}
-              >
-                ✕ Reject
-              </button>
-              <button 
-                className="view-details-btn"
-                onClick={() => toggleCompanyDetails(company.id)}
-              >
-                {expandedCompany === company.id ? '▼' : '▶'} {expandedCompany === company.id ? 'Hide Details' : 'View Details'}
-              </button>
-            </div>
-
-            {expandedCompany === company.id && (
-              <div className="company-details">
-                <div className="details-section">
-                  <h4>About Company</h4>
-                  <p>{company.description}</p>
-                </div>
-
-                <div className="details-section">
-                  <h4>Contact Information</h4>
-                  <div className="contact-info">
-                    <div className="info-item">
-                      <span>✉</span>
-                      <p>{company.contact}</p>
-                    </div>
-                    <div className="info-item">
-                      <span>🌐</span>
-                      <p>{company.website}</p>
-                    </div>
-                    <div className="info-item">
-                      <span>📍</span>
-                      <p>{company.location}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="details-section">
-                  <h4>Specialties</h4>
-                  <div className="specialties-list">
-                    {company.specialties.map((specialty, index) => (
-                      <span key={index} className="specialty-tag">{specialty}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="details-section">
-                  <h4>Certifications</h4>
-                  <div className="certifications-list">
-                    {company.certifications.map((cert, index) => (
-                      <span key={index} className="certification-tag">{cert}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="details-section">
-                  <h4>Available Internship Positions</h4>
-                  <div className="positions-grid">
-                    {company.internshipPositions.map((position, index) => (
-                      <div key={index} className="position-card">
-                        <h5>{position.title}</h5>
-                        <p><strong>Department:</strong> {position.department}</p>
-                        <p><strong>Duration:</strong> {position.duration}</p>
-                        <div className="requirements">
-                          <h6>Requirements:</h6>
-                          <ul>
-                            {position.requirements.map((req, idx) => (
-                              <li key={idx}>{req}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
+        <div className="search-filters">
+          <div className="search-bar">
+            <span className="search-icon">��</span>
+            <input
+              type="text"
+              placeholder="Search companies..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
           </div>
-        ))}
+
+          <div className="filter-section">
+            <span className="filter-icon">⚡</span>
+            <select value={selectedIndustry} onChange={handleIndustryChange}>
+              {industries.map(industry => (
+                <option key={industry} value={industry}>
+                  {industry.charAt(0).toUpperCase() + industry.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="companies-grid">
+          {filteredCompanies.map(company => (
+            <div key={company.id} className="company-card">
+              <div className="company-header">
+                <span className="company-icon">🏢</span>
+                <h3>{company.name}</h3>
+                <span className={`status-badge ${company.status}`}>{company.status}</span>
+              </div>
+              
+              <div className="company-info">
+                <p><strong>Industry:</strong> {company.industry}</p>
+                <p><strong>Location:</strong> {company.location}</p>
+              </div>
+
+              <div className="company-actions">
+                <button 
+                  className="accept-btn"
+                  onClick={() => handleStatusChange(company.id, 'accepted')}
+                  disabled={company.status === 'accepted'}
+                >
+                  ✓ Accept
+                </button>
+                <button 
+                  className="reject-btn"
+                  onClick={() => handleStatusChange(company.id, 'rejected')}
+                  disabled={company.status === 'rejected'}
+                >
+                  ✕ Reject
+                </button>
+                <button 
+                  className="view-details-btn"
+                  onClick={() => toggleCompanyDetails(company.id)}
+                >
+                  {expandedCompany === company.id ? '▼' : '▶'} {expandedCompany === company.id ? 'Hide Details' : 'View Details'}
+                </button>
+              </div>
+
+              {expandedCompany === company.id && (
+                <div className="company-details">
+                  <div className="details-section">
+                    <h4>About Company</h4>
+                    <p>{company.description}</p>
+                  </div>
+
+                  <div className="details-section">
+                    <h4>Contact Information</h4>
+                    <div className="contact-info">
+                      <div className="info-item">
+                        <span>✉</span>
+                        <p>{company.contact}</p>
+                      </div>
+                      <div className="info-item">
+                        <span>🌐</span>
+                        <p>{company.website}</p>
+                      </div>
+                      <div className="info-item">
+                        <span>📍</span>
+                        <p>{company.location}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="details-section">
+                    <h4>Specialties</h4>
+                    <div className="specialties-list">
+                      {company.specialties.map((specialty, index) => (
+                        <span key={index} className="specialty-tag">{specialty}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="details-section">
+                    <h4>Certifications</h4>
+                    <div className="certifications-list">
+                      {company.certifications.map((cert, index) => (
+                        <span key={index} className="certification-tag">{cert}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="details-section">
+                    <h4>Available Internship Positions</h4>
+                    <div className="positions-grid">
+                      {company.internshipPositions.map((position, index) => (
+                        <div key={index} className="position-card">
+                          <h5>{position.title}</h5>
+                          <p><strong>Department:</strong> {position.department}</p>
+                          <p><strong>Duration:</strong> {position.duration}</p>
+                          <div className="requirements">
+                            <h6>Requirements:</h6>
+                            <ul>
+                              {position.requirements.map((req, idx) => (
+                                <li key={idx}>{req}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

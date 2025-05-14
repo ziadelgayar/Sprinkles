@@ -104,97 +104,99 @@ const StudentInternships = () => {
   };
 
   return (
-    <div className="student-internships">
-      <div className="page-header">
-        <h1>Available Internships</h1>
-        <p>Browse and apply for internships that match your interests</p>
-      </div>
-
-      <div className="search-filters">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search by job title or company name..."
-            value={filters.searchQuery}
-            onChange={(e) => setFilters({...filters, searchQuery: e.target.value})}
-          />
+    <div className="main-content">
+      <div className="student-internships">
+        <div className="page-header">
+          <h1>Available Internships</h1>
+          <p>Browse and apply for internships that match your interests</p>
         </div>
 
-        <div className="filter-options">
-          <div className="filter-group">
-            <label>Status:</label>
-            <select 
-              value={filters.status}
-              onChange={(e) => setFilters({...filters, status: e.target.value})}
-            >
-              <option value="all">All Statuses</option>
-              <option value="current">Current Internships</option>
-              <option value="upcoming">Upcoming Internships</option>
-              <option value="completed">Completed Internships</option>
-            </select>
+        <div className="search-filters">
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search by job title or company name..."
+              value={filters.searchQuery}
+              onChange={(e) => setFilters({...filters, searchQuery: e.target.value})}
+            />
           </div>
 
-          <div className="filter-group">
-            <label>Date Range:</label>
-            <select 
-              value={filters.dateRange}
-              onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
-            >
-              <option value="all">All Dates</option>
-              <option value="past">Past Internships</option>
-              <option value="current">Current Internships</option>
-              <option value="upcoming">Upcoming Internships</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div className="internships-list">
-        {filteredInternships.length === 0 ? (
-          <div className="empty-state">
-            <p>No internships found matching your criteria</p>
-          </div>
-        ) : (
-          filteredInternships.map((internship) => (
-            <div key={internship.id} className="internship-card">
-              <div className="internship-header">
-                <h3>{internship.title}</h3>
-                <span className={`status ${internship.status}`}>
-                  {getStatusLabel(internship.status)}
-                </span>
-              </div>
-
-              <div className="company-info">
-                <h4>{internship.company}</h4>
-                <p>{internship.location}</p>
-                <p className="date-range">
-                  {new Date(internship.startDate).toLocaleDateString()} - {new Date(internship.endDate).toLocaleDateString()}
-                </p>
-              </div>
-
-              <div className="internship-details">
-                <h4>Description:</h4>
-                <p>{internship.description}</p>
-                
-                <h4>Requirements:</h4>
-                <p>{internship.requirements}</p>
-              </div>
-
-              <div className="internship-actions">
-                {appliedInternships.includes(internship.id) ? (
-                  <button className="applied-btn" disabled>Applied</button>
-                ) : (
-                  <button 
-                    className="apply-btn"
-                    onClick={() => handleApply(internship.id)}
-                  >
-                    Apply Now
-                  </button>
-                )}
-              </div>
+          <div className="filter-options">
+            <div className="filter-group">
+              <label>Status:</label>
+              <select 
+                value={filters.status}
+                onChange={(e) => setFilters({...filters, status: e.target.value})}
+              >
+                <option value="all">All Statuses</option>
+                <option value="current">Current Internships</option>
+                <option value="upcoming">Upcoming Internships</option>
+                <option value="completed">Completed Internships</option>
+              </select>
             </div>
-          ))
-        )}
+
+            <div className="filter-group">
+              <label>Date Range:</label>
+              <select 
+                value={filters.dateRange}
+                onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
+              >
+                <option value="all">All Dates</option>
+                <option value="past">Past Internships</option>
+                <option value="current">Current Internships</option>
+                <option value="upcoming">Upcoming Internships</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="internships-list">
+          {filteredInternships.length === 0 ? (
+            <div className="empty-state">
+              <p>No internships found matching your criteria</p>
+            </div>
+          ) : (
+            filteredInternships.map((internship) => (
+              <div key={internship.id} className="internship-card">
+                <div className="internship-header">
+                  <h3>{internship.title}</h3>
+                  <span className={`status ${internship.status}`}>
+                    {getStatusLabel(internship.status)}
+                  </span>
+                </div>
+
+                <div className="company-info">
+                  <h4>{internship.company}</h4>
+                  <p>{internship.location}</p>
+                  <p className="date-range">
+                    {new Date(internship.startDate).toLocaleDateString()} - {new Date(internship.endDate).toLocaleDateString()}
+                  </p>
+                </div>
+
+                <div className="internship-details">
+                  <h4>Description:</h4>
+                  <p>{internship.description}</p>
+                  
+                  <h4>Requirements:</h4>
+                  <p>{internship.requirements}</p>
+                </div>
+
+                <div className="internship-actions">
+                  {appliedInternships.includes(internship.id) ? (
+                    <button className="applied-btn" disabled>Applied</button>
+                  ) : (
+                    <button 
+                      className="apply-btn"
+                      onClick={() => handleApply(internship.id)}
+                    >
+                      Apply Now
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

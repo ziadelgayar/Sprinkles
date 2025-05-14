@@ -73,115 +73,117 @@ const InternshipReports = () => {
     });
 
     return (
-        <div className="internship-reports">
-            <h1>Internship Reports</h1>
+        <div className="main-content">
+            <div className="internship-reports">
+                <h1>Internship Reports</h1>
 
-            <div className="filters">
-                <select 
-                    name="major" 
-                    value={filters.major} 
-                    onChange={handleFilterChange}
-                >
-                    <option value="all">All Majors</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Data Science">Data Science</option>
-                    <option value="UI/UX Design">UI/UX Design</option>
-                </select>
+                <div className="filters">
+                    <select 
+                        name="major" 
+                        value={filters.major} 
+                        onChange={handleFilterChange}
+                    >
+                        <option value="all">All Majors</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                    </select>
 
-                <select 
-                    name="status" 
-                    value={filters.status} 
-                    onChange={handleFilterChange}
-                >
-                    <option value="all">All Statuses</option>
-                    <option value="pending">Pending</option>
-                    <option value="accepted">Accepted</option>
-                    <option value="rejected">Rejected</option>
-                    <option value="flagged">Flagged</option>
-                </select>
-            </div>
-
-            <div className="reports-container">
-                <div className="reports-list">
-                    <h2>Reports</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Student</th>
-                                <th>Major</th>
-                                <th>Company</th>
-                                <th>Status</th>
-                                <th>Submission Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredReports.map(report => (
-                                <tr key={report.id}>
-                                    <td>{report.studentName}</td>
-                                    <td>{report.major}</td>
-                                    <td>{report.company}</td>
-                                    <td>{report.status}</td>
-                                    <td>{report.submissionDate}</td>
-                                    <td>
-                                        <button onClick={() => setSelectedReport(report)}>
-                                            View Details
-                                        </button>
-                                        <a href={report.reportUrl} download>
-                                            Download PDF
-                                        </a>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <select 
+                        name="status" 
+                        value={filters.status} 
+                        onChange={handleFilterChange}
+                    >
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="flagged">Flagged</option>
+                    </select>
                 </div>
 
-                {selectedReport && (
-                    <div className="report-details">
-                        <h2>Report Details</h2>
-                        <div className="details-content">
-                            <h3>{selectedReport.studentName}'s Report</h3>
-                            <p><strong>Major:</strong> {selectedReport.major}</p>
-                            <p><strong>Company:</strong> {selectedReport.company}</p>
-                            <p><strong>Status:</strong> {selectedReport.status}</p>
-                            <p><strong>Submission Date:</strong> {selectedReport.submissionDate}</p>
+                <div className="reports-container">
+                    <div className="reports-list">
+                        <h2>Reports</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Major</th>
+                                    <th>Company</th>
+                                    <th>Status</th>
+                                    <th>Submission Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredReports.map(report => (
+                                    <tr key={report.id}>
+                                        <td>{report.studentName}</td>
+                                        <td>{report.major}</td>
+                                        <td>{report.company}</td>
+                                        <td>{report.status}</td>
+                                        <td>{report.submissionDate}</td>
+                                        <td>
+                                            <button onClick={() => setSelectedReport(report)}>
+                                                View Details
+                                            </button>
+                                            <a href={report.reportUrl} download>
+                                                Download PDF
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
-                            <div className="status-actions">
-                                <h4>Update Status</h4>
-                                <div className="status-buttons">
-                                    <button 
-                                        onClick={() => handleStatusUpdate(selectedReport.id, 'accepted')}
-                                    >
-                                        Accept
-                                    </button>
-                                    <button 
-                                        onClick={() => handleStatusUpdate(selectedReport.id, 'rejected')}
-                                    >
-                                        Reject
-                                    </button>
-                                    <button 
-                                        onClick={() => handleStatusUpdate(selectedReport.id, 'flagged')}
-                                    >
-                                        Flag
+                    {selectedReport && (
+                        <div className="report-details">
+                            <h2>Report Details</h2>
+                            <div className="details-content">
+                                <h3>{selectedReport.studentName}'s Report</h3>
+                                <p><strong>Major:</strong> {selectedReport.major}</p>
+                                <p><strong>Company:</strong> {selectedReport.company}</p>
+                                <p><strong>Status:</strong> {selectedReport.status}</p>
+                                <p><strong>Submission Date:</strong> {selectedReport.submissionDate}</p>
+
+                                <div className="status-actions">
+                                    <h4>Update Status</h4>
+                                    <div className="status-buttons">
+                                        <button 
+                                            onClick={() => handleStatusUpdate(selectedReport.id, 'accepted')}
+                                        >
+                                            Accept
+                                        </button>
+                                        <button 
+                                            onClick={() => handleStatusUpdate(selectedReport.id, 'rejected')}
+                                        >
+                                            Reject
+                                        </button>
+                                        <button 
+                                            onClick={() => handleStatusUpdate(selectedReport.id, 'flagged')}
+                                        >
+                                            Flag
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="comments-section">
+                                    <h4>Add Comment</h4>
+                                    <textarea
+                                        value={comment}
+                                        onChange={(e) => setComment(e.target.value)}
+                                        placeholder="Enter your comment here..."
+                                    />
+                                    <button onClick={() => handleCommentSubmit(selectedReport.id)}>
+                                        Submit Comment
                                     </button>
                                 </div>
                             </div>
-
-                            <div className="comments-section">
-                                <h4>Add Comment</h4>
-                                <textarea
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
-                                    placeholder="Enter your comment here..."
-                                />
-                                <button onClick={() => handleCommentSubmit(selectedReport.id)}>
-                                    Submit Comment
-                                </button>
-                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );

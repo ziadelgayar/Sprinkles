@@ -49,140 +49,142 @@ const Applications = () => {
   };
 
   return (
-    <div className="applications-page">
-      <div className="page-header">
-        <h1>Internship Applications</h1>
-        <select
-          value={selectedInternship}
-          onChange={(e) => setSelectedInternship(e.target.value)}
-        >
-          <option value="all">All Internships</option>
-          {internshipOptions.map((internship) => (
-            <option key={internship.id} value={internship.id}>
-              {internship.title}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className="main-content">
+      <div className="applications-page">
+        <div className="page-header">
+          <h1>Internship Applications</h1>
+          <select
+            value={selectedInternship}
+            onChange={(e) => setSelectedInternship(e.target.value)}
+          >
+            <option value="all">All Internships</option>
+            {internshipOptions.map((internship) => (
+              <option key={internship.id} value={internship.id}>
+                {internship.title}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div className="applications-filters">
-        <button
-          className={`filter-btn ${statusFilter === 'all' ? 'active' : ''}`}
-          onClick={() => setStatusFilter('all')}
-        >
-          All
-        </button>
-        <button
-          className={`filter-btn ${statusFilter === 'pending' ? 'active' : ''}`}
-          onClick={() => setStatusFilter('pending')}
-        >
-          Pending
-        </button>
-        <button
-          className={`filter-btn ${statusFilter === 'accepted' ? 'active' : ''}`}
-          onClick={() => setStatusFilter('accepted')}
-        >
-          Accepted
-        </button>
-        <button
-          className={`filter-btn ${statusFilter === 'rejected' ? 'active' : ''}`}
-          onClick={() => setStatusFilter('rejected')}
-        >
-          Rejected
-        </button>
-        <button
-          className={`filter-btn ${statusFilter === 'currentIntern' ? 'active' : ''}`}
-          onClick={() => setStatusFilter('currentIntern')}
-        >
-          Current Interns
-        </button>
-        <button
-          className={`filter-btn ${statusFilter === 'internshipComplete' ? 'active' : ''}`}
-          onClick={() => setStatusFilter('internshipComplete')}
-        >
-          Internship Complete
-        </button>
-      </div>
+        <div className="applications-filters">
+          <button
+            className={`filter-btn ${statusFilter === 'all' ? 'active' : ''}`}
+            onClick={() => setStatusFilter('all')}
+          >
+            All
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === 'pending' ? 'active' : ''}`}
+            onClick={() => setStatusFilter('pending')}
+          >
+            Pending
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === 'accepted' ? 'active' : ''}`}
+            onClick={() => setStatusFilter('accepted')}
+          >
+            Accepted
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === 'rejected' ? 'active' : ''}`}
+            onClick={() => setStatusFilter('rejected')}
+          >
+            Rejected
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === 'currentIntern' ? 'active' : ''}`}
+            onClick={() => setStatusFilter('currentIntern')}
+          >
+            Current Interns
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === 'internshipComplete' ? 'active' : ''}`}
+            onClick={() => setStatusFilter('internshipComplete')}
+          >
+            Internship Complete
+          </button>
+        </div>
 
-      <div className="applications-list">
-        {filteredApplications.length === 0 ? (
-          <div className="empty-state">
-            <p>No applications received yet</p>
-          </div>
-        ) : (
-          filteredApplications.map((application) => (
-            <div key={application.id} className="application-card">
-              <div className="applicant-info">
-                <h3>{application.applicantName}</h3>
-                <p>Position: {application.position}</p>
-                <p>Applied: {application.appliedDate}</p>
-              </div>
-
-              <div className="application-status">
-                <span className={`status ${application.status}`}>{application.status}</span>
-              </div>
-
-              <div className="application-actions">
-                <button
-                  className="view-profile-btn"
-                  onClick={() => setSelectedApplication(application)}
-                >
-                  View Profile
-                </button>
-                <button
-                  className="view-resume-btn"
-                  onClick={() => alert(`Viewing resume: ${application.resume}`)}
-                >
-                  View Resume
-                </button>
-                <button
-                  className="accept-btn"
-                  onClick={() => handleStatusChange(application.id, 'accepted')}
-                >
-                  Accept
-                </button>
-
-                <button
-                  className="finalize-btn"
-                  onClick={() => handleStatusChange(application.id, 'finalized')}
-                >
-                  Finalize
-                </button>
-
-                <button
-                  className="reject-btn"
-                  onClick={() => handleStatusChange(application.id, 'rejected')}
-                >
-                  Reject
-                </button>
-                <button
-                  className="start-internship-btn"
-                  onClick={() => handleStatusChange(application.id, 'currentIntern')}
-                >
-                  Start Internship
-                </button>
-                <button
-                  className="complete-internship-btn"
-                  onClick={() => handleStatusChange(application.id, 'internshipComplete')}
-                >
-                  Complete Internship
-                </button>
-              </div>
+        <div className="applications-list">
+          {filteredApplications.length === 0 ? (
+            <div className="empty-state">
+              <p>No applications received yet</p>
             </div>
-          ))
+          ) : (
+            filteredApplications.map((application) => (
+              <div key={application.id} className="application-card">
+                <div className="applicant-info">
+                  <h3>{application.applicantName}</h3>
+                  <p>Position: {application.position}</p>
+                  <p>Applied: {application.appliedDate}</p>
+                </div>
+
+                <div className="application-status">
+                  <span className={`status ${application.status}`}>{application.status}</span>
+                </div>
+
+                <div className="application-actions">
+                  <button
+                    className="view-profile-btn"
+                    onClick={() => setSelectedApplication(application)}
+                  >
+                    View Profile
+                  </button>
+                  <button
+                    className="view-resume-btn"
+                    onClick={() => alert(`Viewing resume: ${application.resume}`)}
+                  >
+                    View Resume
+                  </button>
+                  <button
+                    className="accept-btn"
+                    onClick={() => handleStatusChange(application.id, 'accepted')}
+                  >
+                    Accept
+                  </button>
+
+                  <button
+                    className="finalize-btn"
+                    onClick={() => handleStatusChange(application.id, 'finalized')}
+                  >
+                    Finalize
+                  </button>
+
+                  <button
+                    className="reject-btn"
+                    onClick={() => handleStatusChange(application.id, 'rejected')}
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className="start-internship-btn"
+                    onClick={() => handleStatusChange(application.id, 'currentIntern')}
+                  >
+                    Start Internship
+                  </button>
+                  <button
+                    className="complete-internship-btn"
+                    onClick={() => handleStatusChange(application.id, 'internshipComplete')}
+                  >
+                    Complete Internship
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {selectedApplication && (
+          <div className="application-detail-modal">
+            <h2>Applicant Profile</h2>
+            <p>Name: {selectedApplication.applicantName}</p>
+            <p>Position: {selectedApplication.position}</p>
+            <p>Applied On: {selectedApplication.appliedDate}</p>
+            <p>Status: {selectedApplication.status}</p>
+            <button onClick={() => setSelectedApplication(null)}>Close</button>
+          </div>
         )}
       </div>
-
-      {selectedApplication && (
-        <div className="application-detail-modal">
-          <h2>Applicant Profile</h2>
-          <p>Name: {selectedApplication.applicantName}</p>
-          <p>Position: {selectedApplication.position}</p>
-          <p>Applied On: {selectedApplication.appliedDate}</p>
-          <p>Status: {selectedApplication.status}</p>
-          <button onClick={() => setSelectedApplication(null)}>Close</button>
-        </div>
-      )}
     </div>
   );
 };

@@ -41,63 +41,65 @@ const StatisticsReports = () => {
     }, []);
 
     return (
-        <div className="statistics-reports">
-            <h1>Statistics Reports</h1>
+        <div className="main-content">
+            <div className="statistics-reports">
+                <h1>Statistics Reports</h1>
 
-            {/* 1. Number of accepted/rejected/flagged reports per cycle */}
-            <section>
-                <h2>Number of accepted/rejected/flagged reports per cycle</h2>
-                <ul>
-                    <li>Accepted: {statistics.reportsPerCycle.accepted}</li>
-                    <li>Rejected: {statistics.reportsPerCycle.rejected}</li>
-                    <li>Flagged: {statistics.reportsPerCycle.flagged}</li>
-                </ul>
-            </section>
+                {/* 1. Number of accepted/rejected/flagged reports per cycle */}
+                <section>
+                    <h2>Number of accepted/rejected/flagged reports per cycle</h2>
+                    <ul>
+                        <li>Accepted: {statistics.reportsPerCycle.accepted}</li>
+                        <li>Rejected: {statistics.reportsPerCycle.rejected}</li>
+                        <li>Flagged: {statistics.reportsPerCycle.flagged}</li>
+                    </ul>
+                </section>
 
-            {/* 2. Average review time */}
-            <section>
-                <h2>Average review time</h2>
-                <p>{statistics.averageReviewTime} days</p>
-            </section>
+                {/* 2. Average review time */}
+                <section>
+                    <h2>Average review time</h2>
+                    <p>{statistics.averageReviewTime} days</p>
+                </section>
 
-            {/* 3. Most frequently used courses in internships */}
-            <section>
-                <h2>Most frequently used courses in internships</h2>
-                <ol>
-                    {statistics.mostUsedCourses.map(course => (
-                        <li key={course.name}>{course.name} ({course.count} times)</li>
-                    ))}
-                </ol>
-            </section>
+                {/* 3. Most frequently used courses in internships */}
+                <section>
+                    <h2>Most frequently used courses in internships</h2>
+                    <ol>
+                        {statistics.mostUsedCourses.map(course => (
+                            <li key={course.name}>{course.name} ({course.count} times)</li>
+                        ))}
+                    </ol>
+                </section>
 
-            {/* 4. Top rated companies based on student evaluations */}
-            <section>
-                <h2>Top rated companies based on student evaluations</h2>
-                <ol>
-                    {statistics.topRatedCompanies.map(company => (
-                        <li key={company.name}>{company.name} (Rating: {company.rating})</li>
-                    ))}
-                </ol>
-            </section>
+                {/* 4. Top rated companies based on student evaluations */}
+                <section>
+                    <h2>Top rated companies based on student evaluations</h2>
+                    <ol>
+                        {statistics.topRatedCompanies.map(company => (
+                            <li key={company.name}>{company.name} (Rating: {company.rating})</li>
+                        ))}
+                    </ol>
+                </section>
 
-            {/* 5. Top companies by internship count */}
-            <section>
-                <h2>Top companies by internship count</h2>
-                <ol>
-                    {statistics.topCompaniesByInternship.map(company => (
-                        <li key={company.name}>{company.name} ({company.count} internships)</li>
-                    ))}
-                </ol>
-            </section>
+                {/* 5. Top companies by internship count */}
+                <section>
+                    <h2>Top companies by internship count</h2>
+                    <ol>
+                        {statistics.topCompaniesByInternship.map(company => (
+                            <li key={company.name}>{company.name} ({company.count} internships)</li>
+                        ))}
+                    </ol>
+                </section>
 
-            {/* Generate reports section remains as before */}
-            <div className="export-section">
-                <h2>Generate Reports</h2>
-                <div className="export-buttons">
-                    <button>Export as PDF</button>
-                    <button>Export as Excel</button>
+                {/* Generate reports section remains as before */}
+                <div className="export-section">
+                    <h2>Generate Reports</h2>
+                    <div className="export-buttons">
+                        <button>Export as PDF</button>
+                        <button>Export as Excel</button>
+                    </div>
+                    <p>Generate reports based on the real-time statistics above.</p>
                 </div>
-                <p>Generate reports based on the real-time statistics above.</p>
             </div>
         </div>
     );

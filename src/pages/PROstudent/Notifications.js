@@ -73,93 +73,95 @@ const Notifications = () => {
   };
 
   return (
-    <div className="notifications-page">
-      <div className="page-header">
-        <h1>Notifications</h1>
-        <div className="filter-tabs">
-          <button
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
-          >
-            All
-          </button>
-          <button
-            className={`filter-btn ${filter === 'unread' ? 'active' : ''}`}
-            onClick={() => setFilter('unread')}
-          >
-            Unread
-          </button>
-        </div>
-      </div>
-
-      <div className="notification-settings">
-        <h2>Notification Settings</h2>
-        <div className="settings-form">
-          <div className="setting-item">
-            <label>Internship Cycles</label>
-            <input
-              type="checkbox"
-              checked={settings.cycle}
-              onChange={() => handleSettingChange('cycle')}
-            />
-          </div>
-          <div className="setting-item">
-            <label>Report Status Updates</label>
-            <input
-              type="checkbox"
-              checked={settings.report}
-              onChange={() => handleSettingChange('report')}
-            />
-          </div>
-          <div className="setting-item">
-            <label>Comments on Reports</label>
-            <input
-              type="checkbox"
-              checked={settings.comment}
-              onChange={() => handleSettingChange('comment')}
-            />
-          </div>
-          <div className="setting-item">
-            <label>Appeal Submissions</label>
-            <input
-              type="checkbox"
-              checked={settings.appeal}
-              onChange={() => handleSettingChange('appeal')}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="notifications-list">
-        {filteredNotifications.length === 0 ? (
-          <div className="empty-state">
-            <p>No notifications</p>
-          </div>
-        ) : (
-          filteredNotifications.map((notification) => (
-            <div
-              key={notification.id}
-              className={`notification-card ${notification.read ? 'read' : 'unread'}`}
+    <div className="main-content">
+      <div className="notifications-page">
+        <div className="page-header">
+          <h1>Notifications</h1>
+          <div className="filter-tabs">
+            <button
+              className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+              onClick={() => setFilter('all')}
             >
-              <div className="notification-icon">🔔</div>
-              <div className="notification-content">
-                <h3>{notification.title}</h3>
-                <p>{notification.message}</p>
-                <span className="notification-time">{notification.time}</span>
-              </div>
-              <div className="notification-actions">
-                {!notification.read && (
-                  <button className="mark-read-btn" onClick={() => markAsRead(notification.id)}>
-                    Mark as Read
-                  </button>
-                )}
-                <button className="delete-btn" onClick={() => deleteNotification(notification.id)}>
-                  Delete
-                </button>
-              </div>
+              All
+            </button>
+            <button
+              className={`filter-btn ${filter === 'unread' ? 'active' : ''}`}
+              onClick={() => setFilter('unread')}
+            >
+              Unread
+            </button>
+          </div>
+        </div>
+
+        <div className="notification-settings">
+          <h2>Notification Settings</h2>
+          <div className="settings-form">
+            <div className="setting-item">
+              <label>Internship Cycles</label>
+              <input
+                type="checkbox"
+                checked={settings.cycle}
+                onChange={() => handleSettingChange('cycle')}
+              />
             </div>
-          ))
-        )}
+            <div className="setting-item">
+              <label>Report Status Updates</label>
+              <input
+                type="checkbox"
+                checked={settings.report}
+                onChange={() => handleSettingChange('report')}
+              />
+            </div>
+            <div className="setting-item">
+              <label>Comments on Reports</label>
+              <input
+                type="checkbox"
+                checked={settings.comment}
+                onChange={() => handleSettingChange('comment')}
+              />
+            </div>
+            <div className="setting-item">
+              <label>Appeal Submissions</label>
+              <input
+                type="checkbox"
+                checked={settings.appeal}
+                onChange={() => handleSettingChange('appeal')}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="notifications-list">
+          {filteredNotifications.length === 0 ? (
+            <div className="empty-state">
+              <p>No notifications</p>
+            </div>
+          ) : (
+            filteredNotifications.map((notification) => (
+              <div
+                key={notification.id}
+                className={`notification-card ${notification.read ? 'read' : 'unread'}`}
+              >
+                <div className="notification-icon">🔔</div>
+                <div className="notification-content">
+                  <h3>{notification.title}</h3>
+                  <p>{notification.message}</p>
+                  <span className="notification-time">{notification.time}</span>
+                </div>
+                <div className="notification-actions">
+                  {!notification.read && (
+                    <button className="mark-read-btn" onClick={() => markAsRead(notification.id)}>
+                      Mark as Read
+                    </button>
+                  )}
+                  <button className="delete-btn" onClick={() => deleteNotification(notification.id)}>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
 // src/components/Sidebar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './sidebar.css';
+import './sidebar.css'; 
+import { useLocation } from 'react-router-dom';
+import { FaPlus } from 'react-icons/fa';
 
 const menus = {
   company: [
@@ -54,21 +56,29 @@ const menus = {
   ]
 };
 
+
 const Sidebar = ({ role }) => {
   const menu = menus[role];
+  const location = useLocation();
 
   if (!menu) return null;
 
   return (
-    <nav className="sidebar">
-      <ul>
-        {menu.map(item =>
-          <li key={item.path}>
+    <div className="sidebar">
+      <div className="sidebar-logo">
+        <span>{role?.toUpperCase()}</span>
+      </div>
+      <div className="sidebar-menu">
+        {menu.map(item => (
+          <div
+            key={item.path}
+            className={`sidebar-menu-item ${location.pathname === item.path ? 'active' : ''}`}
+          >
             <Link to={item.path}>{item.label}</Link>
-          </li>
-        )}
-      </ul>
-    </nav>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

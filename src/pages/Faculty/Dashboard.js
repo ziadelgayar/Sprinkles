@@ -37,49 +37,51 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="faculty-dashboard">
-            <h1>Faculty Dashboard</h1>
-            
-            <section className="notifications-section">
-                <h2>Recent Notifications</h2>
-                <div className="notifications-list">
-                    {notifications.slice(0, 3).map(notification => (
-                        <div
-                            key={notification.id}
-                            className={`notification-card ${notification.read ? 'read' : 'unread'}`}
-                        >
-                            <div className="notification-content">
-                                <h3>{notification.title}</h3>
-                                <p>{notification.message}</p>
-                                <span className="notification-time">{notification.time}</span>
+        <div className="main-content">
+            <div className="faculty-dashboard">
+                <h1>Faculty Dashboard</h1>
+                
+                <section className="notifications-section">
+                    <h2>Recent Notifications</h2>
+                    <div className="notifications-list">
+                        {notifications.slice(0, 3).map(notification => (
+                            <div
+                                key={notification.id}
+                                className={`notification-card ${notification.read ? 'read' : 'unread'}`}
+                            >
+                                <div className="notification-content">
+                                    <h3>{notification.title}</h3>
+                                    <p>{notification.message}</p>
+                                    <span className="notification-time">{notification.time}</span>
+                                </div>
+                                {!notification.read && (
+                                    <button
+                                        className="mark-read-btn"
+                                        onClick={() => handleMarkAsRead(notification.id)}
+                                    >
+                                        Mark as Read
+                                    </button>
+                                )}
                             </div>
-                            {!notification.read && (
-                                <button
-                                    className="mark-read-btn"
-                                    onClick={() => handleMarkAsRead(notification.id)}
-                                >
-                                    Mark as Read
-                                </button>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </section>
+                        ))}
+                    </div>
+                </section>
 
-            <section className="quick-actions">
-                <h2>Quick Actions</h2>
-                <div className="action-buttons">
-                    <Link to="/faculty/statistics-reports" className="action-button">
-                        View Statistics Reports
-                    </Link>
-                    <Link to="/faculty/internship-reports" className="action-button">
-                        Review Internship Reports
-                    </Link>
-                    <Link to="/faculty/evaluation-reports" className="action-button">
-                        View Evaluation Reports
-                    </Link>
-                </div>
-            </section>
+                <section className="quick-actions">
+                    <h2>Quick Actions</h2>
+                    <div className="action-buttons">
+                        <Link to="/faculty/statistics-reports" className="action-button">
+                            View Statistics Reports
+                        </Link>
+                        <Link to="/faculty/internship-reports" className="action-button">
+                            Review Internship Reports
+                        </Link>
+                        <Link to="/faculty/evaluation-reports" className="action-button">
+                            View Evaluation Reports
+                        </Link>
+                    </div>
+                </section>
+            </div>
         </div>
     );
 };

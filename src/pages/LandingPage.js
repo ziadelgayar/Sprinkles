@@ -6,14 +6,17 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleRoleSelect = (role) => {
-    // Redirect to login page with role as a query parameter
     navigate(`/login?role=${role}`);
   };
 
-  return (
-    <div>
-      <h1>Welcome to GUC Portal!</h1>
-      <p>Please Select Your Role</p>
+  return ( 
+    
+    <div className="landing-center">  
+ <h1 style={{ color: "#fff", marginBottom: "40px", textAlign: "center" }}>
+        Welcome to GUC Portal!
+      </h1> 
+    <div style={{ background: "rgba(255,255,255,0.10)", borderRadius: "18px", padding: "40px 60px", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.20)", backdropFilter: "blur(8px)", textAlign: "center" }}>
+      <p style={{ fontSize: "25px"}}>Please Select Your Role</p>
       
       <div>
         <button onClick={() => handleRoleSelect('company')}>
@@ -34,6 +37,7 @@ const LandingPage = () => {
           SCAD Office
         </button>
       </div>
+    </div>
     </div>
   );
 };

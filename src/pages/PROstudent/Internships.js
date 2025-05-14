@@ -154,7 +154,7 @@ const StudentInternships = () => {
   };
 
   return (
-    <div className="student-internships">
+    <div className="main-content">
       <div className="page-header">
         <h1>Browse Internships</h1>
         <p>Find opportunities that match your major and career goals</p>
