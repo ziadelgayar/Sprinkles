@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { jsPDF } from 'jspdf';
 
 const StudentApplications = () => {
-  // Sample application data
   const sampleApplications = [
     {
       id: 1,
@@ -12,8 +12,8 @@ const StudentApplications = () => {
       lastUpdated: '2025-03-15',
       status: 'pending',
       documents: [
-        { name: 'Resume.pdf', url: '#' },
-        { name: 'Cover_Letter_Google.pdf', url: '#' }
+        { name: 'Resume.pdf', content: 'John Doe - Resume\nSkills: UX Design, Figma, User Research' },
+        { name: 'Cover_Letter_Google.pdf', content: 'Cover Letter for Google\nDear Hiring Manager...' }
       ]
     },
     {
@@ -25,45 +25,19 @@ const StudentApplications = () => {
       lastUpdated: '2025-03-20',
       status: 'finalized',
       documents: [
-        { name: 'Resume.pdf', url: '#' },
-        { name: 'Transcript.pdf', url: '#' }
+        { name: 'Resume.pdf', content: 'John Doe - Resume\nSkills: JavaScript, React, Node.js' },
+        { name: 'Transcript.pdf', content: 'SCAD Transcript\nGPA: 3.8\nCourses: Data Structures, Algorithms' }
       ],
       notes: 'You are currently a top candidate!'
-    },
-    {
-      id: 3,
-      position: 'Marketing Intern',
-      companyName: 'Nike',
-      location: 'Portland, OR',
-      appliedDate: '2025-01-15',
-      lastUpdated: '2025-02-01',
-      status: 'accepted',
-      documents: [
-        { name: 'Resume.pdf', url: '#' },
-        { name: 'Writing_Sample.pdf', url: '#' }
-      ],
-      startDate: '2025-06-01'
-    },
-    {
-      id: 4,
-      position: 'Graphic Design Intern',
-      companyName: 'Apple',
-      location: 'Cupertino, CA',
-      appliedDate: '2025-02-20',
-      lastUpdated: '2025-03-10',
-      status: 'rejected',
-      documents: [
-        { name: 'Resume.pdf', url: '#' },
-        { name: 'Portfolio.pdf', url: '#' }
-      ],
-      rejectionReason: 'Position filled by internal candidate'
     }
   ];
 
   const [applications, setApplications] = useState(sampleApplications);
   const [filter, setFilter] = useState('all');
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [currentApplication, setCurrentApplication] = useState(null);
+  const [newDocuments, setNewDocuments] = useState([]);
 
-  // Filter applications based on status
   const filteredApplications = applications.filter(application => {
     return filter === 'all' || application.status === filter;
   });
@@ -89,6 +63,63 @@ const StudentApplications = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const handleUpdateClick = (application) => {
+    setCurrentApplication(application);
+    setShowUpdateModal(true);
+    setNewDocuments([]);
+  };
+
+  const handleFileUpload = (e) => {
+    const files = Array.from(e.target.files);
+    const documentPromises = files.map(file => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          resolve({
+            name: file.name,
+            content: e.target.result
+          });
+        };
+        reader.readAsText(file);
+      });
+    });
+
+    Promise.all(documentPromises).then(docs => {
+      setNewDocuments(docs);
+    });
+  };
+
+  const updateApplicationDocuments = () => {
+    if (!currentApplication || newDocuments.length === 0) return;
+
+    const updatedApplications = applications.map(app => {
+      if (app.id === currentApplication.id) {
+        return {
+          ...app,
+          documents: [...app.documents, ...newDocuments],
+          lastUpdated: new Date().toISOString().split('T')[0]
+        };
+      }
+      return app;
+    });
+
+    setApplications(updatedApplications);
+    setShowUpdateModal(false);
+    alert('Documents updated successfully!');
+  };
+
+  const downloadDocumentAsPDF = (document) => {
+    const doc = new jsPDF();
+    doc.text(`Document: ${document.name}`, 10, 10);
+    doc.text('Content:', 10, 20);
+    
+    // Split content into lines that fit the PDF width
+    const lines = doc.splitTextToSize(document.content, 180);
+    doc.text(lines, 10, 30);
+    
+    doc.save(document.name);
+  };
+
   return (
     <div className="student-applications">
       <div className="page-header">
@@ -97,36 +128,15 @@ const StudentApplications = () => {
       </div>
 
       <div className="filter-tabs">
-        <button 
-          className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-          onClick={() => setFilter('all')}
-        >
-          All Applications
-        </button>
-        <button 
-          className={`filter-btn ${filter === 'pending' ? 'active' : ''}`}
-          onClick={() => setFilter('pending')}
-        >
-          Pending
-        </button>
-        <button 
-          className={`filter-btn ${filter === 'finalized' ? 'active' : ''}`}
-          onClick={() => setFilter('finalized')}
-        >
-          Finalized
-        </button>
-        <button 
-          className={`filter-btn ${filter === 'accepted' ? 'active' : ''}`}
-          onClick={() => setFilter('accepted')}
-        >
-          Accepted
-        </button>
-        <button 
-          className={`filter-btn ${filter === 'rejected' ? 'active' : ''}`}
-          onClick={() => setFilter('rejected')}
-        >
-          Rejected
-        </button>
+        {['all', 'pending', 'finalized', 'accepted', 'rejected'].map((status) => (
+          <button
+            key={status}
+            className={`filter-btn ${filter === status ? 'active' : ''}`}
+            onClick={() => setFilter(status)}
+          >
+            {status === 'all' ? 'All Applications' : getStatusLabel(status)}
+          </button>
+        ))}
       </div>
 
       <div className="applications-list">
@@ -165,32 +175,17 @@ const StudentApplications = () => {
                 </div>
               </div>
 
-              {application.status === 'accepted' && (
-                <div className="status-info accepted">
-                  <p>Congratulations! Your internship starts on {formatDate(application.startDate)}</p>
-                </div>
-              )}
-
-              {application.status === 'finalized' && (
-                <div className="status-info finalized">
-                  <p>{application.notes || 'You are being strongly considered for this position!'}</p>
-                </div>
-              )}
-
-              {application.status === 'rejected' && (
-                <div className="status-info rejected">
-                  <p><strong>Reason:</strong> {application.rejectionReason}</p>
-                </div>
-              )}
-
               <div className="submitted-documents">
                 <h4>Submitted Documents:</h4>
                 <ul>
                   {application.documents.map((doc, index) => (
                     <li key={index}>
-                      <a href={doc.url} target="_blank" rel="noopener noreferrer">
-                        {doc.name}
-                      </a>
+                      <button 
+                        className="document-btn"
+                        onClick={() => downloadDocumentAsPDF(doc)}
+                      >
+                        {doc.name} (Download PDF)
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -199,27 +194,80 @@ const StudentApplications = () => {
               <div className="application-actions">
                 {application.status === 'pending' && (
                   <>
-                    <button 
+                    <button
                       className="withdraw-btn"
                       onClick={() => withdrawApplication(application.id)}
                     >
                       Withdraw Application
                     </button>
-                    <button className="update-btn">
+                    <button 
+                      className="update-btn"
+                      onClick={() => handleUpdateClick(application)}
+                    >
                       Update Documents
                     </button>
                   </>
-                )}
-                {application.status === 'accepted' && (
-                  <button className="accept-btn">
-                    Confirm Acceptance
-                  </button>
                 )}
               </div>
             </div>
           ))
         )}
       </div>
+
+      {/* Update Documents Modal */}
+      {showUpdateModal && currentApplication && (
+        <div className="modal-overlay">
+          <div className="update-modal">
+            <h2>Update Documents for {currentApplication.position}</h2>
+            <p>at {currentApplication.companyName}</p>
+            
+            <div className="modal-content">
+              <h3>Current Documents:</h3>
+              <ul>
+                {currentApplication.documents.map((doc, index) => (
+                  <li key={index}>{doc.name}</li>
+                ))}
+              </ul>
+
+              <div className="file-upload">
+                <h3>Add New Documents:</h3>
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleFileUpload}
+                  accept=".pdf,.doc,.docx,.txt"
+                />
+                {newDocuments.length > 0 && (
+                  <div className="new-documents">
+                    <h4>New files to upload:</h4>
+                    <ul>
+                      {newDocuments.map((doc, index) => (
+                        <li key={index}>{doc.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              <div className="modal-actions">
+                <button
+                  className="cancel-btn"
+                  onClick={() => setShowUpdateModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="submit-btn"
+                  onClick={updateApplicationDocuments}
+                  disabled={newDocuments.length === 0}
+                >
+                  Update Documents
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
