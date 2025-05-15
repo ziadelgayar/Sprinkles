@@ -42,11 +42,9 @@ import Internships from '../pages/Scad/Internships';
 
 // Import faculty page components
 import FacultyHome from '../pages/Faculty/Dashboard';
-import FacultyEvaluationReports from '../pages/Faculty/EvaluationReports';
-import FacultyInternshipReports from '../pages/Faculty/InternshipReports';
+import FacultyReports from '../pages/Faculty/InternshipReports';
 import FacultyNotifications from '../pages/Faculty/Notifications';
 import FacultyProfile from '../pages/Faculty/Profile';
-import FacultyStatisticsReports from '../pages/Faculty/StatisticsReports';
 
 const AppRoutes = () => {
   return (
@@ -107,11 +105,9 @@ const AppRoutes = () => {
       <Route path="/faculty" element={<MainLayout />}>
         <Route index element={<Navigate to="/faculty/home" replace />} />
         <Route path="home" element={<FacultyHome />} />
-        <Route path="evaluation-reports" element={<FacultyEvaluationReports />} />
-        <Route path="internship-reports" element={<FacultyInternshipReports />} />
-        <Route path="notifications" element={<FacultyNotifications />} />
+        <Route path="reports" element={<FacultyReports />} />
         <Route path="profile" element={<FacultyProfile />} />
-        <Route path="statistics-reports" element={<FacultyStatisticsReports />} />
+        <Route path="notifications" element={<FacultyNotifications />} />
       </Route>
     </Routes>
   );

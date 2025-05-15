@@ -91,7 +91,7 @@ const StudentHome = () => {
         <span style={{ fontSize: '2rem', marginRight: '12px' }}>🏅</span>
         <div>
           <h2 style={{ margin: 0 }}>Internship Badge Earned!</h2>
-          <p style={{ margin: 0, fontSize: "0.95rem" }}>You’ve successfully completed a 3-month internship. Great job!</p>
+          <p style={{ margin: 0, fontSize: "0.95rem" }}>You've successfully completed a 3-month internship. Great job!</p>
         </div>
       </div>
 
@@ -127,54 +127,56 @@ const StudentHome = () => {
       </div>
 
       {/* Suggested Companies */}
-      <div className="suggested-companies" style={{ marginTop: "2rem" }}>
+      <div className="suggested-companies">
         <h2>Suggested Companies</h2>
-        {filteredCompanies.length > 0 ? (
-          filteredCompanies.map((company, index) => (
-            <div
-              key={index}
-              className="company-card"
-              style={{
-                border: "1px solid #ccc",
-                margin: "1rem 0",
-                padding: "1rem",
-                borderRadius: "8px",
-                backgroundColor: "#fafafa"
-              }}
-            >
+        <div className="companies-grid">
+          {filteredCompanies.map((company) => (
+            <div key={company.name} className="company-card">
               <h3>{company.name}</h3>
               <p>Industry: {company.industry}</p>
               <p>Duration: {company.duration}</p>
               <p>Type: {company.type}</p>
-              <p style={{ color: company.recommended ? 'green' : 'gray' }}>
-                {company.recommended ? '★ Recommended by past interns' : '☆ Not recommended by past interns'}
-              </p>
-              <ul>
-                {company.roles.map((role, idx) => (
-                  <li key={idx} style={{ marginBottom: "10px" }}>
-                    <strong>{role}</strong><br />
-                    <button
-                      onClick={() => handleApply(company.name, role)}
-                      style={{
-                        marginTop: "5px",
-                        padding: "0.4rem 0.8rem",
-                        backgroundColor: "#4CAF50",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer"
-                      }}
-                    >
-                      Choose to apply
-                    </button>
-                  </li>
+              <div className="roles">
+                {company.roles.map((role) => (
+                  <button
+                    key={role}
+                    onClick={() => handleApply(company.name, role)}
+                  >
+                    Apply for {role}
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
-          ))
-        ) : (
-          <p>No companies match your filters and interests.</p>
-        )}
+          ))}
+        </div>
+      </div>
+
+      {/* Companies That Viewed Profile */}
+      <div className="profile-views" style={{ marginTop: "3rem" }}>
+        <h2>Companies That Viewed Your Profile</h2>
+        <div className="viewed-companies-list">
+          {[
+            { name: "TechCorp", date: "2 days ago", position: "Frontend Developer" },
+            { name: "Designify", date: "1 week ago", position: "UI/UX Designer" },
+            { name: "BizPro", date: "2 weeks ago", position: "Business Analyst" }
+          ].map((company) => (
+            <div key={company.name} className="viewed-company-card" style={{
+              padding: "1rem",
+              border: "1px solid #e0e0e0",
+              borderRadius: "8px",
+              marginBottom: "1rem",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center"
+            }}>
+              <div>
+                <h3 style={{ margin: "0 0 0.5rem 0" }}>{company.name}</h3>
+                <p style={{ margin: "0", color: "#666" }}>Viewed for: {company.position}</p>
+              </div>
+              <span style={{ color: "#888" }}>{company.date}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Internship Video */}

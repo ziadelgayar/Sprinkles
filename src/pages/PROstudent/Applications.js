@@ -1,42 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
+import { useApplications } from '../../context/ApplicationsContext';
 
 const StudentApplications = () => {
-  const sampleApplications = [
-    {
-      id: 1,
-      position: 'UX Design Intern',
-      companyName: 'Google',
-      location: 'Remote',
-      appliedDate: '2025-03-10',
-      lastUpdated: '2025-03-15',
-      status: 'pending',
-      documents: [
-        { name: 'Resume.pdf', content: 'John Doe - Resume\nSkills: UX Design, Figma, User Research' },
-        { name: 'Cover_Letter_Google.pdf', content: 'Cover Letter for Google\nDear Hiring Manager...' }
-      ]
-    },
-    {
-      id: 2,
-      position: 'Software Engineering Intern',
-      companyName: 'Microsoft',
-      location: 'Redmond, WA',
-      appliedDate: '2025-02-28',
-      lastUpdated: '2025-03-20',
-      status: 'finalized',
-      documents: [
-        { name: 'Resume.pdf', content: 'John Doe - Resume\nSkills: JavaScript, React, Node.js' },
-        { name: 'Transcript.pdf', content: 'SCAD Transcript\nGPA: 3.8\nCourses: Data Structures, Algorithms' }
-      ],
-      notes: 'You are currently a top candidate!'
-    }
-  ];
-
-  const [applications, setApplications] = useState(sampleApplications);
+  const { applications = [], withdrawApplication, updateApplicationStatus } = useApplications();
   const [filter, setFilter] = useState('all');
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [currentApplication, setCurrentApplication] = useState(null);
   const [newDocuments, setNewDocuments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Set loading to false once applications are loaded
+    setIsLoading(false);
+  }, [applications]);
 
   const filteredApplications = applications.filter(application => {
     return filter === 'all' || application.status === filter;
@@ -45,22 +22,11 @@ const StudentApplications = () => {
   const getStatusLabel = (status) => {
     switch (status) {
       case 'pending': return 'Pending Review';
-      case 'finalized': return 'Top Applicant';
+      case 'finalized': return 'Flagged';
       case 'accepted': return 'Accepted';
       case 'rejected': return 'Rejected';
       default: return status;
     }
-  };
-
-  const withdrawApplication = (applicationId) => {
-    if (window.confirm('Are you sure you want to withdraw this application?')) {
-      setApplications(applications.filter(app => app.id !== applicationId));
-    }
-  };
-
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   const handleUpdateClick = (application) => {
@@ -92,18 +58,13 @@ const StudentApplications = () => {
   const updateApplicationDocuments = () => {
     if (!currentApplication || newDocuments.length === 0) return;
 
-    const updatedApplications = applications.map(app => {
-      if (app.id === currentApplication.id) {
-        return {
-          ...app,
-          documents: [...app.documents, ...newDocuments],
-          lastUpdated: new Date().toISOString().split('T')[0]
-        };
-      }
-      return app;
-    });
+    const updatedApplication = {
+      ...currentApplication,
+      documents: [...currentApplication.documents, ...newDocuments],
+      lastUpdated: new Date().toISOString().split('T')[0]
+    };
 
-    setApplications(updatedApplications);
+    updateApplicationStatus(currentApplication.id, updatedApplication);
     setShowUpdateModal(false);
     alert('Documents updated successfully!');
   };
@@ -113,11 +74,15 @@ const StudentApplications = () => {
     doc.text(`Document: ${document.name}`, 10, 10);
     doc.text('Content:', 10, 20);
     
-    // Split content into lines that fit the PDF width
     const lines = doc.splitTextToSize(document.content, 180);
     doc.text(lines, 10, 30);
     
     doc.save(document.name);
+  };
+
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   return (
@@ -140,7 +105,11 @@ const StudentApplications = () => {
       </div>
 
       <div className="applications-list">
-        {filteredApplications.length === 0 ? (
+        {isLoading ? (
+          <div className="loading-state">
+            <p>Loading applications...</p>
+          </div>
+        ) : filteredApplications.length === 0 ? (
           <div className="empty-state">
             <p>No applications found matching your criteria</p>
             {filter !== 'all' && (
@@ -175,7 +144,7 @@ const StudentApplications = () => {
                 </div>
               </div>
 
-              <div className="submitted-documents">
+              <div className="application-documents">
                 <h4>Submitted Documents:</h4>
                 <ul>
                   {application.documents.map((doc, index) => (
@@ -214,7 +183,6 @@ const StudentApplications = () => {
         )}
       </div>
 
-      {/* Update Documents Modal */}
       {showUpdateModal && currentApplication && (
         <div className="modal-overlay">
           <div className="update-modal">

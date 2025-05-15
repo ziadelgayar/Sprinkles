@@ -1,7 +1,6 @@
 // src/components/Sidebar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import './sidebar.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const menus = {
   company: [
@@ -46,28 +45,55 @@ const menus = {
   ],
   faculty: [
     { path: '/faculty/home', label: 'Home' },
-    { path: '/faculty/internship-reports', label: 'Internship Reports' },
-    { path: '/faculty/evaluation-reports', label: 'Evaluation Reports' },
-    { path: '/faculty/statistics-reports', label: 'Statistics Reports' },
+    { path: '/faculty/reports', label: 'Reports' },
     { path: '/faculty/profile', label: 'Profile & Settings' },
     { path: '/faculty/notifications', label: 'Notifications' },
   ]
 };
 
 const Sidebar = ({ role }) => {
+  const navigate = useNavigate();
   const menu = menus[role];
 
   if (!menu) return null;
 
   return (
-    <nav className="sidebar">
-      <ul>
+    <nav style={{ 
+      width: '250px', 
+      backgroundColor: '#f5f5f5', 
+      padding: '20px', 
+      borderRight: '1px solid #ddd' 
+    }}>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {menu.map(item =>
-          <li key={item.path}>
-            <Link to={item.path}>{item.label}</Link>
+          <li key={item.path} style={{ marginBottom: '10px' }}>
+            <Link to={item.path} style={{ 
+              display: 'block', 
+              padding: '10px', 
+              color: '#333', 
+              textDecoration: 'none', 
+              borderRadius: '5px' 
+            }}>
+              {item.label}
+            </Link>
           </li>
         )}
       </ul>
+      <button 
+        onClick={() => navigate('/')}
+        style={{
+          width: '100%',
+          padding: '10px',
+          marginTop: '20px',
+          backgroundColor: '#3d1e6d',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer'
+        }}
+      >
+        Back
+      </button>
     </nav>
   );
 };

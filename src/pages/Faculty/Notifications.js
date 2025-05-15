@@ -4,6 +4,13 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [filter, setFilter] = useState('all');
 
+  // Settings states
+  const [settings, setSettings] = useState({
+    report: true,
+    evaluation: true,
+    system: true,
+  });
+
   // Dummy data for demonstration
   useEffect(() => {
     setNotifications([
@@ -22,9 +29,24 @@ const Notifications = () => {
         time: '1 day ago',
         type: 'evaluation',
         read: true
+      },
+      {
+        id: 3,
+        title: 'System Update',
+        message: 'New features have been added to the platform.',
+        time: '2 days ago',
+        type: 'system',
+        read: false
       }
     ]);
   }, []);
+
+  const handleSettingChange = (key) => {
+    setSettings((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   const handleMarkAsRead = (notificationId) => {
     setNotifications(prev =>
@@ -42,30 +64,66 @@ const Notifications = () => {
     );
   };
 
-  const filteredNotifications = notifications.filter(notification => {
-    if (filter === 'all') return true;
-    if (filter === 'unread') return !notification.read;
+  // Apply read/unread filter
+  let filteredNotifications = notifications.filter((notif) =>
+    filter === 'unread' ? !notif.read : true
+  );
+
+  // Apply settings filters (e.g., only show allowed types)
+  filteredNotifications = filteredNotifications.filter((notif) => {
+    if (notif.type === 'report' && !settings.report) return false;
+    if (notif.type === 'evaluation' && !settings.evaluation) return false;
+    if (notif.type === 'system' && !settings.system) return false;
     return true;
   });
 
   return (
-    <div className="faculty-notifications">
-      <h1>Notifications</h1>
-
-      <div className="notifications-header">
+    <div className="notifications-page">
+      <div className="page-header">
+        <h1>Notifications</h1>
         <div className="filter-tabs">
-          <button 
+          <button
             className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
           >
             All
           </button>
-          <button 
+          <button
             className={`filter-btn ${filter === 'unread' ? 'active' : ''}`}
             onClick={() => setFilter('unread')}
           >
             Unread
           </button>
+        </div>
+      </div>
+
+      <div className="notification-settings">
+        <h2>Notification Settings</h2>
+        <div className="settings-form">
+          <div className="setting-item">
+            <label>Report Updates</label>
+            <input
+              type="checkbox"
+              checked={settings.report}
+              onChange={() => handleSettingChange('report')}
+            />
+          </div>
+          <div className="setting-item">
+            <label>Evaluation Updates</label>
+            <input
+              type="checkbox"
+              checked={settings.evaluation}
+              onChange={() => handleSettingChange('evaluation')}
+            />
+          </div>
+          <div className="setting-item">
+            <label>System Updates</label>
+            <input
+              type="checkbox"
+              checked={settings.system}
+              onChange={() => handleSettingChange('system')}
+            />
+          </div>
         </div>
       </div>
 
@@ -75,11 +133,13 @@ const Notifications = () => {
             <p>No notifications</p>
           </div>
         ) : (
-          filteredNotifications.map(notification => (
-            <div 
-              key={notification.id} 
+          filteredNotifications.map((notification) => (
+            <div
+              key={notification.id}
               className={`notification-card ${notification.read ? 'read' : 'unread'}`}
             >
+              <div className="notification-icon">📩</div>
+
               <div className="notification-content">
                 <h3>{notification.title}</h3>
                 <p>{notification.message}</p>
@@ -88,45 +148,17 @@ const Notifications = () => {
 
               <div className="notification-actions">
                 {!notification.read && (
-                  <button
-                    className="mark-read-btn"
-                    onClick={() => handleMarkAsRead(notification.id)}
-                  >
+                  <button className="mark-read-btn" onClick={() => handleMarkAsRead(notification.id)}>
                     Mark as Read
                   </button>
                 )}
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(notification.id)}
-                >
+                <button className="delete-btn" onClick={() => handleDelete(notification.id)}>
                   Delete
                 </button>
               </div>
             </div>
           ))
         )}
-      </div>
-
-      <div className="notification-settings">
-        <h2>Notification Settings</h2>
-        <div className="settings-form">
-          <div className="setting-item">
-            <label>Email Notifications</label>
-            <input type="checkbox" />
-          </div>
-          <div className="setting-item">
-            <label>Application Updates</label>
-            <input type="checkbox" />
-          </div>
-          <div className="setting-item">
-            <label>New Messages</label>
-            <input type="checkbox" />
-          </div>
-          <div className="setting-item">
-            <label>System Updates</label>
-            <input type="checkbox" />
-          </div>
-        </div>
       </div>
     </div>
   );

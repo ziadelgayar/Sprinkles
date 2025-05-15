@@ -15,25 +15,41 @@ const Notifications = () => {
       title: 'Internship Report Status',
       message: 'Your internship report status has been set to "Under Review".',
       time: '1 hour ago',
-      read: true,
+      read: false,
       type: 'report',
     },
     {
       id: 3,
-      title: 'Report Comment',
-      message: 'Your report was flagged for missing company signature. Please review the comments.',
+      title: 'Appointment Accepted',
+      message: 'Your appointment with SCAD Officer has been accepted for tomorrow at 2:00 PM.',
       time: 'Today at 9:15 AM',
       read: false,
-      type: 'comment',
+      type: 'appointment',
     },
     {
       id: 4,
-      title: 'Appeal Submitted',
-      message: 'Your appeal message has been submitted and will be reviewed soon.',
+      title: 'Upcoming Workshop',
+      message: 'Reminder: "Resume Building Workshop" is scheduled for tomorrow at 3:00 PM.',
       time: 'Yesterday',
-      read: true,
-      type: 'appeal',
+      read: false,
+      type: 'workshop',
     },
+    {
+      id: 5,
+      title: 'Incoming Call',
+      message: 'You have an incoming call from SCAD Officer.',
+      time: 'Just now',
+      read: false,
+      type: 'call',
+    },
+    {
+      id: 6,
+      title: 'Workshop Message',
+      message: 'New message in "Resume Building Workshop": "Great presentation!"',
+      time: '2 minutes ago',
+      read: false,
+      type: 'workshop_message',
+    }
   ]);
 
   const [filter, setFilter] = useState('all');
@@ -41,8 +57,10 @@ const Notifications = () => {
   const [settings, setSettings] = useState({
     cycle: true,
     report: true,
-    comment: true,
-    appeal: true,
+    appointment: true,
+    workshop: true,
+    call: true,
+    workshop_message: true
   });
 
   const handleSettingChange = (key) => {
@@ -112,19 +130,35 @@ const Notifications = () => {
             />
           </div>
           <div className="setting-item">
-            <label>Comments on Reports</label>
+            <label>Appointment Updates</label>
             <input
               type="checkbox"
-              checked={settings.comment}
-              onChange={() => handleSettingChange('comment')}
+              checked={settings.appointment}
+              onChange={() => handleSettingChange('appointment')}
             />
           </div>
           <div className="setting-item">
-            <label>Appeal Submissions</label>
+            <label>Workshop Updates</label>
             <input
               type="checkbox"
-              checked={settings.appeal}
-              onChange={() => handleSettingChange('appeal')}
+              checked={settings.workshop}
+              onChange={() => handleSettingChange('workshop')}
+            />
+          </div>
+          <div className="setting-item">
+            <label>Call Notifications</label>
+            <input
+              type="checkbox"
+              checked={settings.call}
+              onChange={() => handleSettingChange('call')}
+            />
+          </div>
+          <div className="setting-item">
+            <label>Workshop Messages</label>
+            <input
+              type="checkbox"
+              checked={settings.workshop_message}
+              onChange={() => handleSettingChange('workshop_message')}
             />
           </div>
         </div>
@@ -141,7 +175,6 @@ const Notifications = () => {
               key={notification.id}
               className={`notification-card ${notification.read ? 'read' : 'unread'}`}
             >
-              <div className="notification-icon">🔔</div>
               <div className="notification-content">
                 <h3>{notification.title}</h3>
                 <p>{notification.message}</p>

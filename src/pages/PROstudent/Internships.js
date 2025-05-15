@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useApplications } from '../../context/ApplicationsContext';
+import '../../styles/Internships.css';
 
 const StudentInternships = () => {
   // Sample internship data with majors information
@@ -97,6 +99,8 @@ const StudentInternships = () => {
     portfolio: false
   });
 
+  const { addApplication } = useApplications();
+
   // Filter internships based on search and filters
   const filteredInternships = internships.filter(internship => {
     // Search filter
@@ -127,6 +131,26 @@ const StudentInternships = () => {
   });
 
   const handleApplyClick = (internship) => {
+    // Check if already applied
+    if (appliedInternships.includes(internship.id)) {
+      alert('You have already applied to this internship.');
+      return;
+    }
+    
+    // Check if internship is still open
+    const now = new Date();
+    const startDate = new Date(internship.startDate);
+    if (startDate < now) {
+      alert('This internship is no longer accepting applications.');
+      return;
+    }
+    
+    // Check if maximum positions are filled
+    if (internship.currentInterns >= internship.totalPositions) {
+      alert('All positions for this internship have been filled.');
+      return;
+    }
+    
     setSelectedInternship(internship);
     setShowApplicationModal(true);
   };
@@ -134,9 +158,46 @@ const StudentInternships = () => {
   const submitApplication = () => {
     if (!selectedInternship) return;
     
+    // Create a complete application object
+    const newApplication = {
+      id: Date.now(),
+      position: selectedInternship.title,
+      companyName: selectedInternship.company,
+      location: selectedInternship.location,
+      appliedDate: new Date().toISOString().split('T')[0],
+      lastUpdated: new Date().toISOString().split('T')[0],
+      status: 'pending',
+      documents: [
+        { 
+          name: 'Resume.pdf', 
+          content: 'Resume content' 
+        },
+        ...(applicationDocuments.coverLetter ? [{
+          name: 'Cover_Letter.pdf',
+          content: 'Cover letter content'
+        }] : []),
+        ...(applicationDocuments.portfolio ? [{
+          name: 'Portfolio.pdf',
+          content: 'Portfolio content'
+        }] : [])
+      ]
+    };
+    
+    // Add the application to the shared state
+    addApplication(newApplication);
+    
     setAppliedInternships([...appliedInternships, selectedInternship.id]);
     setShowApplicationModal(false);
     alert(`Application submitted successfully for ${selectedInternship.title} at ${selectedInternship.company}!`);
+  };
+
+  // Add function to handle application withdrawal
+  const handleWithdrawApplication = (internshipId) => {
+    if (window.confirm('Are you sure you want to withdraw your application?')) {
+      setAppliedInternships(appliedInternships.filter(id => id !== internshipId));
+      // You might want to add a call to your backend here to update the application status
+      alert('Application withdrawn successfully.');
+    }
   };
 
   const getStatusLabel = (status) => {
@@ -154,81 +215,68 @@ const StudentInternships = () => {
   };
 
   return (
-    <div className="student-internships">
-      <div className="page-header">
+    <div>
+      <div>
         <h1>Browse Internships</h1>
         <p>Find opportunities that match your major and career goals</p>
       </div>
 
-      <div className="search-filters">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search by job title or company name..."
-            value={filters.searchQuery}
-            onChange={(e) => setFilters({...filters, searchQuery: e.target.value})}
-          />
-        </div>
-
-        <div className="filter-options">
-          <div className="filter-group">
-            <label>Status:</label>
-            <select 
-              value={filters.status}
-              onChange={(e) => setFilters({...filters, status: e.target.value})}
-            >
-              <option value="all">All Statuses</option>
-              <option value="current">Current Internships</option>
-              <option value="upcoming">Upcoming Internships</option>
-              <option value="completed">Completed Internships</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Date Range:</label>
-            <select 
-              value={filters.dateRange}
-              onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
-            >
-              <option value="all">All Dates</option>
-              <option value="past">Past Internships</option>
-              <option value="current">Current Internships</option>
-              <option value="upcoming">Upcoming Internships</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Filter by Major:</label>
-            <select
-              value={filters.major}
-              onChange={(e) => setFilters({...filters, major: e.target.value})}
-            >
-              <option value="">All Majors</option>
-              {allMajors.map((major, index) => (
-                <option key={index} value={major}>{major}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Semester:</label>
-            <select
-              value={filters.semester}
-              onChange={(e) => setFilters({...filters, semester: e.target.value})}
-            >
-              <option value="">Any Semester</option>
-              <option value="1">Semester 1</option>
-              <option value="2">Semester 2</option>
-              <option value="3">Semester 3</option>
-              <option value="4">Semester 4</option>
-            </select>
-          </div>
-        </div>
+      <div style={{ marginBottom: '20px' }}>
+        <input
+          type="text"
+          placeholder="Search by job title or company name..."
+          value={filters.searchQuery}
+          onChange={(e) => setFilters({...filters, searchQuery: e.target.value})}
+          style={{ width: '300px' }}
+        />
       </div>
 
-      <div className="internships-list">
+      <div style={{ marginBottom: '20px' }}>
+        <select 
+          value={filters.status}
+          onChange={(e) => setFilters({...filters, status: e.target.value})}
+        >
+          <option value="all">All Statuses</option>
+          <option value="current">Current Internships</option>
+          <option value="upcoming">Upcoming Internships</option>
+          <option value="completed">Completed Internships</option>
+        </select>
+
+        <select 
+          value={filters.dateRange}
+          onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
+        >
+          <option value="all">All Dates</option>
+          <option value="past">Past Internships</option>
+          <option value="current">Current Internships</option>
+          <option value="upcoming">Upcoming Internships</option>
+        </select>
+
+        <select
+          value={filters.major}
+          onChange={(e) => setFilters({...filters, major: e.target.value})}
+        >
+          <option value="">All Majors</option>
+          {allMajors.map((major, index) => (
+            <option key={index} value={major}>{major}</option>
+          ))}
+        </select>
+
+        <select
+          value={filters.semester}
+          onChange={(e) => setFilters({...filters, semester: e.target.value})}
+        >
+          <option value="">Any Semester</option>
+          <option value="1">Semester 1</option>
+          <option value="2">Semester 2</option>
+          <option value="3">Semester 3</option>
+          <option value="4">Semester 4</option>
+        </select>
+      </div>
+
+      <div>
         {filteredInternships.length === 0 ? (
-          <div className="empty-state">
+          <div>
             <p>No internships found matching your criteria</p>
             <button onClick={() => setFilters({
               searchQuery: '',
@@ -242,125 +290,128 @@ const StudentInternships = () => {
           </div>
         ) : (
           filteredInternships.map((internship) => (
-            <div key={internship.id} className="internship-card">
-              <div className="internship-header">
-                <h3>{internship.title}</h3>
-                <div className="status-container">
-                  <span className={`status ${internship.status}`}>
-                    {getStatusLabel(internship.status)}
-                  </span>
-                  {internship.status === 'current' && (
-                    <span className="positions">
-                      {internship.currentInterns}/{internship.totalPositions} positions filled
-                    </span>
+            <div key={internship.id}>
+              <div>
+                <div>
+                  <h3>{internship.title}</h3>
+                  <div>
+                    <span>{getStatusLabel(internship.status)}</span>
+                    {internship.status === 'current' && (
+                      <span>
+                        {internship.currentInterns}/{internship.totalPositions} positions filled
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <h4>{internship.company}</h4>
+                  <p>{internship.location}</p>
+                  <p>
+                    {formatDate(internship.startDate)} - {formatDate(internship.endDate)}
+                  </p>
+                </div>
+
+                <div>
+                  <h4>Description:</h4>
+                  <p>{internship.description}</p>
+                  
+                  <h4>Requirements:</h4>
+                  <p>{internship.requirements}</p>
+
+                  <h4>Relevant Majors:</h4>
+                  <div>
+                    {internship.majors.map((major, index) => (
+                      <span key={index}>{major}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  {appliedInternships.includes(internship.id) ? (
+                    <button 
+                      onClick={() => handleWithdrawApplication(internship.id)}
+                    >
+                      Withdraw Application
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => handleApplyClick(internship)}
+                      disabled={new Date(internship.startDate) < new Date() || internship.currentInterns >= internship.totalPositions}
+                    >
+                      {new Date(internship.startDate) < new Date() ? 'Applications Closed' :
+                       internship.currentInterns >= internship.totalPositions ? 'Positions Filled' :
+                       'Apply Now'}
+                    </button>
                   )}
                 </div>
               </div>
 
-              <div className="company-info">
-                <h4>{internship.company}</h4>
-                <p>{internship.location}</p>
-                <p className="date-range">
-                  {formatDate(internship.startDate)} - {formatDate(internship.endDate)}
-                </p>
-              </div>
+              {showApplicationModal && selectedInternship && selectedInternship.id === internship.id && (
+                <div>
+                  <div>
+                    <h2>Apply for {internship.title}</h2>
+                    <p>at {internship.company}</p>
+                    
+                    <div>
+                      <h3>Documents to Submit:</h3>
+                      <div>
+                        <label>
+                          <input 
+                            type="checkbox" 
+                            checked={applicationDocuments.resume}
+                            onChange={() => setApplicationDocuments({
+                              ...applicationDocuments,
+                              resume: !applicationDocuments.resume
+                            })}
+                          />
+                          Resume (required)
+                        </label>
+                        <label>
+                          <input 
+                            type="checkbox" 
+                            checked={applicationDocuments.coverLetter}
+                            onChange={() => setApplicationDocuments({
+                              ...applicationDocuments,
+                              coverLetter: !applicationDocuments.coverLetter
+                            })}
+                          />
+                          Cover Letter
+                        </label>
+                        <label>
+                          <input 
+                            type="checkbox" 
+                            checked={applicationDocuments.portfolio}
+                            onChange={() => setApplicationDocuments({
+                              ...applicationDocuments,
+                              portfolio: !applicationDocuments.portfolio
+                            })}
+                          />
+                          Portfolio
+                        </label>
+                      </div>
 
-              <div className="internship-details">
-                <h4>Description:</h4>
-                <p>{internship.description}</p>
-                
-                <h4>Requirements:</h4>
-                <p>{internship.requirements}</p>
-
-                <h4>Relevant Majors:</h4>
-                <div className="majors-list">
-                  {internship.majors.map((major, index) => (
-                    <span key={index} className="major-tag">{major}</span>
-                  ))}
+                      <div>
+                        <button 
+                          onClick={() => setShowApplicationModal(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button 
+                          onClick={submitApplication}
+                          disabled={!applicationDocuments.resume}
+                        >
+                          Submit Application
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <div className="internship-actions">
-                {appliedInternships.includes(internship.id) ? (
-                  <button className="applied-btn" disabled>Applied ✓</button>
-                ) : (
-                  <button 
-                    className="apply-btn"
-                    onClick={() => handleApplyClick(internship)}
-                  >
-                    Apply Now
-                  </button>
-                )}
-              </div>
+              )}
             </div>
           ))
         )}
       </div>
-
-      {/* Application Modal */}
-      {showApplicationModal && selectedInternship && (
-        <div className="application-modal">
-          <div className="modal-content">
-            <h2>Apply for {selectedInternship.title}</h2>
-            <p>at {selectedInternship.company}</p>
-            
-            <div className="application-form">
-              <h3>Documents to Submit:</h3>
-              <div className="document-options">
-                <label>
-                  <input 
-                    type="checkbox" 
-                    checked={applicationDocuments.resume}
-                    onChange={() => setApplicationDocuments({
-                      ...applicationDocuments,
-                      resume: !applicationDocuments.resume
-                    })}
-                  />
-                  Resume (required)
-                </label>
-                <label>
-                  <input 
-                    type="checkbox" 
-                    checked={applicationDocuments.coverLetter}
-                    onChange={() => setApplicationDocuments({
-                      ...applicationDocuments,
-                      coverLetter: !applicationDocuments.coverLetter
-                    })}
-                  />
-                  Cover Letter
-                </label>
-                <label>
-                  <input 
-                    type="checkbox" 
-                    checked={applicationDocuments.portfolio}
-                    onChange={() => setApplicationDocuments({
-                      ...applicationDocuments,
-                      portfolio: !applicationDocuments.portfolio
-                    })}
-                  />
-                  Portfolio
-                </label>
-              </div>
-
-              <div className="modal-actions">
-                <button 
-                  className="cancel-btn"
-                  onClick={() => setShowApplicationModal(false)}
-                >
-                  Cancel
-                </button>
-                <button 
-                  className="submit-btn"
-                  onClick={submitApplication}
-                  disabled={!applicationDocuments.resume}
-                >
-                  Submit Application
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

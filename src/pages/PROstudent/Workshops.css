@@ -1,0 +1,315 @@
+.student-workshops {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.workshops-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.workshop-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.workshop-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.workshop-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.workshop-card h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.workshop-details {
+  margin: 1rem 0;
+  color: #666;
+}
+
+.workshop-details p {
+  margin: 0.5rem 0;
+}
+
+.workshop-materials {
+  margin: 1rem 0;
+}
+
+.workshop-materials h4 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.workshop-materials ul {
+  list-style: none;
+  padding: 0;
+}
+
+.workshop-materials li {
+  color: #666;
+  margin: 0.25rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.workshop-materials li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #3498db;
+}
+
+.register-btn, .join-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background: #3498db;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.register-btn:hover, .join-btn:hover {
+  background: #2980b9;
+}
+
+.register-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.video-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.video-controls button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.video-controls button:hover {
+  background: #2980b9;
+}
+
+.video-controls button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.active-workshop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: 1000;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.workshop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.workshop-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.workshop-video {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-placeholder {
+  text-align: center;
+  color: #666;
+}
+
+.workshop-notes {
+  grid-column: 1 / -1;
+}
+
+.workshop-notes textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.workshop-chat {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.chat-message {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message .sender {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.chat-message .timestamp {
+  font-size: 0.8rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.chat-input {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.send-btn {
+  padding: 0.5rem 1rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.workshop-feedback {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.rating {
+  margin-bottom: 1rem;
+}
+
+.stars {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.star {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.active {
+  color: #f1c40f;
+}
+
+.feedback-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.submit-feedback-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-feedback-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.workshop-certificate {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.certificate-btn {
+  padding: 0.75rem 1.5rem;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.certificate-btn:hover {
+  background: #219a52;
+} 
