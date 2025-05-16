@@ -92,100 +92,123 @@ const Internships = () => {
 
   return (
     <div className="main-content">
-      <div className="page-header">
-        <h1>Manage Internships</h1>
-        
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search for internships..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button className="search-btn">Search</button>
-        </div>
-        <button className="post-new-btn" onClick={handlePostNewInternship}>
-          Post New Internship
-        </button>
-      </div>
-
-      <div className="internships-list">
-        {internships.length === 0 ? (
-          <div className="empty-state">
-            <p>No internships posted yet</p>
-          </div>
-        ) : (
-          internships.map((internship) => (
-            <div key={internship.id} className="internship-card">
-              <div className="internship-header">
-                <h3>{internship.title}</h3>
-                <span className={`status ${internship.status}`}>{internship.status}</span>
-              </div>
-              <p className="description">{internship.description}</p>
-              <div className="internship-details">
-                <span>Location: {internship.location}</span>
-                <span>Duration: {internship.duration}</span>
-                <span>Applications: {internship.applicationCount}</span>
-              </div>
-              <div className="internship-actions">
-                <button className="edit-btn" onClick={() => handleEditInternship(internship)}>Edit</button>
-                <button className="view-applicants-btn" onClick={() => handleViewApplicants(internship)}>View Applicants</button>
-                <button className="delete-btn" onClick={() => handleDeleteInternship(internship.id)}>Delete</button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      {selectedInternship && (
-        <div className="edit-internship-form">
-          <h2>Edit Internship</h2>
-          <input
-            type="text"
-            placeholder="Title"
-            value={newInternship.title}
-            onChange={(e) => setNewInternship({ ...newInternship, title: e.target.value })}
-          />
-          <textarea
-            placeholder="Description"
-            value={newInternship.description}
-            onChange={(e) => setNewInternship({ ...newInternship, description: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            value={newInternship.location}
-            onChange={(e) => setNewInternship({ ...newInternship, location: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Duration"
-            value={newInternship.duration}
-            onChange={(e) => setNewInternship({ ...newInternship, duration: e.target.value })}
-          />
-          <input
-            type="checkbox"
-            checked={newInternship.isPaid}
-            onChange={() => setNewInternship({ ...newInternship, isPaid: !newInternship.isPaid })}
-          />
-          <label>Paid Internship</label>
-          {newInternship.isPaid && (
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="page-header mb-6">
+          <h1 className="text-2xl font-bold">Manage Internships</h1>
+          <div className="flex flex-col md:flex-row md:items-center md:gap-4 mb-4">
             <input
               type="text"
-              placeholder="Salary"
-              value={newInternship.salary}
-              onChange={(e) => setNewInternship({ ...newInternship, salary: e.target.value })}
+              className="w-full p-2 border rounded mb-2 md:mb-0"
+              placeholder="Search for internships..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-          )}
-          <input
-            type="text"
-            placeholder="Skills"
-            value={newInternship.skills}
-            onChange={(e) => setNewInternship({ ...newInternship, skills: e.target.value })}
-          />
-          <button onClick={handleUpdateInternship}>Update Internship</button>
+            <button className="accept-btn" onClick={handlePostNewInternship}>
+              Post New Internship
+            </button>
+          </div>
         </div>
-      )}
+
+        <div className="space-y-6">
+          {internships.length === 0 ? (
+            <div className="custom-box text-center">
+              <p className="text-gray-500">No internships posted yet</p>
+            </div>
+          ) : (
+            internships
+              .filter((internship) =>
+                internship.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                internship.description.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((internship) => (
+                <div key={internship.id} className="custom-box">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-xl font-bold">{internship.title}</h3>
+                    <span className={`status ${internship.status} px-3 py-1 rounded-full text-sm`}>
+                      {internship.status}
+                    </span>
+                  </div>
+                  <p className="mb-2 text-gray-500">{internship.description}</p>
+                  <div className="mb-2 text-sm text-gray-500 flex flex-wrap gap-4">
+                    <span>Location: {internship.location}</span>
+                    <span>Duration: {internship.duration}</span>
+                    <span>Applications: {internship.applicationCount}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2 justify-end">
+                    <button className="save-btn" onClick={() => handleEditInternship(internship)}>Edit</button>
+                    <button className="accept-btn" onClick={() => handleViewApplicants(internship)}>View Applicants</button>
+                    <button className="reject-btn" onClick={() => handleDeleteInternship(internship.id)}>Delete</button>
+                  </div>
+                </div>
+              ))
+          )}
+        </div>
+
+        {selectedInternship && (
+          <div className="modal-overlay">
+            <div className="custom-box max-w-md mx-auto mt-20">
+              <h2 className="text-xl font-bold mb-4">Edit Internship</h2>
+              <div className="grid grid-cols-1 gap-4">
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  placeholder="Title"
+                  value={newInternship.title}
+                  onChange={(e) => setNewInternship({ ...newInternship, title: e.target.value })}
+                />
+                <textarea
+                  className="w-full p-2 border rounded"
+                  placeholder="Description"
+                  value={newInternship.description}
+                  onChange={(e) => setNewInternship({ ...newInternship, description: e.target.value })}
+                />
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  placeholder="Location"
+                  value={newInternship.location}
+                  onChange={(e) => setNewInternship({ ...newInternship, location: e.target.value })}
+                />
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  placeholder="Duration"
+                  value={newInternship.duration}
+                  onChange={(e) => setNewInternship({ ...newInternship, duration: e.target.value })}
+                />
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={newInternship.isPaid}
+                    onChange={() => setNewInternship({ ...newInternship, isPaid: !newInternship.isPaid })}
+                  />
+                  <label>Paid Internship</label>
+                </div>
+                {newInternship.isPaid && (
+                  <input
+                    type="text"
+                    className="w-full p-2 border rounded"
+                    placeholder="Salary"
+                    value={newInternship.salary}
+                    onChange={(e) => setNewInternship({ ...newInternship, salary: e.target.value })}
+                  />
+                )}
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  placeholder="Skills"
+                  value={newInternship.skills}
+                  onChange={(e) => setNewInternship({ ...newInternship, skills: e.target.value })}
+                />
+              </div>
+              <div className="flex justify-end gap-2 mt-4">
+                <button className="cancel-btn" onClick={() => setSelectedInternship(null)}>Cancel</button>
+                <button className="accept-btn" onClick={handleUpdateInternship}>Update Internship</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

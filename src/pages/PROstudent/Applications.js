@@ -120,68 +120,81 @@ const StudentApplications = () => {
     doc.save(document.name);
   };
 
+  const updateApplicationStatus = (applicationId, newStatus) => {
+    const updatedApplications = applications.map(app =>
+      app.id === applicationId ? { ...app, status: newStatus } : app
+    );
+    setApplications(updatedApplications);
+  };
+
   return (
     <div className="main-content">
-      <div className="student-applications">
-        <div className="page-header">
-          <h1>My Applications</h1>
-          <p>Track the status of your internship applications</p>
-        </div>
-
-        <div className="filter-tabs">
-          {['all', 'pending', 'finalized', 'accepted', 'rejected'].map((status) => (
-            <button
-              key={status}
-              className={`filter-btn ${filter === status ? 'active' : ''}`}
-              onClick={() => setFilter(status)}
-            >
-              {status === 'all' ? 'All Applications' : getStatusLabel(status)}
-            </button>
-          ))}
-        </div>
-
-        <div className="applications-list">
-          {filteredApplications.length === 0 ? (
-            <div className="empty-state">
-              <p>No applications found matching your criteria</p>
-              {filter !== 'all' && (
-                <button onClick={() => setFilter('all')}>View All Applications</button>
-              )}
-            </div>
-          ) : (
-            filteredApplications.map((application) => (
-              <div key={application.id} className={`application-card status-${application.status}`}>
-                <div className="application-header">
-                  <div>
-                    <h3>{application.position}</h3>
-                    <h4>{application.companyName}</h4>
-                  </div>
-                  <span className={`status ${application.status}`}>
-                    {getStatusLabel(application.status)}
-                  </span>
-                </div>
-
-                <div className="application-details">
-                  <div className="detail-group">
-                    <span className="detail-label">Location:</span>
-                    <span>{application.location}</span>
-                  </div>
-                  <div className="detail-group">
-                    <span className="detail-label">Applied:</span>
-                    <span>{formatDate(application.appliedDate)}</span>
-                  </div>
-                  <div className="detail-group">
-                    <span className="detail-label">Last Updated:</span>
-                    <span>{formatDate(application.lastUpdated)}</span>
-                  </div>
-                </div>
-
-                <div className="submitted-documents">
-                  <h4>Submitted Documents:</h4>
-                  <ul>
+      <div className="page-header">
+        <h1>My Applications</h1>
+        <p>Track the status of your internship applications</p>
+      </div>
+      <div className="filter-tabs">
+        {['all', 'pending', 'finalized', 'accepted', 'rejected'].map((status) => (
+          <button
+            key={status}
+            className={`filter-btn ${filter === status ? 'active' : ''}`}
+            onClick={() => setFilter(status)}
+          >
+            {status === 'all' ? 'All Applications' : getStatusLabel(status)}
+          </button>
+        ))}
+      </div>
+      <div className="applications-list" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {filteredApplications.length === 0 ? (
+          <div className="custom-box" style={{ textAlign: 'center' }}>
+            <p>No applications found matching your criteria</p>
+            {filter !== 'all' && (
+              <button className="cancel-btn" onClick={() => setFilter('all')}>View All Applications</button>
+            )}
+          </div>
+        ) : (
+          filteredApplications.map((application) => (
+            <div key={application.id} className="custom-box" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{ marginBottom: '6px' }}>
+                <h3 style={{ marginBottom: '4px' }}>{application.position}</h3>
+                <h4 style={{ color: '#b5b5b5', marginBottom: '2px' }}>Company: {application.companyName}</h4>
+                <p style={{ color: '#b5b5b5', marginBottom: '2px' }}>
+                  Status: {getStatusLabel(application.status)}
+                </p>
+                {application.notes && (
+                  <p style={{ color: '#4fd1c5', marginBottom: '2px' }}>
+                    Notes: {application.notes}
+                  </p>
+                )}
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
+                {application.status === 'pending' && (
+                  <button
+                    className="cancel-btn"
+                    onClick={() => withdrawApplication(application.id)}
+                  >
+                    Withdraw
+                  </button>
+                )}
+                <select
+                  value={application.status}
+                  onChange={(e) => updateApplicationStatus(application.id, e.target.value)}
+                  style={{ border: '1px solid #4fd1c5', borderRadius: '8px', padding: '6px 12px', background: '#181c2a', color: '#fff' }}
+                >
+                  {['pending', 'finalized', 'accepted', 'rejected'].map((status) => (
+                    <option key={status} value={status} style={{ color: '#181c2a' }}>
+                      {getStatusLabel(status)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {application.documents && application.documents.length > 0 && (
+                <div style={{ marginTop: '8px' }}>
+                  <h4 style={{ color: '#4fd1c5', marginBottom: '4px' }}>Submitted Documents:</h4>
+                  <ul style={{ paddingLeft: '18px' }}>
                     {application.documents.map((doc, index) => (
-                      <li key={index}>
-                        <button 
+                      <li key={index} style={{ marginBottom: '4px' }}>
+                        <button
                           className="document-btn"
                           onClick={() => downloadDocumentAsPDF(doc)}
                         >
@@ -191,85 +204,72 @@ const StudentApplications = () => {
                     ))}
                   </ul>
                 </div>
-
-                <div className="application-actions">
-                  {application.status === 'pending' && (
-                    <>
-                      <button
-                        className="withdraw-btn"
-                        onClick={() => withdrawApplication(application.id)}
-                      >
-                        Withdraw Application
-                      </button>
-                      <button 
-                        className="update-btn"
-                        onClick={() => handleUpdateClick(application)}
-                      >
-                        Update Documents
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        {/* Update Documents Modal */}
-        {showUpdateModal && currentApplication && (
-          <div className="modal-overlay">
-            <div className="update-modal">
-              <h2>Update Documents for {currentApplication.position}</h2>
-              <p>at {currentApplication.companyName}</p>
-              
-              <div className="modal-content">
-                <h3>Current Documents:</h3>
-                <ul>
-                  {currentApplication.documents.map((doc, index) => (
-                    <li key={index}>{doc.name}</li>
-                  ))}
-                </ul>
-
-                <div className="file-upload">
-                  <h3>Add New Documents:</h3>
-                  <input
-                    type="file"
-                    multiple
-                    onChange={handleFileUpload}
-                    accept=".pdf,.doc,.docx,.txt"
-                  />
-                  {newDocuments.length > 0 && (
-                    <div className="new-documents">
-                      <h4>New files to upload:</h4>
-                      <ul>
-                        {newDocuments.map((doc, index) => (
-                          <li key={index}>{doc.name}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-
-                <div className="modal-actions">
+              )}
+              {application.status === 'pending' && (
+                <div style={{ marginTop: '8px' }}>
                   <button
-                    className="cancel-btn"
-                    onClick={() => setShowUpdateModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="submit-btn"
-                    onClick={updateApplicationDocuments}
-                    disabled={newDocuments.length === 0}
+                    className="reject-btn"
+                    onClick={() => handleUpdateClick(application)}
                   >
                     Update Documents
                   </button>
                 </div>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+      {/* Update Documents Modal */}
+      {showUpdateModal && currentApplication && (
+        <div className="modal-overlay">
+          <div className="update-modal">
+            <h2>Update Documents for {currentApplication.position}</h2>
+            <p>at {currentApplication.companyName}</p>
+            <div className="modal-content">
+              <h3>Current Documents:</h3>
+              <ul>
+                {currentApplication.documents && currentApplication.documents.map((doc, index) => (
+                  <li key={index}>{doc.name}</li>
+                ))}
+              </ul>
+              <div className="file-upload">
+                <h3>Add New Documents:</h3>
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleFileUpload}
+                  accept=".pdf,.doc,.docx,.txt"
+                />
+                {newDocuments.length > 0 && (
+                  <div className="new-documents">
+                    <h4>New files to upload:</h4>
+                    <ul>
+                      {newDocuments.map((doc, index) => (
+                        <li key={index}>{doc.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="modal-actions">
+                <button
+                  className="cancel-btn"
+                  onClick={() => setShowUpdateModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="reject-btn"
+                  onClick={updateApplicationDocuments}
+                  disabled={newDocuments.length === 0}
+                >
+                  Update Documents
+                </button>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

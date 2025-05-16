@@ -24,7 +24,7 @@ const CompanyProfile = () => {
         </div>
 
         <div className="profile-sections">
-          <div className="basic-info-section">
+          <div className="custom-box">
             <h2>Basic Information</h2>
             <div className="profile-form">
               <div className="form-group">
@@ -35,7 +35,6 @@ const CompanyProfile = () => {
                   onChange={(e) => setProfile({...profile, companyName: e.target.value})}
                 />
               </div>
-
               <div className="form-group">
                 <label>Industry</label>
                 <input 
@@ -44,7 +43,6 @@ const CompanyProfile = () => {
                   onChange={(e) => setProfile({...profile, industry: e.target.value})}
                 />
               </div>
-
               <div className="form-group">
                 <label>Location</label>
                 <input 
@@ -53,7 +51,6 @@ const CompanyProfile = () => {
                   onChange={(e) => setProfile({...profile, location: e.target.value})}
                 />
               </div>
-
               <div className="form-group">
                 <label>Description</label>
                 <textarea 
@@ -63,8 +60,7 @@ const CompanyProfile = () => {
               </div>
             </div>
           </div>
-
-          <div className="contact-info-section">
+          <div className="custom-box">
             <h2>Contact Information</h2>
             <div className="profile-form">
               <div className="form-group">
@@ -75,7 +71,6 @@ const CompanyProfile = () => {
                   onChange={(e) => setProfile({...profile, contactEmail: e.target.value})}
                 />
               </div>
-
               <div className="form-group">
                 <label>Website</label>
                 <input 
@@ -86,8 +81,7 @@ const CompanyProfile = () => {
               </div>
             </div>
           </div>
-
-          <div className="social-media-section">
+          <div className="custom-box">
             <h2>Social Media</h2>
             <div className="profile-form">
               <div className="form-group">
@@ -101,7 +95,6 @@ const CompanyProfile = () => {
                   })}
                 />
               </div>
-
               <div className="form-group">
                 <label>Twitter</label>
                 <input 
@@ -113,7 +106,6 @@ const CompanyProfile = () => {
                   })}
                 />
               </div>
-
               <div className="form-group">
                 <label>Facebook</label>
                 <input 
@@ -127,7 +119,6 @@ const CompanyProfile = () => {
               </div>
             </div>
           </div>
-
           <div className="profile-actions">
             <button className="save-btn">Save Changes</button>
             <button className="cancel-btn">Cancel</button>

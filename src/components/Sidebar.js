@@ -1,6 +1,6 @@
 // src/components/Sidebar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './sidebar.css'; 
 import { useLocation } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
@@ -56,10 +56,37 @@ const menus = {
   ]
 };
 
+const getHomePath = (role) => {
+  switch (role) {
+    case 'company': return '/company/home';
+    case 'student': return '/student/home';
+    case 'PROstudent': return '/PROstudent/home';
+    case 'faculty': return '/faculty/home';
+    case 'scad': return '/scad/home';
+    default: return '/';
+  }
+};
 
 const Sidebar = ({ role }) => {
   const menu = menus[role];
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    const currentPath = location.pathname;
+    const homePath = getHomePath(role);
+    
+    if (currentPath === homePath) {
+      // If at home, go to login
+      navigate('/login');
+    } else if (currentPath === '/login') {
+      // If at login, go to landing page
+      navigate('/');
+    } else {
+      // Otherwise, go to home
+      navigate(homePath);
+    }
+  };
 
   if (!menu) return null;
 
@@ -69,6 +96,15 @@ const Sidebar = ({ role }) => {
         <span>{role?.toUpperCase()}</span>
       </div>
       <div className="sidebar-menu">
+        <div 
+          className="sidebar-menu-item"
+          onClick={handleBack}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+          </svg>
+          Back
+        </div>
         {menu.map(item => (
           <div
             key={item.path}

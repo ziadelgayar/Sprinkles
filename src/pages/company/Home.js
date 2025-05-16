@@ -70,51 +70,50 @@ const CompanyHome = () => {
 
   return (
     <div className="main-content">
-      <div className="company-home">
-        <div className="search-section">
-          <h1>Find the Perfect Intern</h1>
-
-          {/* Search Bar */}
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search by job title or company..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-
-          {/* Filters */}
-          <div className="quick-filters">
-            <select name="industry" onChange={(e) => setFilters({ ...filters, industry: e.target.value })}>
-              <option value="">All Industries</option>
-              <option value="Technology">Technology</option>
-              <option value="Marketing">Marketing</option>
-            </select>
-
-            <select name="duration" onChange={(e) => setFilters({ ...filters, duration: e.target.value })}>
-              <option value="">All Durations</option>
-              <option value="3 months">3 months</option>
-              <option value="6 months">6 months</option>
-              <option value="12+ months">12+ months</option>
-            </select>
-
-            <select name="isPaid" onChange={(e) => setFilters({ ...filters, isPaid: e.target.value })}>
-              <option value="">All Types</option>
-              <option value="true">Paid</option>
-              <option value="false">Unpaid</option>
-            </select>
+      <div className="p-6 max-w-4xl mx-auto space-y-8">
+        <div className="custom-box mb-6">
+          <div className="search-section">
+            <h1 className="text-2xl font-bold mb-4">Find the Perfect Intern</h1>
+            {/* Search Bar */}
+            <div className="mb-4">
+              <input
+                type="text"
+                className="w-full p-2 border rounded"
+                placeholder="Search by job title or company..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            {/* Filters */}
+            <div className="flex flex-wrap gap-2 mb-2">
+              <select name="industry" className="p-2 border rounded bg-white text-gray-900" onChange={(e) => setFilters({ ...filters, industry: e.target.value })}>
+                <option value="">All Industries</option>
+                <option value="Technology">Technology</option>
+                <option value="Marketing">Marketing</option>
+              </select>
+              <select name="duration" className="p-2 border rounded bg-white text-gray-900" onChange={(e) => setFilters({ ...filters, duration: e.target.value })}>
+                <option value="">All Durations</option>
+                <option value="3 months">3 months</option>
+                <option value="6 months">6 months</option>
+                <option value="12+ months">12+ months</option>
+              </select>
+              <select name="isPaid" className="p-2 border rounded bg-white text-gray-900" onChange={(e) => setFilters({ ...filters, isPaid: e.target.value })}>
+                <option value="">All Types</option>
+                <option value="true">Paid</option>
+                <option value="false">Unpaid</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Featured Internships */}
-        <div className="featured-section">
-          <h2>Available Internships</h2>
-          <div className="featured-listings">
+        <div className="custom-box mb-6">
+          <h2 className="text-xl font-bold mb-4">Available Internships</h2>
+          <div className="space-y-4">
             {filteredInternships.length > 0 ? (
               filteredInternships.map((internship) => (
-                <div key={internship.id} className="internship-card">
-                  <h3>{internship.jobTitle}</h3>
+                <div key={internship.id} className="custom-box bg-gray-50">
+                  <h3 className="font-semibold">{internship.jobTitle}</h3>
                   <p><strong>Company:</strong> {internship.companyName}</p>
                   <p><strong>Industry:</strong> {internship.industry}</p>
                   <p><strong>Duration:</strong> {internship.duration}</p>
@@ -127,34 +126,34 @@ const CompanyHome = () => {
                 </div>
               ))
             ) : (
-              <p>No internships match your criteria.</p>
+              <p className="text-gray-500">No internships match your criteria.</p>
             )}
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="quick-actions">
-          <h2>Quick Actions</h2>
-          <div className="action-buttons">
-            <button className="post-slot-btn">Post New Internship</button>
-            <button className="view-applications-btn">View Applications</button>
-            <button className="manage-interns-btn">Manage Current Interns</button>
+        <div className="custom-box mb-6">
+          <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
+          <div className="flex flex-wrap gap-2">
+            <button className="accept-btn">Post New Internship</button>
+            <button className="save-btn">View Applications</button>
+            <button className="reject-btn">Manage Current Interns</button>
           </div>
         </div>
 
         {/* Stats Dashboard */}
-        <div className="stats-dashboard">
-          <div className="stat-card">
-            <h3>Active Listings</h3>
-            <p>{internships.length}</p>
+        <div className="custom-box grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="stat-card text-center p-4">
+            <h3 className="font-semibold mb-2">Active Listings</h3>
+            <p className="text-2xl font-bold">{internships.length}</p>
           </div>
-          <div className="stat-card">
-            <h3>Pending Applications</h3>
-            <p>0</p>
+          <div className="stat-card text-center p-4">
+            <h3 className="font-semibold mb-2">Pending Applications</h3>
+            <p className="text-2xl font-bold">0</p>
           </div>
-          <div className="stat-card">
-            <h3>Current Interns</h3>
-            <p>0</p>
+          <div className="stat-card text-center p-4">
+            <h3 className="font-semibold mb-2">Current Interns</h3>
+            <p className="text-2xl font-bold">0</p>
           </div>
         </div>
       </div>

@@ -42,63 +42,72 @@ const StatisticsReports = () => {
 
     return (
         <div className="main-content">
-            <div className="statistics-reports">
-                <h1>Statistics Reports</h1>
+            <div className="p-6 max-w-4xl mx-auto space-y-8">
+                <h1 className="text-2xl font-bold mb-4">Statistics Reports</h1>
 
                 {/* 1. Number of accepted/rejected/flagged reports per cycle */}
-                <section>
-                    <h2>Number of accepted/rejected/flagged reports per cycle</h2>
-                    <ul>
-                        <li>Accepted: {statistics.reportsPerCycle.accepted}</li>
-                        <li>Rejected: {statistics.reportsPerCycle.rejected}</li>
-                        <li>Flagged: {statistics.reportsPerCycle.flagged}</li>
-                    </ul>
-                </section>
+                <div className="custom-box mb-6">
+                    <h2 className="text-xl font-bold mb-4">Reports per Cycle</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="stat-card text-center p-4">
+                            <span className="block text-gray-500 mb-1">Accepted: </span>
+                            <span className="text-2xl font-bold">{statistics.reportsPerCycle.accepted}</span>
+                        </div>
+                        <div className="stat-card text-center p-4">
+                            <span className="block text-gray-500 mb-1">Rejected: </span>
+                            <span className="text-2xl font-bold">{statistics.reportsPerCycle.rejected}</span>
+                        </div>
+                        <div className="stat-card text-center p-4">
+                            <span className="block text-gray-500 mb-1">Flagged: </span>
+                            <span className="text-2xl font-bold">{statistics.reportsPerCycle.flagged}</span>
+                        </div>
+                    </div>
+                </div>
 
                 {/* 2. Average review time */}
-                <section>
-                    <h2>Average review time</h2>
-                    <p>{statistics.averageReviewTime} days</p>
-                </section>
+                <div className="custom-box mb-6">
+                    <h2 className="text-xl font-bold mb-4">Average Review Time</h2>
+                    <p className="text-2xl font-bold text-center">{statistics.averageReviewTime} days</p>
+                </div>
 
                 {/* 3. Most frequently used courses in internships */}
-                <section>
-                    <h2>Most frequently used courses in internships</h2>
-                    <ol>
+                <div className="custom-box mb-6">
+                    <h2 className="text-xl font-bold mb-4">Most Frequently Used Courses in Internships</h2>
+                    <ol className="list-decimal list-inside space-y-1">
                         {statistics.mostUsedCourses.map(course => (
-                            <li key={course.name}>{course.name} ({course.count} times)</li>
+                            <li key={course.name}>{course.name} <span className="text-gray-500">({course.count} times)</span></li>
                         ))}
                     </ol>
-                </section>
+                </div>
 
                 {/* 4. Top rated companies based on student evaluations */}
-                <section>
-                    <h2>Top rated companies based on student evaluations</h2>
-                    <ol>
+                <div className="custom-box mb-6">
+                    <h2 className="text-xl font-bold mb-4">Top Rated Companies</h2>
+                    <ol className="list-decimal list-inside space-y-1">
                         {statistics.topRatedCompanies.map(company => (
-                            <li key={company.name}>{company.name} (Rating: {company.rating})</li>
+                            <li key={company.name}>{company.name} <span className="text-gray-500">(Rating: {company.rating})</span></li>
                         ))}
                     </ol>
-                </section>
+                </div>
 
                 {/* 5. Top companies by internship count */}
-                <section>
-                    <h2>Top companies by internship count</h2>
-                    <ol>
+                <div className="custom-box mb-6">
+                    <h2 className="text-xl font-bold mb-4">Top Companies by Internship Count</h2>
+                    <ol className="list-decimal list-inside space-y-1">
                         {statistics.topCompaniesByInternship.map(company => (
-                            <li key={company.name}>{company.name} ({company.count} internships)</li>
+                            <li key={company.name}>{company.name} <span className="text-gray-500">({company.count} internships)</span></li>
                         ))}
                     </ol>
-                </section>
+                </div>
 
                 {/* Generate reports section remains as before */}
-                <div className="export-section">
-                    <h2>Generate Reports</h2>
-                    <div className="export-buttons">
-                        <button>Export as PDF</button>
-                        <button>Export as Excel</button>
+                <div className="custom-box">
+                    <h2 className="text-xl font-bold mb-4">Generate Reports</h2>
+                    <div className="flex flex-wrap gap-2 mb-2">
+                        <button className="accept-btn">Export as PDF</button>
+                        <button className="save-btn">Export as Excel</button>
                     </div>
-                    <p>Generate reports based on the real-time statistics above.</p>
+                    <p className="text-gray-500">Generate reports based on the real-time statistics above.</p>
                 </div>
             </div>
         </div>

@@ -68,71 +68,72 @@ const Interns = () => {
   });
 
   return (
-    <div className="main-content interns-page">
-      <div className="page-header">
-        <h1>Current Interns</h1>
+    <div className="main-content">
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="page-header mb-6">
+          <h1 className="text-2xl font-bold">Current Interns</h1>
 
-        {/* Search Bar */}
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search by name or job title"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-
-        {/* Filter Tabs */}
-        <div className="filter-tabs">
-          <button
-            className={`filter-btn ${filter === 'active' ? 'active' : ''}`}
-            onClick={() => setFilter('active')}
-          >
-            Active
-          </button>
-          <button
-            className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
-            onClick={() => setFilter('completed')}
-          >
-            Completed
-          </button>
-        </div>
-      </div>
-
-      {/* Intern List */}
-      <div className="interns-list">
-        {filteredInterns.length === 0 ? (
-          <div className="empty-state">
-            <p>No interns found</p>
+          {/* Search Bar */}
+          <div className="mb-4">
+            <input
+              type="text"
+              className="w-full p-2 border rounded"
+              placeholder="Search by name or job title"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-        ) : (
-          filteredInterns.map((intern) => (
-            <div key={intern.id} className="intern-card">
-              <div className="intern-header">
-                <h3>{intern.name}</h3>
-                <span className={`status ${intern.status}`}>
-                  {intern.status}
-                </span>
-              </div>
 
-              <div className="intern-details">
-                <p>Department: {intern.department}</p>
-                <p>Start Date: {intern.startDate}</p>
-                <p>End Date: {intern.endDate}</p>
-                <p>Supervisor: {intern.supervisor}</p>
-              </div>
+          {/* Filter Tabs */}
+          <div className="filter-tabs flex space-x-2 mb-4">
+            <button
+              className={`accept-btn${filter === 'active' ? ' active' : ''}`}
+              onClick={() => setFilter('active')}
+            >
+              Active
+            </button>
+            <button
+              className={`save-btn${filter === 'completed' ? ' active' : ''}`}
+              onClick={() => setFilter('completed')}
+            >
+              Completed
+            </button>
+          </div>
+        </div>
 
-              <div className="intern-actions">
-                <button onClick={() => markAsCurrent(intern.id)}>
-                  Mark as Current Intern
-                </button>
-                <button onClick={() => markAsCompleted(intern.id)}>
-                  Mark as Internship Complete
-                </button>
-              </div>
+        {/* Intern List */}
+        <div className="space-y-6">
+          {filteredInterns.length === 0 ? (
+            <div className="custom-box text-center">
+              <p className="text-gray-500">No interns found</p>
             </div>
-          ))
-        )}
+          ) : (
+            filteredInterns.map((intern) => (
+              <div key={intern.id} className="custom-box">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-xl font-bold">{intern.name}</h3>
+                  <span className={`status ${intern.status} px-3 py-1 rounded-full text-sm`}>
+                    {intern.status}
+                  </span>
+                </div>
+                <div className="mb-2 text-sm text-gray-500">
+                  <p>Department: {intern.department}</p>
+                  <p>Start Date: {intern.startDate}</p>
+                  <p>End Date: {intern.endDate}</p>
+                  <p>Supervisor: {intern.supervisor}</p>
+                </div>
+                <div className="flex flex-wrap gap-2 justify-end">
+                  <button className="accept-btn" onClick={() => markAsCurrent(intern.id)}>
+                    Mark as Current Intern
+                  </button>
+                  <button className="save-btn" onClick={() => markAsCompleted(intern.id)}>
+                    Mark as Internship Complete
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

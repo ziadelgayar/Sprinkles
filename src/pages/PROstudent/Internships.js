@@ -155,194 +155,187 @@ const StudentInternships = () => {
 
   return (
     <div className="main-content">
-      <div className="page-header">
-        <h1>Browse Internships</h1>
-        <p>Find opportunities that match your major and career goals</p>
-      </div>
-
-      <div className="search-filters">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search by job title or company name..."
-            value={filters.searchQuery}
-            onChange={(e) => setFilters({...filters, searchQuery: e.target.value})}
-          />
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="page-header mb-6">
+          <h1 className="text-2xl font-bold">Browse Internships</h1>
+          <p className="text-gray-400">Find opportunities that match your major and career goals</p>
         </div>
 
-        <div className="filter-options">
-          <div className="filter-group">
-            <label>Status:</label>
-            <select 
-              value={filters.status}
-              onChange={(e) => setFilters({...filters, status: e.target.value})}
-            >
-              <option value="all">All Statuses</option>
-              <option value="current">Current Internships</option>
-              <option value="upcoming">Upcoming Internships</option>
-              <option value="completed">Completed Internships</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Date Range:</label>
-            <select 
-              value={filters.dateRange}
-              onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
-            >
-              <option value="all">All Dates</option>
-              <option value="past">Past Internships</option>
-              <option value="current">Current Internships</option>
-              <option value="upcoming">Upcoming Internships</option>
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Filter by Major:</label>
-            <select
-              value={filters.major}
-              onChange={(e) => setFilters({...filters, major: e.target.value})}
-            >
-              <option value="">All Majors</option>
-              {allMajors.map((major, index) => (
-                <option key={index} value={major}>{major}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Semester:</label>
-            <select
-              value={filters.semester}
-              onChange={(e) => setFilters({...filters, semester: e.target.value})}
-            >
-              <option value="">Any Semester</option>
-              <option value="1">Semester 1</option>
-              <option value="2">Semester 2</option>
-              <option value="3">Semester 3</option>
-              <option value="4">Semester 4</option>
-            </select>
+        <div className="custom-box mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="form-group mb-0">
+              <input
+                type="text"
+                className="w-full p-2 border rounded"
+                placeholder="Search by job title or company name..."
+                value={filters.searchQuery}
+                onChange={(e) => setFilters({...filters, searchQuery: e.target.value})}
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <select 
+                className="p-2 border rounded"
+                value={filters.status}
+                onChange={(e) => setFilters({...filters, status: e.target.value})}
+              >
+                <option value="all">All Statuses</option>
+                <option value="current">Current Internships</option>
+                <option value="upcoming">Upcoming Internships</option>
+                <option value="completed">Completed Internships</option>
+              </select>
+              <select 
+                className="p-2 border rounded"
+                value={filters.dateRange}
+                onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
+              >
+                <option value="all">All Dates</option>
+                <option value="past">Past Internships</option>
+                <option value="current">Current Internships</option>
+                <option value="upcoming">Upcoming Internships</option>
+              </select>
+              <select
+                className="p-2 border rounded"
+                value={filters.major}
+                onChange={(e) => setFilters({...filters, major: e.target.value})}
+              >
+                <option value="">All Majors</option>
+                {allMajors.map((major, index) => (
+                  <option key={index} value={major}>{major}</option>
+                ))}
+              </select>
+              <select
+                className="p-2 border rounded"
+                value={filters.semester}
+                onChange={(e) => setFilters({...filters, semester: e.target.value})}
+              >
+                <option value="">Any Semester</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="internships-list">
-        {filteredInternships.length === 0 ? (
-          <div className="empty-state">
-            <p>No internships found matching your criteria</p>
-            <button onClick={() => setFilters({
-              searchQuery: '',
-              status: 'all',
-              dateRange: 'all',
-              major: '',
-              semester: ''
-            })}>
-              Clear Filters
-            </button>
-          </div>
-        ) : (
-          filteredInternships.map((internship) => (
-            <div key={internship.id} className="internship-card">
-              <div className="internship-header">
-                <h3>{internship.title}</h3>
-                <div className="status-container">
-                  <span className={`status ${internship.status}`}>
-                    {getStatusLabel(internship.status)}
-                  </span>
-                  {internship.status === 'current' && (
-                    <span className="positions">
-                      {internship.currentInterns}/{internship.totalPositions} positions filled
+        <div className="space-y-6">
+          {filteredInternships.length === 0 ? (
+            <div className="custom-box text-center">
+              <p className="mb-4 text-gray-500">No internships found matching your criteria</p>
+              <button className="cancel-btn" onClick={() => setFilters({
+                searchQuery: '',
+                status: 'all',
+                dateRange: 'all',
+                major: '',
+                semester: ''
+              })}>
+                Clear Filters
+              </button>
+            </div>
+          ) : (
+            filteredInternships.map((internship) => (
+              <div key={internship.id} className="custom-box">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-xl font-bold">{internship.title}</h3>
+                  <div className="flex flex-col items-end">
+                    <span className={`status ${internship.status} px-3 py-1 rounded-full text-sm mb-1`}>
+                      {getStatusLabel(internship.status)}
                     </span>
+                    {internship.status === 'current' && (
+                      <span className="positions text-xs text-gray-400">
+                        {internship.currentInterns}/{internship.totalPositions} positions filled
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mb-2">
+                  <h4 className="font-semibold">{internship.company}</h4>
+                  <p className="text-gray-400">{internship.location}</p>
+                  <p className="date-range text-xs text-gray-400">
+                    {formatDate(internship.startDate)} - {formatDate(internship.endDate)}
+                  </p>
+                </div>
+
+                <div className="mb-2">
+                  <h4 className="font-semibold">Description:</h4>
+                  <p>{internship.description}</p>
+                </div>
+                <div className="mb-2">
+                  <h4 className="font-semibold">Requirements:</h4>
+                  <p>{internship.requirements}</p>
+                </div>
+                <div className="mb-2">
+                  <h4 className="font-semibold">Relevant Majors:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {internship.majors.map((major, index) => (
+                      <span key={index} className="major-tag bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">{major}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex justify-end mt-4">
+                  {appliedInternships.includes(internship.id) ? (
+                    <button className="accept-btn" disabled>Applied ✓</button>
+                  ) : (
+                    <button 
+                      className="accept-btn"
+                      onClick={() => handleApplyClick(internship)}
+                    >
+                      Apply Now
+                    </button>
                   )}
                 </div>
               </div>
+            ))
+          )}
+        </div>
 
-              <div className="company-info">
-                <h4>{internship.company}</h4>
-                <p>{internship.location}</p>
-                <p className="date-range">
-                  {formatDate(internship.startDate)} - {formatDate(internship.endDate)}
-                </p>
-              </div>
-
-              <div className="internship-details">
-                <h4>Description:</h4>
-                <p>{internship.description}</p>
-                
-                <h4>Requirements:</h4>
-                <p>{internship.requirements}</p>
-
-                <h4>Relevant Majors:</h4>
-                <div className="majors-list">
-                  {internship.majors.map((major, index) => (
-                    <span key={index} className="major-tag">{major}</span>
-                  ))}
+        {/* Application Modal */}
+        {showApplicationModal && selectedInternship && (
+          <div className="modal-overlay">
+            <div className="custom-box max-w-md mx-auto mt-20">
+              <h2 className="text-xl font-bold mb-2">Apply for {selectedInternship.title}</h2>
+              <p className="mb-4">at {selectedInternship.company}</p>
+              <div className="mb-4">
+                <h3 className="font-semibold mb-2">Documents to Submit:</h3>
+                <div className="flex flex-col gap-2">
+                  <label className="flex items-center gap-2">
+                    <input 
+                      type="checkbox" 
+                      checked={applicationDocuments.resume}
+                      onChange={() => setApplicationDocuments({
+                        ...applicationDocuments,
+                        resume: !applicationDocuments.resume
+                      })}
+                    />
+                    Resume (required)
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input 
+                      type="checkbox" 
+                      checked={applicationDocuments.coverLetter}
+                      onChange={() => setApplicationDocuments({
+                        ...applicationDocuments,
+                        coverLetter: !applicationDocuments.coverLetter
+                      })}
+                    />
+                    Cover Letter
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input 
+                      type="checkbox" 
+                      checked={applicationDocuments.portfolio}
+                      onChange={() => setApplicationDocuments({
+                        ...applicationDocuments,
+                        portfolio: !applicationDocuments.portfolio
+                      })}
+                    />
+                    Portfolio
+                  </label>
                 </div>
               </div>
-
-              <div className="internship-actions">
-                {appliedInternships.includes(internship.id) ? (
-                  <button className="applied-btn" disabled>Applied ✓</button>
-                ) : (
-                  <button 
-                    className="apply-btn"
-                    onClick={() => handleApplyClick(internship)}
-                  >
-                    Apply Now
-                  </button>
-                )}
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      {/* Application Modal */}
-      {showApplicationModal && selectedInternship && (
-        <div className="application-modal">
-          <div className="modal-content">
-            <h2>Apply for {selectedInternship.title}</h2>
-            <p>at {selectedInternship.company}</p>
-            
-            <div className="application-form">
-              <h3>Documents to Submit:</h3>
-              <div className="document-options">
-                <label>
-                  <input 
-                    type="checkbox" 
-                    checked={applicationDocuments.resume}
-                    onChange={() => setApplicationDocuments({
-                      ...applicationDocuments,
-                      resume: !applicationDocuments.resume
-                    })}
-                  />
-                  Resume (required)
-                </label>
-                <label>
-                  <input 
-                    type="checkbox" 
-                    checked={applicationDocuments.coverLetter}
-                    onChange={() => setApplicationDocuments({
-                      ...applicationDocuments,
-                      coverLetter: !applicationDocuments.coverLetter
-                    })}
-                  />
-                  Cover Letter
-                </label>
-                <label>
-                  <input 
-                    type="checkbox" 
-                    checked={applicationDocuments.portfolio}
-                    onChange={() => setApplicationDocuments({
-                      ...applicationDocuments,
-                      portfolio: !applicationDocuments.portfolio
-                    })}
-                  />
-                  Portfolio
-                </label>
-              </div>
-
-              <div className="modal-actions">
+              <div className="flex justify-end gap-2">
                 <button 
                   className="cancel-btn"
                   onClick={() => setShowApplicationModal(false)}
@@ -350,7 +343,7 @@ const StudentInternships = () => {
                   Cancel
                 </button>
                 <button 
-                  className="submit-btn"
+                  className="accept-btn"
                   onClick={submitApplication}
                   disabled={!applicationDocuments.resume}
                 >
@@ -359,8 +352,8 @@ const StudentInternships = () => {
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -52,18 +52,18 @@ const Profile = () => {
 
     return (
         <div className="main-content">
-            <div className="faculty-profile">
-                <h1>Profile </h1>
+            <div className="p-6 max-w-3xl mx-auto space-y-8">
+                <h1 className="text-2xl font-bold mb-4">Profile</h1>
 
-                <div className="profile-section">
-                    <div className="profile-header">
-                        <h2>Personal Information</h2>
+                <div className="custom-box mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-bold">Personal Information</h2>
                         {!isEditing ? (
-                            <button className="edit-btn" onClick={handleEdit}>
+                            <button className="accept-btn" onClick={handleEdit}>
                                 Edit Profile
                             </button>
                         ) : (
-                            <div className="edit-actions">
+                            <div className="flex gap-2">
                                 <button className="save-btn" onClick={handleSave}>
                                     Save Changes
                                 </button>
@@ -74,40 +74,43 @@ const Profile = () => {
                         )}
                     </div>
 
-                    <div className="profile-content">
-                        <div className="profile-field">
-                            <label>Name</label>
+                    <div className="grid grid-cols-1 gap-4">
+                        <div>
+                            <label className="block font-semibold mb-1">Name: </label>
                             {isEditing ? (
                                 <input
                                     type="text"
                                     name="name"
+                                    className="w-full p-2 border rounded"
                                     value={editedProfile.name}
                                     onChange={handleChange}
                                 />
                             ) : (
-                                <p>{profile.name}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.name}</p>
                             )}
                         </div>
 
-                        <div className="profile-field">
-                            <label>Email</label>
+                        <div>
+                            <label className="block font-semibold mb-1">Email: </label>
                             {isEditing ? (
                                 <input
                                     type="email"
                                     name="email"
+                                    className="w-full p-2 border rounded"
                                     value={editedProfile.email}
                                     onChange={handleChange}
                                 />
                             ) : (
-                                <p>{profile.email}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.email}</p>
                             )}
                         </div>
 
-                        <div className="profile-field">
-                            <label>Department</label>
+                        <div>
+                            <label className="block font-semibold mb-1">Department: </label>
                             {isEditing ? (
                                 <select
                                     name="department"
+                                    className="w-full p-2 border rounded bg-white text-gray-900"
                                     value={editedProfile.department}
                                     onChange={handleChange}
                                 >
@@ -116,96 +119,101 @@ const Profile = () => {
                                     <option value="UI/UX Design">UI/UX Design</option>
                                 </select>
                             ) : (
-                                <p>{profile.department}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.department}</p>
                             )}
                         </div>
 
-                        <div className="profile-field">
-                            <label>Position</label>
+                        <div>
+                            <label className="block font-semibold mb-1">Position: </label>
                             {isEditing ? (
                                 <input
                                     type="text"
                                     name="position"
+                                    className="w-full p-2 border rounded"
                                     value={editedProfile.position}
                                     onChange={handleChange}
                                 />
                             ) : (
-                                <p>{profile.position}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.position}</p>
                             )}
                         </div>
 
-                        <div className="profile-field">
-                            <label>Phone</label>
+                        <div>
+                            <label className="block font-semibold mb-1">Phone: </label>
                             {isEditing ? (
                                 <input
                                     type="tel"
                                     name="phone"
+                                    className="w-full p-2 border rounded"
                                     value={editedProfile.phone}
                                     onChange={handleChange}
                                 />
                             ) : (
-                                <p>{profile.phone}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.phone}</p>
                             )}
                         </div>
 
-                        <div className="profile-field">
-                            <label>Office</label>
+                        <div>
+                            <label className="block font-semibold mb-1">Office: </label>
                             {isEditing ? (
                                 <input
                                     type="text"
                                     name="office"
+                                    className="w-full p-2 border rounded"
                                     value={editedProfile.office}
                                     onChange={handleChange}
                                 />
                             ) : (
-                                <p>{profile.office}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.office}</p>
                             )}
                         </div>
 
-                        <div className="profile-field">
-                            <label>Office Hours</label>
+                        <div>
+                            <label className="block font-semibold mb-1">Office Hours: </label>
                             {isEditing ? (
                                 <input
                                     type="text"
                                     name="officeHours"
+                                    className="w-full p-2 border rounded"
                                     value={editedProfile.officeHours}
                                     onChange={handleChange}
                                 />
                             ) : (
-                                <p>{profile.officeHours}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.officeHours}</p>
                             )}
                         </div>
 
-                        <div className="profile-field">
-                            <label>Biography</label>
+                        <div>
+                            <label className="block font-semibold mb-1 ">Biography: </label>
                             {isEditing ? (
                                 <textarea
                                     name="biography"
+                                    className="w-full p-2 border rounded"
                                     value={editedProfile.biography}
                                     onChange={handleChange}
                                     rows="4"
                                 />
                             ) : (
-                                <p>{profile.biography}</p>
+                                <p className="p-2 bg-gray-50 rounded">{profile.biography}</p>
                             )}
                         </div>
                     </div>
                 </div>
 
-                <div className="documents-section">
-                    <h2>Documents</h2>
-                    <div className="document-uploads">
+                <div className="custom-box">
+                    <h2 className="text-xl font-bold mb-4">Documents</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="document-item">
-                            <h3>CV</h3>
-                            <input type="file" accept=".pdf,.doc,.docx" />
+                            <h3 className="font-semibold mb-2">CV</h3>
+                            <input type="file" accept=".pdf,.doc,.docx" className="w-full p-2 border rounded bg-white text-gray-900" />
                         </div>
                         <div className="document-item">
-                            <h3>Certificates</h3>
-                            <input type="file" accept=".pdf,.jpg,.png" multiple />
+                            <h3 className="font-semibold mb-2">Certificates</h3>
+                            <input type="file" accept=".pdf,.jpg,.png" multiple className="w-full p-2 border rounded bg-white text-gray-900" />
                         </div>
                         <div className="document-item">
-                            <h3>Publications</h3>
-                            <input type="file" accept=".pdf" multiple />
+                            <h3 className="font-semibold mb-2">Publications</h3>
+                            <input type="file" accept=".pdf" multiple className="w-full p-2 border rounded bg-white text-gray-900" />
                         </div>
                     </div>
                 </div>

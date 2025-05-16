@@ -92,45 +92,43 @@ const Notifications = () => {
             </button>
           </div>
         </div>
-
-        <div className="notification-settings">
+        <div className="custom-box notification-settings">
           <h2>Notification Settings</h2>
           <div className="settings-form">
             <div className="setting-item">
-              <label>Internship Cycles</label>
+              <label>Email Notifications</label>
               <input
                 type="checkbox"
-                checked={settings.cycle}
-                onChange={() => handleSettingChange('cycle')}
+                checked={settings.email}
+                onChange={() => handleSettingChange('email')}
               />
             </div>
             <div className="setting-item">
-              <label>Report Status Updates</label>
+              <label>Application Updates</label>
               <input
                 type="checkbox"
-                checked={settings.report}
-                onChange={() => handleSettingChange('report')}
+                checked={settings.application}
+                onChange={() => handleSettingChange('application')}
               />
             </div>
             <div className="setting-item">
-              <label>Comments on Reports</label>
+              <label>New Messages</label>
               <input
                 type="checkbox"
-                checked={settings.comment}
-                onChange={() => handleSettingChange('comment')}
+                checked={settings.messages}
+                onChange={() => handleSettingChange('messages')}
               />
             </div>
             <div className="setting-item">
-              <label>Appeal Submissions</label>
+              <label>System Updates</label>
               <input
                 type="checkbox"
-                checked={settings.appeal}
-                onChange={() => handleSettingChange('appeal')}
+                checked={settings.system}
+                onChange={() => handleSettingChange('system')}
               />
             </div>
           </div>
         </div>
-
         <div className="notifications-list">
           {filteredNotifications.length === 0 ? (
             <div className="empty-state">
@@ -140,9 +138,10 @@ const Notifications = () => {
             filteredNotifications.map((notification) => (
               <div
                 key={notification.id}
-                className={`notification-card ${notification.read ? 'read' : 'unread'}`}
+                className={`custom-box notification-card ${notification.read ? 'read' : 'unread'}`}
+                style={!notification.read ? { borderLeft: '4px solid #4fd1c5' } : {}}
               >
-                <div className="notification-icon">🔔</div>
+                <div className="notification-icon">📩</div>
                 <div className="notification-content">
                   <h3>{notification.title}</h3>
                   <p>{notification.message}</p>

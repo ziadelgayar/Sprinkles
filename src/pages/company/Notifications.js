@@ -89,8 +89,7 @@ const Notifications = () => {
             </button>
           </div>
         </div>
-
-        <div className="notification-settings">
+        <div className="custom-box notification-settings">
           <h2>Notification Settings</h2>
           <div className="settings-form">
             <div className="setting-item">
@@ -127,7 +126,6 @@ const Notifications = () => {
             </div>
           </div>
         </div>
-
         <div className="notifications-list">
           {filteredNotifications.length === 0 ? (
             <div className="empty-state">
@@ -137,7 +135,8 @@ const Notifications = () => {
             filteredNotifications.map((notification) => (
               <div
                 key={notification.id}
-                className={`notification-card ${notification.read ? 'read' : 'unread'}`}
+                className={`custom-box notification-card ${notification.read ? 'read' : 'unread'}`}
+                style={!notification.read ? { borderLeft: '4px solid #4fd1c5' } : {}}
               >
                 <div className="notification-icon">📩</div>
                 <div className="notification-content">

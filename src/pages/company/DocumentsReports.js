@@ -6,32 +6,31 @@ const DocumentsReports = () => {
 
   return (
     <div className="main-content">
-      <div className="documents-reports-page">
-        <div className="page-header">
-          <h1>Documents & Reports</h1>
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="page-header mb-6">
+          <h1 className="text-2xl font-bold">Documents & Reports</h1>
         </div>
 
-        <div className="documents-section">
-          <h2>Company Documents</h2>
-          <div className="upload-section">
-            <button className="upload-btn">Upload New Document</button>
+        <div className="custom-box mb-6">
+          <h2 className="text-xl font-bold mb-4">Company Documents</h2>
+          <div className="flex justify-end mb-4">
+            <button className="accept-btn">Upload New Document</button>
           </div>
-          
-          <div className="documents-list">
+          <div className="space-y-4">
             {documents.length === 0 ? (
-              <p>No documents available</p>
+              <p className="text-gray-500">No documents available</p>
             ) : (
               documents.map((doc) => (
-                <div key={doc.id} className="document-card">
-                  <div className="document-info">
-                    <h3>{doc.title}</h3>
-                    <p>Type: {doc.type}</p>
-                    <p>Last Updated: {doc.lastUpdated}</p>
+                <div key={doc.id} className="custom-box bg-gray-50 flex flex-col md:flex-row md:items-center md:justify-between">
+                  <div className="document-info mb-2 md:mb-0">
+                    <h3 className="font-semibold">{doc.title}</h3>
+                    <p className="text-xs text-gray-500">Type: {doc.type}</p>
+                    <p className="text-xs text-gray-400">Last Updated: {doc.lastUpdated}</p>
                   </div>
-                  <div className="document-actions">
-                    <button className="view-btn">View</button>
-                    <button className="download-btn">Download</button>
-                    <button className="delete-btn">Delete</button>
+                  <div className="flex gap-2">
+                    <button className="accept-btn">View</button>
+                    <button className="save-btn">Download</button>
+                    <button className="reject-btn">Delete</button>
                   </div>
                 </div>
               ))
@@ -39,28 +38,31 @@ const DocumentsReports = () => {
           </div>
         </div>
 
-        <div className="reports-section">
-          <h2>Reports</h2>
-          <div className="reports-filters">
-            <select>
+        <div className="custom-box mb-6">
+          <h2 className="text-xl font-bold mb-4">Reports</h2>
+          <div className="flex flex-wrap gap-4 mb-4 items-center">
+            <select className="p-2 border rounded bg-white text-gray-900">
               <option>All Reports</option>
               <option>Internship Reports</option>
               <option>Application Reports</option>
               <option>Evaluation Reports</option>
             </select>
-            <input type="date" placeholder="Select Date Range" />
+            <input type="date" className="p-2 border rounded bg-white text-gray-900" placeholder="Select Date Range" />
           </div>
-
-          <div className="reports-list">
+          <div className="space-y-4">
             {reports.length === 0 ? (
-              <p>No reports available</p>
+              <p className="text-gray-500">No reports available</p>
             ) : (
               reports.map((report) => (
-                <div key={report.id} className="report-card">
-                  <h3>{report.title}</h3>
-                  <p>Generated: {report.generatedDate}</p>
-                  <button className="generate-btn">Generate Report</button>
-                  <button className="download-btn">Download</button>
+                <div key={report.id} className="custom-box bg-gray-50 flex flex-col md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <h3 className="font-semibold">{report.title}</h3>
+                    <p className="text-xs text-gray-400">Generated: {report.generatedDate}</p>
+                  </div>
+                  <div className="flex gap-2 mt-2 md:mt-0">
+                    <button className="save-btn">Generate Report</button>
+                    <button className="accept-btn">Download</button>
+                  </div>
                 </div>
               ))
             )}

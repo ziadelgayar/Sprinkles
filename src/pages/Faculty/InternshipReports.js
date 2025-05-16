@@ -8,6 +8,7 @@ const InternshipReports = () => {
     });
     const [selectedReport, setSelectedReport] = useState(null);
     const [comment, setComment] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Dummy data for demonstration
     useEffect(() => {
@@ -19,7 +20,8 @@ const InternshipReports = () => {
                 company: 'Tech Corp',
                 status: 'pending',
                 submissionDate: '2024-03-15',
-                reportUrl: '#'
+                reportUrl: '#', // Replace with actual PDF URL
+                comments: []
             },
             {
                 id: 2,
@@ -28,7 +30,8 @@ const InternshipReports = () => {
                 company: 'Data Systems',
                 status: 'accepted',
                 submissionDate: '2024-03-14',
-                reportUrl: '#'
+                reportUrl: '#',
+                comments: []
             },
             {
                 id: 3,
@@ -37,7 +40,8 @@ const InternshipReports = () => {
                 company: 'Design Studio',
                 status: 'flagged',
                 submissionDate: '2024-03-13',
-                reportUrl: '#'
+                reportUrl: '#',
+                comments: []
             }
         ]);
     }, []);
@@ -56,13 +60,24 @@ const InternshipReports = () => {
                 ? { ...report, status: newStatus }
                 : report
         ));
+        setIsModalOpen(false);
     };
 
     const handleCommentSubmit = (reportId) => {
         if (!comment.trim()) return;
-        
-        // In a real application, this would send the comment to the backend
-        alert(`Comment submitted for report ${reportId}: ${comment}`);
+
+        setReports(prev => prev.map(report => 
+            report.id === reportId 
+                ? { 
+                    ...report, 
+                    comments: [...report.comments, {
+                        id: Date.now(),
+                        text: comment,
+                        timestamp: new Date().toISOString()
+                    }]
+                }
+                : report
+        ));
         setComment('');
     };
 
@@ -72,118 +87,190 @@ const InternshipReports = () => {
         return true;
     });
 
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'accepted': return 'bg-green-100 text-green-800';
+            case 'rejected': return 'bg-red-100 text-red-800';
+            case 'flagged': return 'bg-yellow-100 text-yellow-800';
+            default: return 'bg-gray-100 text-gray-800';
+        }
+    };
+
     return (
         <div className="main-content">
-            <div className="internship-reports">
-                <h1>Internship Reports</h1>
-
-                <div className="filters">
-                    <select 
-                        name="major" 
-                        value={filters.major} 
-                        onChange={handleFilterChange}
-                    >
-                        <option value="all">All Majors</option>
-                        <option value="Computer Science">Computer Science</option>
-                        <option value="Data Science">Data Science</option>
-                        <option value="UI/UX Design">UI/UX Design</option>
-                    </select>
-
-                    <select 
-                        name="status" 
-                        value={filters.status} 
-                        onChange={handleFilterChange}
-                    >
-                        <option value="all">All Statuses</option>
-                        <option value="pending">Pending</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="flagged">Flagged</option>
-                    </select>
+            <div className="p-6 max-w-7xl mx-auto space-y-6">
+                <div className="flex justify-between items-center">
+                    <h1 className="text-2xl font-bold">Internship Reports</h1>
                 </div>
 
-                <div className="reports-container">
-                    <div className="reports-list">
-                        <h2>Reports</h2>
-                        <table>
-                            <thead>
+                <div className="custom-box p-4">
+                    <div className="flex flex-wrap gap-4">
+                        <select 
+                            name="major" 
+                            value={filters.major} 
+                            onChange={handleFilterChange}
+                            className="p-2 border rounded bg-white text-gray-900"
+                        >
+                            <option value="all">All Majors</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                        </select>
+
+                        <select 
+                            name="status" 
+                            value={filters.status} 
+                            onChange={handleFilterChange}
+                            className="p-2 border rounded bg-white text-gray-900"
+                        >
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="flagged">Flagged</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div className="custom-box">
+                    <h2 className="text-xl font-bold mb-4">Reports</h2>
+                    <style>{`.purple-btn { background: #8b5cf6 !important; color: #fff !important; border-radius: 0.375rem; padding: 0.5rem 1rem; text-align: center; display: inline-block; transition: background 0.2s; } .purple-btn:hover { background: #7c3aed !important; }`}</style>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full border border-gray-200 rounded-lg">
+                            <thead className="bg-gray-100">
                                 <tr>
-                                    <th>Student</th>
-                                    <th>Major</th>
-                                    <th>Company</th>
-                                    <th>Status</th>
-                                    <th>Submission Date</th>
-                                    <th>Actions</th>
-                                </tr>
+                                    <th className="px-4 py-2 border-b">Student</th>
+                                    <th className="px-4 py-2 border-b">Major</th>
+                                    <th className="px-4 py-2 border-b">Company</th>
+                                    <th className="px-4 py-2 border-b">Status</th>
+                                    <th className="px-4 py-2 border-b">Submission Date</th>
+                                    </tr>
                             </thead>
                             <tbody>
-                                {filteredReports.map(report => (
-                                    <tr key={report.id}>
-                                        <td>{report.studentName}</td>
-                                        <td>{report.major}</td>
-                                        <td>{report.company}</td>
-                                        <td>{report.status}</td>
-                                        <td>{report.submissionDate}</td>
-                                        <td>
-                                            <button onClick={() => setSelectedReport(report)}>
+                                {filteredReports.map((report) => (
+                                    <tr key={report.id} className="hover:bg-gray-50">
+                                        <td className="px-4 py-2">{report.studentName}</td>
+                                        <td className="px-4 py-2">{report.major}</td>
+                                        <td className="px-4 py-2">{report.company}</td>
+                                        <td className="px-4 py-2 capitalize">{report.status.replace('_', ' ')}</td>
+                                        <td className="px-4 py-2">{report.submissionDate}</td>
+                                        <td className="px-4 py-2 flex flex-wrap gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedReport(report);
+                                                    setIsModalOpen(true);
+                                                }}
+                                                className="accept-btn"
+                                            >
                                                 View Details
                                             </button>
-                                            <a href={report.reportUrl} download>
+                                            <a
+                                                href={report.reportUrl}
+                                                download={`Report_${report.studentName.replace(/\s/g, '_')}.pdf`}
+                                                className="purple-btn"
+                                            >
                                                 Download PDF
                                             </a>
                                         </td>
                                     </tr>
                                 ))}
+                                {filteredReports.length === 0 && (
+                                    <tr>
+                                        <td colSpan="6" className="text-center py-8 text-gray-500">
+                                            No reports found.
+                                        </td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>
+                </div>
 
-                    {selectedReport && (
-                        <div className="report-details">
-                            <h2>Report Details</h2>
-                            <div className="details-content">
-                                <h3>{selectedReport.studentName}'s Report</h3>
-                                <p><strong>Major:</strong> {selectedReport.major}</p>
-                                <p><strong>Company:</strong> {selectedReport.company}</p>
-                                <p><strong>Status:</strong> {selectedReport.status}</p>
-                                <p><strong>Submission Date:</strong> {selectedReport.submissionDate}</p>
+                {isModalOpen && selectedReport && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+                        <div className="custom-box max-w-2xl w-full p-6">
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="text-xl font-bold">Report Details</h2>
+                                <button 
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="text-gray-500 hover:text-gray-700"
+                                >
+                                    ✕
+                                </button>
+                            </div>
 
-                                <div className="status-actions">
-                                    <h4>Update Status</h4>
-                                    <div className="status-buttons">
+                            <div className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <p className="font-semibold">Student Name</p>
+                                        <p>{selectedReport.studentName}</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold">Major</p>
+                                        <p>{selectedReport.major}</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold">Company</p>
+                                        <p>{selectedReport.company}</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold">Submission Date</p>
+                                        <p>{selectedReport.submissionDate}</p>
+                                    </div>
+                                </div>
+
+                                <div className="border-t pt-4">
+                                    <h3 className="font-semibold mb-2">Update Status</h3>
+                                    <div className="flex gap-2">
                                         <button 
                                             onClick={() => handleStatusUpdate(selectedReport.id, 'accepted')}
+                                            className="accept-btn"
                                         >
                                             Accept
                                         </button>
                                         <button 
                                             onClick={() => handleStatusUpdate(selectedReport.id, 'rejected')}
+                                            className="reject-btn"
                                         >
                                             Reject
                                         </button>
                                         <button 
                                             onClick={() => handleStatusUpdate(selectedReport.id, 'flagged')}
+                                            className="save-btn"
                                         >
                                             Flag
                                         </button>
                                     </div>
                                 </div>
 
-                                <div className="comments-section">
-                                    <h4>Add Comment</h4>
+                                <div className="border-t pt-4">
+                                    <h3 className="font-semibold mb-2">Comments</h3>
+                                    <div className="space-y-2 mb-4">
+                                        {selectedReport.comments.map(comment => (
+                                            <div key={comment.id} className="bg-gray-50 p-2 rounded">
+                                                <p className="text-sm">{comment.text}</p>
+                                                <p className="text-xs text-gray-500">{new Date(comment.timestamp).toLocaleString()}</p>
+                                            </div>
+                                        ))}
+                                    </div>
                                     <textarea
                                         value={comment}
                                         onChange={(e) => setComment(e.target.value)}
                                         placeholder="Enter your comment here..."
+                                        className="w-full p-2 border rounded mb-2"
+                                        rows="3"
                                     />
-                                    <button onClick={() => handleCommentSubmit(selectedReport.id)}>
+                                    <button 
+                                        onClick={() => handleCommentSubmit(selectedReport.id)}
+                                        className="accept-btn"
+                                    >
                                         Submit Comment
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     );

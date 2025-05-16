@@ -4,7 +4,6 @@ import Sidebar from '../components/Sidebar';
 
 const MainLayout = () => {
   const location = useLocation();
-  // Extract the role from the URL path (e.g., /company/... -> company)
   const role = location.pathname.split('/')[1];
 
   return (
