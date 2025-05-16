@@ -50,6 +50,8 @@ export const ROUTES = {
     HOME: '/scad/scadDashboard',
     STATISTICS: '/scad/statistics',
     REPORTS: '/scad/internshipReports', 
-    REPORT_DETAILS: '/scad/reportDetails'
+    REPORT_DETAILS: '/scad/reportDetails',
+    WORKSHOPS: '/scad/workshops',
+    VIDEOCALL: '/scad/videocall'
   }
 };

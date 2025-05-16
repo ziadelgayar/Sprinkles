@@ -131,16 +131,6 @@ const CompanyHome = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="custom-box mb-6">
-          <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
-          <div className="flex flex-wrap gap-2">
-            <button className="accept-btn">Post New Internship</button>
-            <button className="save-btn">View Applications</button>
-            <button className="reject-btn">Manage Current Interns</button>
-          </div>
-        </div>
-
         {/* Stats Dashboard */}
         <div className="custom-box grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="stat-card text-center p-4">

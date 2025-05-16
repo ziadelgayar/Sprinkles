@@ -84,8 +84,8 @@ const Companies = () => {
   });
 
   return (
-    <div className="main-content">
-      <div className="companies-container">
+    <div className="main-content" style={{ paddingLeft: '260px', overflowX: 'auto' }}>
+      <div className="companies-container" style={{ maxWidth: '100%', overflowX: 'auto' }}>
         <div className="page-header">
           <h1>Companies Management</h1>
           <p>Manage and review companies applying to the SCAD system</p>
@@ -93,7 +93,7 @@ const Companies = () => {
 
         <div className="search-filters">
           <div className="search-bar">
-            <span className="search-icon">��</span>
+            <span className="search-icon">🔍</span>
             <input
               type="text"
               placeholder="Search companies..."

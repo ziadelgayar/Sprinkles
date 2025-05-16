@@ -28,7 +28,8 @@ const PROStudentWorkshops = () => {
         id: 3,
         title: 'LinkedIn Optimization',
         description: 'Make the most of your LinkedIn profile.',
-        videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4'
+        videoUrl: 'https://pixabay.com/videos/id-1234567/download/video.mp4'
+
       }
     ]
   });
@@ -166,7 +167,7 @@ const PROStudentWorkshops = () => {
               <h3>Live workshop in session: {activeWorkshop.title}</h3>
               <p>{activeWorkshop.description}</p>
               <video width="100%" controls autoPlay>
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+                <source src="https://pixabay.com/videos/id-1234567/" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>

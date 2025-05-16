@@ -714,74 +714,7 @@ const StudentProfileAndSettings = () => {
               onChange={(e) => handleFileChange('certificates', e.target.files)}
             />
           </div>
-        </div>
-
-        {/* Assessment Score */}
-        <div className="custom-box mb-6">
-          <h2 className="text-xl font-bold mb-4">Online Assessment</h2>
-
-          {profile.postAssessmentScore && profile.assessmentScore ? (
-            <div className="mb-4 p-3 bg-gray-100 rounded">
-              <p className="font-semibold">Your assessment score: {profile.assessmentScore}</p>
-              <button
-                className="cancel-btn mt-2"
-                onClick={cancelAssessmentScore}
-              >
-                Remove Score
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="mb-4">
-                <label htmlFor="postAssessmentScore" className="inline-flex items-center cursor-pointer">
-                  <input
-                    id="postAssessmentScore"
-                    type="checkbox"
-                    checked={profile.postAssessmentScore}
-                    onChange={(e) => {
-                      if (!e.target.checked) {
-                        cancelAssessmentScore();
-                      } else {
-                        setProfile((prev) => ({ ...prev, postAssessmentScore: true }));
-                      }
-                    }}
-                    className="mr-2"
-                  />
-                  Choose to post my online assessment score on my profile
-                </label>
-              </div>
-              {profile.postAssessmentScore && (
-                <div className="bg-gray-100 p-4 rounded">
-                  <label className="block font-semibold mb-2">Enter your assessment score:</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={scoreInput}
-                    onChange={handleAssessmentScoreChange}
-                    className="p-2 border rounded w-full mb-2"
-                    placeholder="Score (0-100)"
-                  />
-                  <div className="flex justify-end space-x-2">
-                    <button
-                      className="save-btn"
-                      onClick={saveAssessmentScore}
-                      disabled={scoreInput.trim() === ''}
-                    >
-                      Save Score
-                    </button>
-                    <button
-                      className="cancel-btn"
-                      onClick={cancelAssessmentScore}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
+        </div> 
       </div>
     </div>
   );
