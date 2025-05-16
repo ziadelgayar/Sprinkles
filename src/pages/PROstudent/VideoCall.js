@@ -280,22 +280,56 @@ const PROStudentVideoCall = () => {
 
         {/* Appointment request form */}
         <div style={{ marginBottom: 30 }}>
-          <h2>Request Appointment</h2>
+          <h2 style={{ color: '#E2E8F0' }}>Request Appointment</h2>
           <input
             type="text"
             placeholder="User"
             value={requestedUser}
             onChange={(e) => setRequestedUser(e.target.value)}
-            style={{ marginRight: 10, padding: 8, width: 200 }}
+            style={{ 
+              marginRight: 10, 
+              padding: '8px 12px', 
+              width: 200,
+              backgroundColor: '#2D3748',
+              border: '1px solid #4A5568',
+              borderRadius: '6px',
+              color: '#E2E8F0',
+              outline: 'none'
+            }}
           />
           <input
             type="text"
             placeholder="Time (e.g. 5:00 PM)"
             value={requestedTime}
             onChange={(e) => setRequestedTime(e.target.value)}
-            style={{ marginRight: 10, padding: 8, width: 140 }}
+            style={{ 
+              marginRight: 10, 
+              padding: '8px 12px', 
+              width: 140,
+              backgroundColor: '#2D3748',
+              border: '1px solid #4A5568',
+              borderRadius: '6px',
+              color: '#E2E8F0',
+              outline: 'none'
+            }}
           />
-          <button className="accept-btn" onClick={handleRequestAppointment}>
+          <button 
+            className="accept-btn" 
+            onClick={handleRequestAppointment}
+            style={{
+              padding: '8px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #6B46C1 0%, #553C9A 100%)',
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+            onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+          >
             Request
           </button>
         </div>
@@ -305,21 +339,57 @@ const PROStudentVideoCall = () => {
           <div
             className="incoming-appointment"
             style={{
-              backgroundColor: "#e0f7fa",
-              padding: 16,
-              borderRadius: 6,
-              marginBottom: 20,
+              background: 'linear-gradient(135deg, #2D3748 0%, #1A202C 100%)',
+              padding: '20px',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              border: '1px solid #4A5568',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
             }}
           >
-            <p>
-              Appointment request from <b>{incomingAppointment.requester}</b> at <b>{incomingAppointment.time}</b>.
+            <p style={{ color: '#E2E8F0', marginBottom: '16px' }}>
+              Appointment request from <b style={{ color: '#6B46C1' }}>{incomingAppointment.requester}</b> at <b style={{ color: '#6B46C1' }}>{incomingAppointment.time}</b>.
             </p>
-            <button className="accept-btn" onClick={handleAcceptAppointment} style={{ marginRight: 10 }}>
-              Accept
-            </button>
-            <button className="reject-btn" onClick={handleRejectAppointment}>
-              Reject
-            </button>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                className="accept-btn" 
+                onClick={handleAcceptAppointment}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #48BB78 0%, #38A169 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Accept
+              </button>
+              <button 
+                className="reject-btn" 
+                onClick={handleRejectAppointment}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #F56565 0%, #C53030 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Reject
+              </button>
+            </div>
           </div>
         )}
 
@@ -328,21 +398,57 @@ const PROStudentVideoCall = () => {
           <div
             className="incoming-call"
             style={{
-              backgroundColor: "#fff9c4",
-              padding: 16,
-              borderRadius: 6,
-              marginBottom: 20,
+              background: 'linear-gradient(135deg, #2D3748 0%, #1A202C 100%)',
+              padding: '20px',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              border: '1px solid #4A5568',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
             }}
           >
-            <p>
-              Incoming call from <b>{incomingCall.caller}</b>.
+            <p style={{ color: '#E2E8F0', marginBottom: '16px' }}>
+              Incoming call from <b style={{ color: '#6B46C1' }}>{incomingCall.caller}</b>.
             </p>
-            <button className="accept-btn" onClick={handleAcceptCall} style={{ marginRight: 10 }}>
-              Accept
-            </button>
-            <button className="reject-btn" onClick={handleRejectCall}>
-              Reject
-            </button>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                className="accept-btn" 
+                onClick={handleAcceptCall}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #48BB78 0%, #38A169 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Accept
+              </button>
+              <button 
+                className="reject-btn" 
+                onClick={handleRejectCall}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #F56565 0%, #C53030 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Reject
+              </button>
+            </div>
           </div>
         )}
 
@@ -361,9 +467,10 @@ const PROStudentVideoCall = () => {
               style={{
                 flex: 1,
                 marginRight: 20,
-                border: "1px solid #ccc",
-                borderRadius: 6,
+                border: "1px solid #4A5568",
+                borderRadius: 12,
                 overflow: "hidden",
+                backgroundColor: '#2D3748'
               }}
             >
               <video
@@ -376,9 +483,10 @@ const PROStudentVideoCall = () => {
               <div
                 style={{
                   textAlign: "center",
-                  padding: 8,
-                  backgroundColor: "#f0f0f0",
-                  fontWeight: "bold",
+                  padding: 12,
+                  backgroundColor: "#1A202C",
+                  color: "#E2E8F0",
+                  fontWeight: "500",
                 }}
               >
                 You
@@ -387,9 +495,10 @@ const PROStudentVideoCall = () => {
             <div
               style={{
                 flex: 1,
-                border: "1px solid #ccc",
-                borderRadius: 6,
+                border: "1px solid #4A5568",
+                borderRadius: 12,
                 overflow: "hidden",
+                backgroundColor: '#2D3748'
               }}
             >
               <video
@@ -401,9 +510,10 @@ const PROStudentVideoCall = () => {
               <div
                 style={{
                   textAlign: "center",
-                  padding: 8,
-                  backgroundColor: "#f0f0f0",
-                  fontWeight: "bold",
+                  padding: 12,
+                  backgroundColor: "#1A202C",
+                  color: "#E2E8F0",
+                  fontWeight: "500",
                 }}
               >
                 {callState.remoteUser}
@@ -415,16 +525,83 @@ const PROStudentVideoCall = () => {
         {/* Call controls */}
         {callState.isInCall && (
           <div className="call-controls" style={{ marginBottom: 40, textAlign: "center" }}>
-            <button className="accept-btn" onClick={handleToggleVideo} style={{ marginRight: 10 }}>
+            <button 
+              className="accept-btn" 
+              onClick={handleToggleVideo} 
+              style={{ 
+                marginRight: 10,
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #6B46C1 0%, #553C9A 100%)',
+                color: '#fff',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+              onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+            >
               {callState.isVideoEnabled ? "Disable Video" : "Enable Video"}
             </button>
-            <button className="accept-btn" onClick={handleToggleMute} style={{ marginRight: 10 }}>
+            <button 
+              className="accept-btn" 
+              onClick={handleToggleMute} 
+              style={{ 
+                marginRight: 10,
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #6B46C1 0%, #553C9A 100%)',
+                color: '#fff',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+              onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+            >
               {callState.isMuted ? "Unmute" : "Mute"}
             </button>
-            <button className="accept-btn" onClick={handleToggleScreenShare} style={{ marginRight: 10 }}>
+            <button 
+              className="accept-btn" 
+              onClick={handleToggleScreenShare} 
+              style={{ 
+                marginRight: 10,
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #6B46C1 0%, #553C9A 100%)',
+                color: '#fff',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+              onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+            >
               {callState.isScreenSharing ? "Stop Screen Share" : "Share Screen"}
             </button>
-            <button className="reject-btn" onClick={handleEndCall}>
+            <button 
+              className="reject-btn" 
+              onClick={handleEndCall}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #F56565 0%, #C53030 100%)',
+                color: '#fff',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+              onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+            >
               End Call
             </button>
           </div>
@@ -432,13 +609,13 @@ const PROStudentVideoCall = () => {
 
         {/* Appointments list */}
         <div style={{ marginBottom: 40 }}>
-          <h2>Appointments</h2>
+          <h2 style={{ color: '#E2E8F0' }}>Appointments</h2>
           {appointments.length === 0 ? (
-            <p>No appointments scheduled.</p>
+            <p style={{ color: '#A0AEC0' }}>No appointments scheduled.</p>
           ) : (
-            <ul>
+            <ul style={{ color: '#E2E8F0' }}>
               {appointments.map((appt, i) => (
-                <li key={i}>
+                <li key={i} style={{ marginBottom: '8px' }}>
                   {appt.user} at {appt.time}
                 </li>
               ))}
@@ -448,13 +625,16 @@ const PROStudentVideoCall = () => {
 
         {/* Online users */}
         <div>
-          <h2>Users Online</h2>
+          <h2 style={{ color: '#E2E8F0' }}>Users Online</h2>
           {Object.keys(onlineUsers).length === 0 ? (
-            <p>Loading users...</p>
+            <p style={{ color: '#A0AEC0' }}>Loading users...</p>
           ) : (
-            <ul>
+            <ul style={{ color: '#E2E8F0' }}>
               {Object.entries(onlineUsers).map(([user, isOnline]) => (
-                <li key={user} style={{ color: isOnline ? "green" : "gray" }}>
+                <li key={user} style={{ 
+                  color: isOnline ? '#48BB78' : '#A0AEC0',
+                  marginBottom: '8px'
+                }}>
                   {user} - {isOnline ? "Online" : "Offline"}
                 </li>
               ))}

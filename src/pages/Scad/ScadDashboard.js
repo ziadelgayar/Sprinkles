@@ -86,13 +86,16 @@ const Dashboard = () => {
   };
 
   return (
-    <div
-      className="main-content"
-      style={{ paddingLeft: '260px', paddingTop: '20px', color: '#fff' }}
-    >
-      <h1 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '25px' }}>
-        Student Internship Dashboard
-      </h1>
+    <div className="main-content" style={{ 
+      padding: '20px',
+      backgroundColor: '#1A202C',
+      minHeight: '100vh',
+      color: '#E2E8F0'
+    }}>
+      <div className="page-header" style={{ marginBottom: '30px' }}>
+        <h1 style={{ color: '#E2E8F0', fontSize: '24px', marginBottom: '8px' }}>Student Internship Dashboard</h1>
+        <p style={{ color: '#A0AEC0' }}>View and manage student internship information</p>
+      </div>
 
       <div style={{ marginBottom: '20px' }}>
         <label htmlFor="cycle-select" style={{ marginRight: '10px', fontWeight: 'bold' }}>

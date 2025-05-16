@@ -305,21 +305,57 @@ const ScadVideoCall = () => {
           <div
             className="incoming-appointment"
             style={{
-              backgroundColor: "#e0f7fa",
-              padding: 16,
-              borderRadius: 6,
-              marginBottom: 20,
+              background: 'linear-gradient(135deg, #2D3748 0%, #1A202C 100%)',
+              padding: '20px',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              border: '1px solid #4A5568',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
             }}
           >
-            <p>
-              Appointment request from <b>{incomingAppointment.requester}</b> at <b>{incomingAppointment.time}</b>.
+            <p style={{ color: '#E2E8F0', marginBottom: '16px' }}>
+              Appointment request from <b style={{ color: '#6B46C1' }}>{incomingAppointment.requester}</b> at <b style={{ color: '#6B46C1' }}>{incomingAppointment.time}</b>.
             </p>
-            <button className="accept-btn" onClick={handleAcceptAppointment} style={{ marginRight: 10 }}>
-              Accept
-            </button>
-            <button className="reject-btn" onClick={handleRejectAppointment}>
-              Reject
-            </button>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                className="accept-btn" 
+                onClick={handleAcceptAppointment}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #48BB78 0%, #38A169 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Accept
+              </button>
+              <button 
+                className="reject-btn" 
+                onClick={handleRejectAppointment}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #F56565 0%, #C53030 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Reject
+              </button>
+            </div>
           </div>
         )}
 
@@ -328,21 +364,57 @@ const ScadVideoCall = () => {
           <div
             className="incoming-call"
             style={{
-              backgroundColor: "#fff9c4",
-              padding: 16,
-              borderRadius: 6,
-              marginBottom: 20,
+              background: 'linear-gradient(135deg, #2D3748 0%, #1A202C 100%)',
+              padding: '20px',
+              borderRadius: '12px',
+              marginBottom: '20px',
+              border: '1px solid #4A5568',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
             }}
           >
-            <p>
-              Incoming call from <b>{incomingCall.caller}</b>.
+            <p style={{ color: '#E2E8F0', marginBottom: '16px' }}>
+              Incoming call from <b style={{ color: '#6B46C1' }}>{incomingCall.caller}</b>.
             </p>
-            <button className="accept-btn" onClick={handleAcceptCall} style={{ marginRight: 10 }}>
-              Accept
-            </button>
-            <button className="reject-btn" onClick={handleRejectCall}>
-              Reject
-            </button>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                className="accept-btn" 
+                onClick={handleAcceptCall}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #48BB78 0%, #38A169 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Accept
+              </button>
+              <button 
+                className="reject-btn" 
+                onClick={handleRejectCall}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #F56565 0%, #C53030 100%)',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                Reject
+              </button>
+            </div>
           </div>
         )}
 

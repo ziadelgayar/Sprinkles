@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import jsPDF from "jspdf";
 
 const dummyInternshipReports = [
   {
@@ -104,50 +105,114 @@ const InternshipReports = () => {
     setClarificationInput("");
   };
 
-  // Download as PDF simulation: just print the selected report's section
+  // Download as PDF using jsPDF
   const handleDownloadPDF = () => {
-    if (!selectedReport) return;
-    // Create a new window with report content for print
-    const printWindow = window.open("", "", "width=600,height=600");
-    printWindow.document.write("<html><head><title>Report PDF</title></head><body>");
-    printWindow.document.write(`<h2>Report Details</h2>`);
-    printWindow.document.write(`<p><strong>Student:</strong> ${selectedReport.studentName}</p>`);
-    if (activeTab === "internship") {
-      printWindow.document.write(`<p><strong>Major:</strong> ${selectedReport.major}</p>`);
-      printWindow.document.write(`<p><strong>Company:</strong> ${selectedReport.company}</p>`);
-      printWindow.document.write(`<p><strong>Supervisor:</strong> ${selectedReport.supervisor}</p>`);
-      printWindow.document.write(`<p><strong>Duration:</strong> ${selectedReport.startDate} to ${selectedReport.endDate}</p>`);
-      if (selectedReport.evaluation) {
-        printWindow.document.write(`<p><strong>Evaluation Rating:</strong> ${selectedReport.evaluation.rating}/5</p>`);
-        printWindow.document.write(`<p><strong>Evaluation Comments:</strong> ${selectedReport.evaluation.comments}</p>`);
+    try {
+      if (!selectedReport) {
+        console.error('No report selected');
+        return;
       }
-    } else {
-      printWindow.document.write(`<p><strong>Company:</strong> ${selectedReport.company}</p>`);
-      printWindow.document.write(`<p><strong>Supervisor:</strong> ${selectedReport.supervisor}</p>`);
-      printWindow.document.write(`<p><strong>Internship Dates:</strong> ${selectedReport.internshipDates}</p>`);
-      printWindow.document.write(`<p><strong>Rating:</strong> ${selectedReport.rating}/5</p>`);
-      printWindow.document.write(`<p><strong>Comments:</strong> ${selectedReport.comments}</p>`);
+      
+      console.log('Generating PDF for report:', selectedReport);
+      
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const margin = 20;
+      let yPos = 20;
+      
+      // Add title
+      doc.setFontSize(20);
+      doc.setTextColor(79, 209, 197); // SCAD theme color
+      doc.text("Internship Report", pageWidth / 2, yPos, { align: "center" });
+      
+      // Add student info
+      yPos += 20;
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0); // Black text for better PDF readability
+      doc.text(`Student: ${selectedReport.studentName}`, margin, yPos);
+      
+      if (activeTab === "internship") {
+        yPos += 10;
+        doc.text(`Major: ${selectedReport.major}`, margin, yPos);
+        yPos += 10;
+        doc.text(`Company: ${selectedReport.company}`, margin, yPos);
+        yPos += 10;
+        doc.text(`Supervisor: ${selectedReport.supervisor}`, margin, yPos);
+        yPos += 10;
+        doc.text(`Duration: ${selectedReport.startDate} to ${selectedReport.endDate}`, margin, yPos);
+        
+        if (selectedReport.evaluation) {
+          yPos += 15;
+          doc.setFontSize(14);
+          doc.text("Evaluation", margin, yPos);
+          yPos += 10;
+          doc.setFontSize(12);
+          doc.text(`Rating: ${selectedReport.evaluation.rating}/5`, margin, yPos);
+          yPos += 10;
+          doc.text(`Comments: ${selectedReport.evaluation.comments}`, margin, yPos);
+        }
+        
+        if (selectedReport.clarification) {
+          yPos += 15;
+          doc.setFontSize(14);
+          doc.text("Clarification", margin, yPos);
+          yPos += 10;
+          doc.setFontSize(12);
+          doc.text(selectedReport.clarification, margin, yPos);
+        }
+      } else {
+        yPos += 10;
+        doc.text(`Company: ${selectedReport.company}`, margin, yPos);
+        yPos += 10;
+        doc.text(`Supervisor: ${selectedReport.supervisor}`, margin, yPos);
+        yPos += 10;
+        doc.text(`Internship Dates: ${selectedReport.internshipDates}`, margin, yPos);
+        yPos += 10;
+        doc.text(`Rating: ${selectedReport.rating}/5`, margin, yPos);
+        yPos += 10;
+        doc.text(`Comments: ${selectedReport.comments}`, margin, yPos);
+      }
+      
+      // Add footer
+      const today = new Date();
+      doc.setFontSize(10);
+      doc.setTextColor(128, 128, 128); // Gray text color
+      doc.text(`Generated on: ${today.toLocaleDateString()}`, pageWidth - margin, doc.internal.pageSize.getHeight() - 10, { align: "right" });
+      
+      // Save the PDF
+      const fileName = `${selectedReport.studentName.replace(/\s+/g, '_')}_Report.pdf`;
+      console.log('Saving PDF as:', fileName);
+      doc.save(fileName);
+      
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('There was an error generating the PDF. Please try again.');
     }
-    printWindow.document.write("</body></html>");
-    printWindow.document.close();
-    printWindow.print();
   };
 
   return (
-    <div className="main-content" style={{ padding: 20, maxWidth: 900, margin: "auto" }}>
-      <h1>Reports</h1>
+    <div className="main-content" style={{ 
+      padding: '20px',
+      marginLeft: '260px', // Add margin to account for sidebar width
+      width: 'calc(100% - 260px)', // Subtract sidebar width from total width
+      minHeight: '100vh',
+      backgroundColor: '#1A202C',
+      color: '#E2E8F0'
+    }}>
+      <h1 style={{ color: '#E2E8F0', fontSize: '24px', marginBottom: '20px' }}>Reports</h1>
 
-      <div className="tabs" style={{ marginBottom: 20 }}>
+      <div className="tabs" style={{ marginBottom: '20px' }}>
         <button
           onClick={() => setActiveTab("internship")}
           style={{
-            padding: "8px 16px",
+            padding: "10px 20px",
             marginRight: 10,
-            backgroundColor: activeTab === "internship" ? "#1976d2" : "#eee",
-            color: activeTab === "internship" ? "white" : "#333",
+            backgroundColor: activeTab === "internship" ? "#4FD1C5" : "#2D3748",
+            color: "#E2E8F0",
             border: "none",
-            borderRadius: 4,
+            borderRadius: 8,
             cursor: "pointer",
+            transition: "all 0.2s ease"
           }}
         >
           Internship Reports
@@ -155,12 +220,13 @@ const InternshipReports = () => {
         <button
           onClick={() => setActiveTab("evaluation")}
           style={{
-            padding: "8px 16px",
-            backgroundColor: activeTab === "evaluation" ? "#1976d2" : "#eee",
-            color: activeTab === "evaluation" ? "white" : "#333",
+            padding: "10px 20px",
+            backgroundColor: activeTab === "evaluation" ? "#4FD1C5" : "#2D3748",
+            color: "#E2E8F0",
             border: "none",
-            borderRadius: 4,
+            borderRadius: 8,
             cursor: "pointer",
+            transition: "all 0.2s ease"
           }}
         >
           Evaluation Reports
@@ -169,12 +235,25 @@ const InternshipReports = () => {
 
       {activeTab === "internship" && (
         <>
-          <div className="filters" style={{ marginBottom: 15, display: "flex", gap: 10 }}>
+          <div className="filters" style={{ 
+            marginBottom: '20px', 
+            display: "flex", 
+            gap: '15px',
+            flexWrap: 'wrap'
+          }}>
             <select
               name="major"
               value={filters.major}
               onChange={handleFilterChange}
-              style={{ flex: 1, padding: 8 }}
+              style={{
+                flex: 1,
+                minWidth: '200px',
+                padding: '10px',
+                backgroundColor: '#2D3748',
+                color: '#E2E8F0',
+                border: '1px solid #4A5568',
+                borderRadius: '8px'
+              }}
             >
               <option value="">All Majors</option>
               <option value="Computer Science">Computer Science</option>
@@ -186,7 +265,15 @@ const InternshipReports = () => {
               name="status"
               value={filters.status}
               onChange={handleFilterChange}
-              style={{ flex: 1, padding: 8 }}
+              style={{
+                flex: 1,
+                minWidth: '200px',
+                padding: '10px',
+                backgroundColor: '#2D3748',
+                color: '#E2E8F0',
+                border: '1px solid #4A5568',
+                borderRadius: '8px'
+              }}
             >
               <option value="">All Statuses</option>
               <option value="pending">Pending</option>
@@ -196,9 +283,11 @@ const InternshipReports = () => {
             </select>
           </div>
 
-          <div className="reports-list" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div className="reports-list">
             {filteredInternshipReports.length === 0 && (
-              <p>No internship reports match the selected filters.</p>
+              <p style={{ color: '#A0AEC0', textAlign: 'center', padding: '40px' }}>
+                No internship reports match the selected filters.
+              </p>
             )}
 
             {filteredInternshipReports.map((report) => (
@@ -206,58 +295,101 @@ const InternshipReports = () => {
                 key={report.id}
                 className="report-card"
                 style={{
-                  border: "1px solid #ddd",
-                  borderRadius: 6,
-                  padding: 12,
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                  backgroundColor: '#2D3748',
+                  border: '1px solid #4A5568',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  marginBottom: '20px',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
                 }}
               >
                 <div
                   className="report-header"
                   style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
                 >
-                  <h3 style={{ margin: 0 }}>{report.studentName}</h3>
+                  <h3 style={{ margin: 0, color: '#E2E8F0' }}>{report.studentName}</h3>
                   <span
                     className={`status ${report.status}`}
                     style={{
-                      padding: "4px 8px",
-                      borderRadius: 4,
+                      padding: "6px 12px",
+                      borderRadius: 6,
                       backgroundColor:
                         report.status === "accepted"
-                          ? "#4caf50"
+                          ? "#48BB78"
                           : report.status === "pending"
-                          ? "#ff9800"
+                          ? "#ED8936"
                           : report.status === "flagged"
-                          ? "#f44336"
+                          ? "#F56565"
                           : report.status === "rejected"
-                          ? "#9e9e9e"
-                          : "#ccc",
+                          ? "#A0AEC0"
+                          : "#4A5568",
                       color: "white",
                       textTransform: "capitalize",
-                      fontWeight: "bold",
-                      fontSize: 12,
+                      fontWeight: "500",
+                      fontSize: 14,
                     }}
                   >
                     {report.status}
                   </span>
                 </div>
 
-                <div className="report-details" style={{ marginTop: 8 }}>
-                  <p><strong>Major:</strong> {report.major}</p>
-                  <p><strong>Company:</strong> {report.company}</p>
-                  <p><strong>Supervisor:</strong> {report.supervisor}</p>
-                  <p><strong>Duration:</strong> {report.startDate} to {report.endDate}</p>
+                <div style={{ marginTop: '15px', color: '#A0AEC0' }}>
+                  <p><strong style={{ color: '#E2E8F0' }}>Major:</strong> {report.major}</p>
+                  <p><strong style={{ color: '#E2E8F0' }}>Company:</strong> {report.company}</p>
+                  <p><strong style={{ color: '#E2E8F0' }}>Supervisor:</strong> {report.supervisor}</p>
+                  <p><strong style={{ color: '#E2E8F0' }}>Duration:</strong> {report.startDate} to {report.endDate}</p>
                 </div>
 
-                <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  <button onClick={() => setSelectedReport(report)} style={{ cursor: "pointer" }}>
+                <div style={{ 
+                  marginTop: '15px', 
+                  display: "flex", 
+                  gap: '8px', 
+                  flexWrap: "wrap" 
+                }}>
+                  <button 
+                    onClick={() => setSelectedReport(report)}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: '#4FD1C5',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontSize: '14px',
+                      minWidth: '100px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '&:hover': {
+                        backgroundColor: '#38B2AC'
+                      }
+                    }}
+                  >
                     View Details
                   </button>
 
                   <button
                     onClick={() => handleStatusChange(report.id, "accepted")}
                     disabled={report.status === "accepted"}
-                    style={{ cursor: report.status === "accepted" ? "not-allowed" : "pointer" }}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: report.status === "accepted" ? '#4A5568' : '#48BB78',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: report.status === "accepted" ? "not-allowed" : "pointer",
+                      transition: 'all 0.2s ease',
+                      fontSize: '14px',
+                      minWidth: '100px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      opacity: report.status === "accepted" ? 0.7 : 1,
+                      '&:hover': {
+                        backgroundColor: report.status === "accepted" ? '#4A5568' : '#38A169'
+                      }
+                    }}
                   >
                     Accept
                   </button>
@@ -265,7 +397,24 @@ const InternshipReports = () => {
                   <button
                     onClick={() => handleStatusChange(report.id, "flagged")}
                     disabled={report.status === "flagged"}
-                    style={{ cursor: report.status === "flagged" ? "not-allowed" : "pointer" }}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: report.status === "flagged" ? '#4A5568' : '#F56565',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: report.status === "flagged" ? "not-allowed" : "pointer",
+                      transition: 'all 0.2s ease',
+                      fontSize: '14px',
+                      minWidth: '100px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      opacity: report.status === "flagged" ? 0.7 : 1,
+                      '&:hover': {
+                        backgroundColor: report.status === "flagged" ? '#4A5568' : '#E53E3E'
+                      }
+                    }}
                   >
                     Flag
                   </button>
@@ -273,7 +422,24 @@ const InternshipReports = () => {
                   <button
                     onClick={() => handleStatusChange(report.id, "rejected")}
                     disabled={report.status === "rejected"}
-                    style={{ cursor: report.status === "rejected" ? "not-allowed" : "pointer" }}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: report.status === "rejected" ? '#4A5568' : '#A0AEC0',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: report.status === "rejected" ? "not-allowed" : "pointer",
+                      transition: 'all 0.2s ease',
+                      fontSize: '14px',
+                      minWidth: '100px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      opacity: report.status === "rejected" ? 0.7 : 1,
+                      '&:hover': {
+                        backgroundColor: report.status === "rejected" ? '#4A5568' : '#718096'
+                      }
+                    }}
                   >
                     Reject
                   </button>
@@ -282,6 +448,23 @@ const InternshipReports = () => {
                     onClick={() => {
                       setSelectedReport(report);
                       setTimeout(() => handleDownloadPDF(), 300);
+                    }}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: '#4FD1C5',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontSize: '14px',
+                      minWidth: '100px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '&:hover': {
+                        backgroundColor: '#38B2AC'
+                      }
                     }}
                   >
                     Download PDF
@@ -294,28 +477,46 @@ const InternshipReports = () => {
       )}
 
       {activeTab === "evaluation" && (
-        <div className="evaluation-reports" style={{ marginTop: 20 }}>
-          {evaluationReports.length === 0 && <p>No evaluation reports found.</p>}
+        <div className="evaluation-reports" style={{ marginTop: '20px' }}>
+          {evaluationReports.length === 0 && (
+            <p style={{ color: '#A0AEC0', textAlign: 'center', padding: '40px' }}>
+              No evaluation reports found.
+            </p>
+          )}
           {evaluationReports.map((evalReport) => (
             <div
               key={evalReport.id}
               style={{
-                border: "1px solid #ddd",
-                borderRadius: 6,
-                padding: 12,
-                marginBottom: 10,
+                backgroundColor: '#2D3748',
+                border: '1px solid #4A5568',
+                borderRadius: '12px',
+                padding: '20px',
+                marginBottom: '20px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
               }}
             >
-              <h3>{evalReport.studentName}</h3>
-              <p><strong>Company:</strong> {evalReport.company}</p>
-              <p><strong>Supervisor:</strong> {evalReport.supervisor}</p>
-              <p><strong>Internship Dates:</strong> {evalReport.internshipDates}</p>
-              <p><strong>Rating:</strong> {evalReport.rating}/5</p>
-              <p><strong>Comments:</strong> {evalReport.comments}</p>
+              <h3 style={{ color: '#E2E8F0', marginBottom: '15px' }}>{evalReport.studentName}</h3>
+              <div style={{ color: '#A0AEC0' }}>
+                <p><strong style={{ color: '#E2E8F0' }}>Company:</strong> {evalReport.company}</p>
+                <p><strong style={{ color: '#E2E8F0' }}>Supervisor:</strong> {evalReport.supervisor}</p>
+                <p><strong style={{ color: '#E2E8F0' }}>Internship Dates:</strong> {evalReport.internshipDates}</p>
+                <p><strong style={{ color: '#E2E8F0' }}>Rating:</strong> {evalReport.rating}/5</p>
+                <p><strong style={{ color: '#E2E8F0' }}>Comments:</strong> {evalReport.comments}</p>
+              </div>
               <button
                 onClick={() => {
                   setSelectedReport(evalReport);
                   setTimeout(() => handleDownloadPDF(), 300);
+                }}
+                style={{
+                  marginTop: '15px',
+                  padding: '8px 16px',
+                  backgroundColor: '#4FD1C5',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
                 }}
               >
                 Download PDF
@@ -325,7 +526,6 @@ const InternshipReports = () => {
         </div>
       )}
 
-      {/* Modal for viewing details + clarifications */}
       {selectedReport && (
         <div
           className="modal-overlay"
@@ -335,7 +535,7 @@ const InternshipReports = () => {
             left: 0,
             width: "100vw",
             height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.5)",
+            backgroundColor: "rgba(0,0,0,0.7)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -347,42 +547,51 @@ const InternshipReports = () => {
             className="modal-content"
             onClick={(e) => e.stopPropagation()}
             style={{
-              backgroundColor: "white",
-              padding: 20,
-              borderRadius: 8,
+              backgroundColor: "#2D3748",
+              padding: "24px",
+              borderRadius: "12px",
               maxWidth: 600,
               width: "90%",
               maxHeight: "80vh",
               overflowY: "auto",
               boxShadow: "0 5px 15px rgba(0,0,0,0.3)",
+              color: "#E2E8F0"
             }}
           >
-            <h2>Report Details</h2>
-            <p><strong>Student:</strong> {selectedReport.studentName}</p>
+            <h2 style={{ color: '#E2E8F0', marginBottom: '20px' }}>Report Details</h2>
+            <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Student:</strong> {selectedReport.studentName}</p>
 
             {activeTab === "internship" ? (
               <>
-                <p><strong>Major:</strong> {selectedReport.major}</p>
-                <p><strong>Company:</strong> {selectedReport.company}</p>
-                <p><strong>Supervisor:</strong> {selectedReport.supervisor}</p>
-                <p><strong>Duration:</strong> {selectedReport.startDate} to {selectedReport.endDate}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Major:</strong> {selectedReport.major}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Company:</strong> {selectedReport.company}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Supervisor:</strong> {selectedReport.supervisor}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Duration:</strong> {selectedReport.startDate} to {selectedReport.endDate}</p>
 
                 {selectedReport.evaluation && (
                   <>
-                    <h4>Evaluation</h4>
-                    <p><strong>Rating:</strong> {selectedReport.evaluation.rating}/5</p>
-                    <p><strong>Comments:</strong> {selectedReport.evaluation.comments}</p>
+                    <h4 style={{ color: '#E2E8F0', marginTop: '20px', marginBottom: '10px' }}>Evaluation</h4>
+                    <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Rating:</strong> {selectedReport.evaluation.rating}/5</p>
+                    <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Comments:</strong> {selectedReport.evaluation.comments}</p>
                   </>
                 )}
 
                 {["flagged", "rejected"].includes(selectedReport.status) && (
                   <>
-                    <h4>Submit Clarification</h4>
+                    <h4 style={{ color: '#E2E8F0', marginTop: '20px', marginBottom: '10px' }}>Submit Clarification</h4>
                     <textarea
                       rows={3}
                       value={clarificationInput}
                       onChange={(e) => setClarificationInput(e.target.value)}
-                      style={{ width: "100%", padding: 8, borderRadius: 4, borderColor: "#ccc" }}
+                      style={{
+                        width: "100%",
+                        padding: '12px',
+                        borderRadius: '8px',
+                        backgroundColor: '#1A202C',
+                        color: '#E2E8F0',
+                        border: '1px solid #4A5568',
+                        marginBottom: '10px'
+                      }}
                       placeholder="Explain why the report was flagged or rejected..."
                     />
                     <button
@@ -391,7 +600,16 @@ const InternshipReports = () => {
                         alert("Clarification submitted!");
                       }}
                       disabled={!clarificationInput.trim()}
-                      style={{ marginTop: 8 }}
+                      style={{
+                        padding: '8px 16px',
+                        backgroundColor: '#4FD1C5',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        opacity: !clarificationInput.trim() ? 0.5 : 1
+                      }}
                     >
                       Submit Clarification
                     </button>
@@ -400,24 +618,41 @@ const InternshipReports = () => {
 
                 {selectedReport.clarification && (
                   <>
-                    <h4>Clarification</h4>
-                    <p>{selectedReport.clarification}</p>
+                    <h4 style={{ color: '#E2E8F0', marginTop: '20px', marginBottom: '10px' }}>Clarification</h4>
+                    <p style={{ color: '#A0AEC0' }}>{selectedReport.clarification}</p>
                   </>
                 )}
               </>
             ) : (
               <>
-                <p><strong>Company:</strong> {selectedReport.company}</p>
-                <p><strong>Supervisor:</strong> {selectedReport.supervisor}</p>
-                <p><strong>Internship Dates:</strong> {selectedReport.internshipDates}</p>
-                <p><strong>Rating:</strong> {selectedReport.rating}/5</p>
-                <p><strong>Comments:</strong> {selectedReport.comments}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Company:</strong> {selectedReport.company}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Supervisor:</strong> {selectedReport.supervisor}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Internship Dates:</strong> {selectedReport.internshipDates}</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Rating:</strong> {selectedReport.rating}/5</p>
+                <p style={{ color: '#A0AEC0' }}><strong style={{ color: '#E2E8F0' }}>Comments:</strong> {selectedReport.comments}</p>
               </>
             )}
 
             <button
               onClick={closeModal}
-              style={{ marginTop: 20, padding: "8px 16px", cursor: "pointer" }}
+              style={{
+                marginTop: '20px',
+                padding: '6px 12px',
+                backgroundColor: '#4FD1C5',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                fontSize: '14px',
+                minWidth: '80px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  backgroundColor: '#38B2AC'
+                }
+              }}
             >
               Close
             </button>

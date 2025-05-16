@@ -41,6 +41,7 @@ import Companies from '../pages/Scad/companies';
 import Internships from '../pages/Scad/Internships';
 import VideoCall from '../pages/Scad/VideoCall'; 
 import Workshops from '../pages/Scad/Workshops';
+import Students from '../pages/Scad/Students';
 
 // Import faculty page components
 import FacultyHome from '../pages/Faculty/Dashboard';
@@ -102,9 +103,10 @@ const AppRoutes = () => {
         <Route path="statistics" element={<Statistics />} />
         <Route path="reports" element={<InternshipReports />} /> 
         <Route path="companies" element={<Companies />} />
-        <Route path="Internships" element={<Internships />} />
-        <Route path="VideoCall" element={<VideoCall />} />
-        <Route path="Workshops" element={<Workshops />} />
+        <Route path="internships" element={<Internships />} />
+        <Route path="students" element={<Students />} />
+        <Route path="videocall" element={<VideoCall />} />
+        <Route path="workshops" element={<Workshops />} />
       </Route>
 
       {/* Faculty routes */}

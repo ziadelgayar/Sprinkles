@@ -34,6 +34,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    color: rgb(54, 12, 54);
+}
+
+.sidebar .sidebar-menu-item svg {
+    width: 16px;
+    height: 16px;
+    color: rgb(54, 12, 54);
 }
   
 .sidebar .sidebar-menu-item.active,
@@ -46,4 +53,8 @@
     color: rgb(54, 12, 54); 
     text-decoration: none; 
     font-weight: 500; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }

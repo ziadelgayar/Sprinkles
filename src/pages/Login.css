@@ -1,85 +1,143 @@
 .login-container {
     max-width: 390px;
     margin: 50px auto;
-    padding: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    padding: 2.5rem;
+    border-radius: 16px;
     text-align: center;
-    background-color: #ffffff; 
-    color: darkslateblue;
-  }
-  
-  .login-container h2 {
+    background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);
+    color: #E2E8F0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.login-container h2 {
     margin-bottom: 1.5rem;
-  }
-  
-  .login-form .form-group {
-    margin-bottom: 1rem;
+    color: #E2E8F0;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.login-form .form-group {
     text-align: left;
-  }
-  
-  .login-form label {
+}
+
+.login-form label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .login-form input {
+    font-weight: 500;
+    color: #A0AEC0;
+}
+
+.login-form input {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     box-sizing: border-box;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-  }
-  
-  .login-form button {
-    padding: 0.5rem 1.5rem;
-    background-color: #007bfe;
+    border: 1px solid #4A5568;
+    border-radius: 8px;
+    background-color: #2D3748;
+    color: #E2E8F0;
+    transition: all 0.2s ease;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #6B46C1;
+    box-shadow: 0 0 0 2px rgba(107, 70, 193, 0.2);
+}
+
+.login-form input::placeholder {
+    color: #718096;
+}
+
+.login-form button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #6B46C1 0%, #553C9A 100%);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-  }
-  
-  .login-form button:hover {
-    background-color: #0159b8;
-  }
-  
-  .password-input-container {
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.login-form button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+}
+
+.password-input-container {
     position: relative;
     display: flex;
     align-items: center;
-  }
-  
-  .password-input-container input {
+}
+
+.password-input-container input {
     width: 100%;
     padding-right: 35px;
-  }
-  
-  .password-toggle {
+}
+
+.password-toggle {
     position: absolute;
-    right: 1px;
-    top: 34%;
+    right: 12px;
+    top: 45%;
     transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-    color: #aaa;
+    color: #A0AEC0;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: auto;
-    width: auto;
-    min-width: 0;
-    min-height: 0;
-  }
-  
-  .password-toggle:hover {
-    color: #666;
-  }
-  
-  .password-toggle:focus {
+    transition: color 0.2s ease;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+}
+
+.password-toggle:hover {
+    color: #E2E8F0;
+}
+
+.password-toggle:focus {
     outline: none;
-  }
+}
+
+.signup-link {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #4A5568;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.signup-link p {
+    color: #A0AEC0;
+    margin: 0;
+}
+
+.signup-link button {
+    background: transparent;
+    border: 1px solid #6B46C1;
+    color: #6B46C1;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: auto;
+    min-width: 120px;
+}
+
+.signup-link button:hover {
+    background: rgba(107, 70, 193, 0.1);
+}
   
