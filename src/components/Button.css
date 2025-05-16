@@ -1,0 +1,45 @@
+/* buttons.css */
+.btn {
+  padding: 10px 28px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(76, 110, 245, 0.08);
+  margin: 0 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #6c63ff 0%, #48c6ef 100%);
+  color: #fff;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background: linear-gradient(90deg, #48c6ef 0%, #6c63ff 100%);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.08);
+  color: #bdbdfc;
+  border: 1px solid #6c63ff;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+  background: #6c63ff;
+  color: #fff;
+}
+
+.btn-glass {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.btn-glass:hover, .btn-glass:focus {
+  background: rgba(76, 110, 245, 0.18);
+  color: #fff;
+}
